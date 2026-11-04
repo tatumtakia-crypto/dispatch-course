@@ -611,6 +611,8 @@
             checkoutBtn?.addEventListener('click', async () => {
                 if (cart.length === 0) return;
 
+                const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRoemJxbHVtb2h3bHhnYm9kb3BmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2Mzg1MDMsImV4cCI6MjEwMDIxNDUwM30.oaLH3NqWFdAvzHm3PGyXMgxo4cFfF4BRSPTR90JcLOM';
+
                 const payload = {
                     items: cart,
                     discount: appliedDiscount ? {
@@ -626,7 +628,9 @@
                     const response = await fetch('https://thzbqlumohwlxgbodopf.supabase.co/functions/v1/create-square-checkout', {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            'apikey': SUPABASE_ANON_KEY,
+                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
                         },
                         body: JSON.stringify(payload)
                     });
