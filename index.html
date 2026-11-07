@@ -152,7 +152,7 @@
             
             <div class="space-y-3">
                 <button type="button" id="checkout-btn" disabled class="w-full shine-button-gold text-black font-extrabold py-4 rounded-xl transition text-sm tracking-wide disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex flex-col items-center justify-center">
-                    <span>Proceed to Secure Checkout & Afterpay</span>
+                    <span>Proceed to Secure Checkout</span>
                 </button>
             </div>
         </div>
@@ -225,9 +225,14 @@
                             <span class="text-xs text-gray-400">Duration: 3 Full Days</span>
                             <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">Cohort Access</span>
                         </div>
-                        <button type="button" class="add-to-cart-btn w-full shine-button-blue text-white font-extrabold py-4 rounded-xl transition text-base tracking-wide cursor-pointer relative z-10" data-name="Live Dispatcher Course" data-price="8500">
-                            Add to Cart ($85)
-                        </button>
+                        <div class="space-y-3">
+                            <button type="button" class="add-to-cart-btn w-full shine-button-blue text-white font-extrabold py-4 rounded-xl transition text-base tracking-wide cursor-pointer relative z-10" data-name="Live Dispatcher Course" data-price="8500">
+                                Pay Full Tuition ($85)
+                            </button>
+                            <a href="https://square.link/u/dnTjB2at" target="_blank" rel="noopener noreferrer" class="block text-center border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 font-bold py-3 rounded-xl transition text-xs uppercase tracking-wider">
+                                Weekly Payment Plan
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -262,9 +267,14 @@
                             <span class="text-xs text-gray-400">Format: 24/7 Digital Portal</span>
                             <span class="text-xs font-bold metallic-gold-text uppercase tracking-wider">Instant Access</span>
                         </div>
-                        <button type="button" class="add-to-cart-btn w-full shine-button-gold text-black font-extrabold py-4 rounded-xl transition text-base tracking-wide cursor-pointer relative z-10" data-name="Self-Led Dispatcher Course" data-price="7500">
-                            Add to Cart ($75)
-                        </button>
+                        <div class="space-y-3">
+                            <button type="button" class="add-to-cart-btn w-full shine-button-gold text-black font-extrabold py-4 rounded-xl transition text-base tracking-wide cursor-pointer relative z-10" data-name="Self-Led Dispatcher Course" data-price="7500">
+                                Pay Full Tuition ($75)
+                            </button>
+                            <a href="https://square.link/u/Q0d1nryD" target="_blank" rel="noopener noreferrer" class="block text-center border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 font-bold py-3 rounded-xl transition text-xs uppercase tracking-wider">
+                                Weekly Payment Plan
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -569,13 +579,13 @@
                 } else {
                     alert('Could not start checkout: ' + (result.error || 'Server error'));
                     checkoutBtn.disabled = false;
-                    checkoutBtn.innerText = 'Proceed to Secure Checkout & Afterpay';
+                    checkoutBtn.innerText = 'Proceed to Secure Checkout';
                 }
             } catch (err) {
                 console.error('Checkout error:', err);
                 alert('Connection error. Please try again.');
                 checkoutBtn.disabled = false;
-                checkoutBtn.innerText = 'Proceed to Secure Checkout & Afterpay';
+                checkoutBtn.innerText = 'Proceed to Secure Checkout';
             }
         });
     </script>
