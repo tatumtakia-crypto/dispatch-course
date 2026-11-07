@@ -153,11 +153,14 @@
             </div>
             
             <div class="space-y-3">
+                <!-- Square Credit Card Form Container -->
+                <div id="card-container" class="bg-black/40 border border-gray-800 p-3 rounded-xl min-h-[100px]"></div>
+
                 <button type="button" id="checkout-btn" disabled class="w-full shine-button-gold text-black font-extrabold py-3.5 rounded-xl transition text-sm tracking-wide disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex flex-col items-center justify-center">
                     <span>Pay Full Amount with Card</span>
                 </button>
 
-                <!-- Dedicated container where Square SDK will render the official Afterpay button -->
+                <!-- Dedicated container where Square SDK renders the official Afterpay button -->
                 <div id="afterpay-container" class="w-full"></div>
             </div>
         </div>
@@ -466,8 +469,8 @@
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
 
-        // Replace with your live Production App ID (starts with sq0idp-) from Square Console
-        const SQUARE_APP_ID = 'sq0idp-YOUR_PRODUCTION_APP_ID'; 
+        // Production Square App ID and Location ID
+        const SQUARE_APP_ID = 'sq0idp-LZN1FSaOQ1EQIf7ExbC9XA'; 
         const SQUARE_LOCATION_ID = 'LZJFJ8DG9QZDA';
 
         // Initialize Square Web Payments SDK
@@ -478,7 +481,10 @@
             }
             try {
                 paymentsInstance = window.Square.payments(SQUARE_APP_ID, SQUARE_LOCATION_ID);
+                
+                // Initialize and mount credit card fields into #card-container
                 cardInstance = await paymentsInstance.card();
+                await cardInstance.attach('#card-container');
             } catch (e) {
                 console.error('Failed to initialize Square Payments:', e);
             }
@@ -617,7 +623,7 @@
                 if (result.status === 'OK') {
                     await processPaymentWithEdgeFunction(result.token);
                 } else {
-                    alert('Card tokenization failed: ' + result.errors[0].message);
+                    alert('Card tokenization failed: ' + (result.errors?.[0]?.message || 'Check card details'));
                     checkoutBtn.disabled = false;
                     checkoutBtn.innerText = 'Pay Full Amount with Card';
                 }
