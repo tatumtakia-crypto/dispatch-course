@@ -6,8 +6,6 @@
     <title>Crown Access | The Black Label Dispatch Academy</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Square Production Web Payments SDK -->
-    <script type="text/javascript" src="https://web.squarecdn.com/v1/square.js"></script>
     <!-- Supabase JS Client CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
@@ -144,7 +142,7 @@
         <div class="p-6 border-t border-gray-800 bg-black/50 space-y-4">
             <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-3">
                 <p class="text-[11px] text-yellow-300/90 leading-relaxed font-medium">
-                    📌 <strong>Disclaimer:</strong> Login credentials and booking link for live course will be sent via email after payment.
+                    📌 <strong>Disclaimer:</strong> Login credentials and booking links will be sent via email after secure checkout.
                 </p>
             </div>
             <div class="flex justify-between items-center">
@@ -153,15 +151,9 @@
             </div>
             
             <div class="space-y-3">
-                <!-- Square Credit Card Form Container -->
-                <div id="card-container" class="bg-black/40 border border-gray-800 p-3 rounded-xl min-h-[100px]"></div>
-
-                <button type="button" id="checkout-btn" disabled class="w-full shine-button-gold text-black font-extrabold py-3.5 rounded-xl transition text-sm tracking-wide disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex flex-col items-center justify-center">
-                    <span>Pay Full Amount with Card</span>
+                <button type="button" id="checkout-btn" disabled class="w-full shine-button-gold text-black font-extrabold py-4 rounded-xl transition text-sm tracking-wide disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex flex-col items-center justify-center">
+                    <span>Proceed to Secure Checkout & Afterpay</span>
                 </button>
-
-                <!-- Dedicated container where Square SDK renders the official Afterpay button -->
-                <div id="afterpay-container" class="w-full"></div>
             </div>
         </div>
     </div>
@@ -447,12 +439,9 @@
         </div>
     </footer>
 
-    <!-- Cart, Square Payments SDK & Supabase Edge Function Call Script -->
+    <!-- Cart Script & Hosted Checkout Link Integration -->
     <script>
         let cart = [];
-        let paymentsInstance = null;
-        let afterpayInstance = null;
-        let cardInstance = null;
 
         const cartOverlay = document.getElementById('cart-overlay');
         const cartDrawer = document.getElementById('cart-drawer');
@@ -465,32 +454,8 @@
         const emptyCartMsg = document.getElementById('empty-cart-msg');
         const cartTotalDisplay = document.getElementById('cart-total');
         const checkoutBtn = document.getElementById('checkout-btn');
-        const afterpayContainer = document.getElementById('afterpay-container');
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
-
-        // Production Square App ID and Location ID
-        const SQUARE_APP_ID = 'sq0idp-LZN1FSaOQ1EQIf7ExbC9XA'; 
-        const SQUARE_LOCATION_ID = 'LZJFJ8DG9QZDA';
-
-        // Initialize Square Web Payments SDK
-        async function initSquarePayments() {
-            if (!window.Square) {
-                console.error('Square Web Payments SDK failed to load.');
-                return;
-            }
-            try {
-                paymentsInstance = window.Square.payments(SQUARE_APP_ID, SQUARE_LOCATION_ID);
-                
-                // Initialize and mount credit card fields into #card-container
-                cardInstance = await paymentsInstance.card();
-                await cardInstance.attach('#card-container');
-            } catch (e) {
-                console.error('Failed to initialize Square Payments:', e);
-            }
-        }
-
-        window.addEventListener('DOMContentLoaded', initSquarePayments);
 
         // Mobile Menu Toggle
         mobileMenuBtn.addEventListener('click', () => {
@@ -536,7 +501,7 @@
             updateCartUI();
         }
 
-        async function updateCartUI() {
+        function updateCartUI() {
             const count = cart.length;
             cartBadge.textContent = count;
             mobileCartBadge.textContent = count;
@@ -547,7 +512,6 @@
                 cartItemsContainer.appendChild(emptyCartMsg);
                 cartTotalDisplay.textContent = '$0.00';
                 checkoutBtn.disabled = true;
-                afterpayContainer.innerHTML = '';
                 return;
             }
 
@@ -572,106 +536,42 @@
             const totalDollars = totalCents / 100;
             cartTotalDisplay.textContent = `$${totalDollars.toFixed(2)}`;
             checkoutBtn.disabled = false;
-
-            // Render Afterpay button if total is within valid range ($1 - $2000)
-            if (paymentsInstance && totalDollars >= 1 && totalDollars <= 2000) {
-                await renderAfterpayButton(totalDollars);
-            } else {
-                afterpayContainer.innerHTML = '<p class="text-[11px] text-gray-500 text-center">Afterpay available for totals between $1.00 and $2,000.00</p>';
-            }
         }
 
-        // Initialize and Attach Square Afterpay Component
-        async function renderAfterpayButton(totalDollars) {
-            try {
-                afterpayContainer.innerHTML = ''; // Clear previous button instance
-                
-                const paymentRequest = paymentsInstance.paymentRequest({
-                    countryCode: 'US',
-                    currencyCode: 'USD',
-                    total: {
-                        amount: totalDollars.toFixed(2),
-                        label: 'Crown Access Total'
-                    }
-                });
-
-                afterpayInstance = await paymentsInstance.afterpayClearpay(paymentRequest);
-                await afterpayInstance.attach('#afterpay-container');
-
-                // Handle token generation when buyer interacts with Afterpay
-                afterpayInstance.addEventListener('ontokenize', async (event) => {
-                    const tokenResult = event.detail;
-                    if (tokenResult.status === 'OK') {
-                        await processPaymentWithEdgeFunction(tokenResult.token);
-                    } else {
-                        console.error('Afterpay tokenization error:', tokenResult.errors);
-                    }
-                });
-            } catch (e) {
-                console.log('Afterpay initialization skipped:', e);
-            }
-        }
-
-        // Handle Card Checkout Button Click
+        // Trigger Supabase Edge Function to generate Square Hosted Checkout Link (supports Cards + Afterpay)
         checkoutBtn.addEventListener('click', async () => {
-            if (!cardInstance) return;
-            try {
-                checkoutBtn.disabled = true;
-                checkoutBtn.innerText = 'Processing...';
-                
-                const result = await cardInstance.tokenize();
-                if (result.status === 'OK') {
-                    await processPaymentWithEdgeFunction(result.token);
-                } else {
-                    alert('Card tokenization failed: ' + (result.errors?.[0]?.message || 'Check card details'));
-                    checkoutBtn.disabled = false;
-                    checkoutBtn.innerText = 'Pay Full Amount with Card';
-                }
-            } catch (e) {
-                console.error(e);
-                checkoutBtn.disabled = false;
-                checkoutBtn.innerText = 'Pay Full Amount with Card';
-            }
-        });
-
-        // Call your Supabase Edge Function 'create-square-checkout'
-        async function processPaymentWithEdgeFunction(sourceId) {
-            const totalCents = cart.reduce((sum, item) => sum + item.price, 0);
+            if (cart.length === 0) return;
             
             try {
+                checkoutBtn.disabled = true;
+                checkoutBtn.innerText = 'Generating Secure Checkout...';
+
                 const response = await fetch('https://thzbqlumohwlxgbodopf.supabase.co/functions/v1/create-square-checkout', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
-                        sourceId, 
-                        amount: totalCents, 
-                        items: cart 
+                        items: cart,
+                        redirectUrl: window.location.origin + '/success.html'
                     })
                 });
 
                 const result = await response.json();
 
-                if (response.ok && result.success) {
-                    alert('Payment successful! Payment ID: ' + result.paymentId);
-                    cart = [];
-                    updateCartUI();
-                    closeCart();
+                if (response.ok && (result.checkoutUrl || result.url)) {
+                    // Redirect customer to Square's secure hosted payment page (where Afterpay & Cards are enabled)
+                    window.location.href = result.checkoutUrl || result.url;
                 } else {
-                    alert('Payment failed: ' + (result.error || 'Server processing error'));
-                    if (checkoutBtn) {
-                        checkoutBtn.disabled = false;
-                        checkoutBtn.innerText = 'Pay Full Amount with Card';
-                    }
+                    alert('Could not start checkout: ' + (result.error || 'Server error'));
+                    checkoutBtn.disabled = false;
+                    checkoutBtn.innerText = 'Proceed to Secure Checkout & Afterpay';
                 }
             } catch (err) {
-                console.error('Error calling Edge Function:', err);
-                alert('Could not complete payment communication.');
-                if (checkoutBtn) {
-                    checkoutBtn.disabled = false;
-                    checkoutBtn.innerText = 'Pay Full Amount with Card';
-                }
+                console.error('Checkout error:', err);
+                alert('Connection error. Please try again.');
+                checkoutBtn.disabled = false;
+                checkoutBtn.innerText = 'Proceed to Secure Checkout & Afterpay';
             }
-        }
+        });
     </script>
 </body>
 </html>
