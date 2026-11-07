@@ -538,7 +538,7 @@
             checkoutBtn.disabled = false;
         }
 
-        // Trigger Supabase Edge Function to generate Square Hosted Checkout Link (supports Cards + Afterpay)
+        // Trigger Supabase Edge Function to generate Square Hosted Checkout Link
         checkoutBtn.addEventListener('click', async () => {
             if (cart.length === 0) return;
             
@@ -557,9 +557,8 @@
 
                 const result = await response.json();
 
-                if (response.ok && (result.checkoutUrl || result.url)) {
-                    // Redirect customer to Square's secure hosted payment page (where Afterpay & Cards are enabled)
-                    window.location.href = result.checkoutUrl || result.url;
+                if (response.ok && result.checkoutUrl) {
+                    window.location.href = result.checkoutUrl;
                 } else {
                     alert('Could not start checkout: ' + (result.error || 'Server error'));
                     checkoutBtn.disabled = false;
