@@ -6,8 +6,8 @@
     <title>Crown Access | The Black Label Dispatch Academy</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Square Web Payments SDK -->
-    <script type="text/javascript" src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
+    <!-- Square Production Web Payments SDK -->
+    <script type="text/javascript" src="https://web.squarecdn.com/v1/square.js"></script>
     <!-- Supabase JS Client CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
@@ -154,7 +154,7 @@
             
             <div class="space-y-3">
                 <button type="button" id="checkout-btn" disabled class="w-full shine-button-gold text-black font-extrabold py-3.5 rounded-xl transition text-sm tracking-wide disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex flex-col items-center justify-center">
-                    <span>Pay Full Amount with Square</span>
+                    <span>Pay Full Amount with Card</span>
                 </button>
 
                 <!-- Dedicated container where Square SDK will render the official Afterpay button -->
@@ -189,7 +189,7 @@
         </div>
     </section>
 
-    <!-- Detailed Programs Section -->
+    <!-- Programs Section -->
     <section id="programs" class="py-20 sm:py-24 px-6 bg-black/60 border-t border-b border-gray-800/80 relative">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
@@ -198,7 +198,6 @@
                 <p class="text-gray-400 max-w-xl mx-auto text-sm sm:text-base">Engineered to give you absolute command over freight dispatching operations, carrier acquisition, and agency scaling.</p>
             </div>
             
-            <!-- 4-Card Grid -->
             <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto items-stretch">
                 <!-- Live Cohort Card -->
                 <div class="metallic-card-blue rounded-3xl p-6 sm:p-10 flex flex-col justify-between relative transition duration-300">
@@ -368,7 +367,6 @@
             </div>
 
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Website Tiers -->
                 <div class="bg-black/50 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
                     <div>
                         <div class="flex justify-between items-start mb-3">
@@ -402,7 +400,6 @@
                     <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer relative z-10" data-name="7-Page Website" data-price="50000">Add to Cart ($500)</button>
                 </div>
 
-                <!-- TMS System -->
                 <div class="bg-black/50 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
                     <div>
                         <div class="flex justify-between items-start mb-3">
@@ -414,7 +411,6 @@
                     <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer relative z-10" data-name="TMS System" data-price="15000">Add to Cart ($150)</button>
                 </div>
 
-                <!-- Professional Documents -->
                 <div class="bg-black/50 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
                     <div>
                         <div class="flex justify-between items-start mb-3">
@@ -426,7 +422,6 @@
                     <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer relative z-10" data-name="Professional Docs" data-price="8000">Add to Cart ($80)</button>
                 </div>
 
-                <!-- Branding Package -->
                 <div class="bg-black/50 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
                     <div>
                         <div class="flex justify-between items-start mb-3">
@@ -449,11 +444,12 @@
         </div>
     </footer>
 
-    <!-- Cart, Square Payments SDK & Afterpay Logic Script -->
+    <!-- Cart, Square Payments SDK & Supabase Edge Function Call Script -->
     <script>
         let cart = [];
         let paymentsInstance = null;
         let afterpayInstance = null;
+        let cardInstance = null;
 
         const cartOverlay = document.getElementById('cart-overlay');
         const cartDrawer = document.getElementById('cart-drawer');
@@ -470,18 +466,19 @@
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
 
-        // Replace with your actual Square App ID and Location ID
-        const SQUARE_APP_ID = 'sandbox-sq0idp-YOUR_APP_ID';
-        const SQUARE_LOCATION_ID = 'YOUR_LOCATION_ID';
+        // Replace with your live Production App ID (starts with sq0idp-) from Square Console
+        const SQUARE_APP_ID = 'sq0idp-YOUR_PRODUCTION_APP_ID'; 
+        const SQUARE_LOCATION_ID = 'LZJFJ8DG9QZDA';
 
-        // Initialize Square Payments SDK on load
+        // Initialize Square Web Payments SDK
         async function initSquarePayments() {
             if (!window.Square) {
-                console.error('Square SDK failed to load.');
+                console.error('Square Web Payments SDK failed to load.');
                 return;
             }
             try {
                 paymentsInstance = window.Square.payments(SQUARE_APP_ID, SQUARE_LOCATION_ID);
+                cardInstance = await paymentsInstance.card();
             } catch (e) {
                 console.error('Failed to initialize Square Payments:', e);
             }
@@ -599,34 +596,75 @@
                 afterpayInstance.addEventListener('ontokenize', async (event) => {
                     const tokenResult = event.detail;
                     if (tokenResult.status === 'OK') {
-                        await processPaymentOnBackend(tokenResult.token);
+                        await processPaymentWithEdgeFunction(tokenResult.token);
                     } else {
                         console.error('Afterpay tokenization error:', tokenResult.errors);
                     }
                 });
             } catch (e) {
-                console.log('Afterpay not supported for this amount or configuration:', e);
+                console.log('Afterpay initialization skipped:', e);
             }
         }
 
-        // Send generated token to your backend
-        async function processPaymentOnBackend(sourceId) {
-            const totalCents = cart.reduce((sum, item) => sum + item.price, 0);
+        // Handle Card Checkout Button Click
+        checkoutBtn.addEventListener('click', async () => {
+            if (!cardInstance) return;
             try {
-                const response = await fetch('/api/process-payment', {
+                checkoutBtn.disabled = true;
+                checkoutBtn.innerText = 'Processing...';
+                
+                const result = await cardInstance.tokenize();
+                if (result.status === 'OK') {
+                    await processPaymentWithEdgeFunction(result.token);
+                } else {
+                    alert('Card tokenization failed: ' + result.errors[0].message);
+                    checkoutBtn.disabled = false;
+                    checkoutBtn.innerText = 'Pay Full Amount with Card';
+                }
+            } catch (e) {
+                console.error(e);
+                checkoutBtn.disabled = false;
+                checkoutBtn.innerText = 'Pay Full Amount with Card';
+            }
+        });
+
+        // Call your Supabase Edge Function 'create-square-checkout'
+        async function processPaymentWithEdgeFunction(sourceId) {
+            const totalCents = cart.reduce((sum, item) => sum + item.price, 0);
+            
+            try {
+                // Call Supabase Edge Function URL directly
+                const response = await fetch('https://YOUR_SUPABASE_PROJECT_ID.supabase.co/functions/v1/create-square-checkout', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ sourceId, amount: totalCents, items: cart })
+                    body: JSON.stringify({ 
+                        sourceId, 
+                        amount: totalCents, 
+                        items: cart 
+                    })
                 });
+
                 const result = await response.json();
-                if (result.success) {
-                    window.location.href = '/success.html';
+
+                if (response.ok && result.success) {
+                    alert('Payment successful! Payment ID: ' + result.paymentId);
+                    cart = [];
+                    updateCartUI();
+                    closeCart();
                 } else {
-                    alert('Payment processing failed: ' + (result.error || 'Unknown error'));
+                    alert('Payment failed: ' + (result.error || 'Server processing error'));
+                    if (checkoutBtn) {
+                        checkoutBtn.disabled = false;
+                        checkoutBtn.innerText = 'Pay Full Amount with Card';
+                    }
                 }
             } catch (err) {
-                console.error('Server communication error:', err);
-                alert('Could not complete transaction.');
+                console.error('Error calling Edge Function:', err);
+                alert('Could not complete payment communication.');
+                if (checkoutBtn) {
+                    checkoutBtn.disabled = false;
+                    checkoutBtn.innerText = 'Pay Full Amount with Card';
+                }
             }
         }
     </script>
