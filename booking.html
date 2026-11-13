@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book a Session | Crown Access</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandDark: '#080808',
+            brandCard: '#121212',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .metallic-gold-text {
+      background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .slot-btn.selected {
+      background: linear-gradient(135deg, #1d4ed8, #2563eb);
+      border-color: #3b82f6;
+      color: white;
+    }
+  </style>
+</head>
+<body class="bg-brandDark text-gray-100 font-sans antialiased min-h-screen">
+
+  <!-- Header -->
+  <header class="border-b border-gray-800/80 bg-brandDark/95 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-3xl mx-auto px-4 h-20 flex items-center justify-between">
+      <div>
+        <span class="block text-[10px] uppercase tracking-widest metallic-gold-text font-bold">Crown Access</span>
+        <span class="text-lg font-black text-white">Book a Session</span>
+      </div>
+      <a href="index.html" class="text-sm text-gray-400 hover:text-white transition">← Back</a>
+    </div>
+  </header>
+
+  <main class="max-w-3xl mx-auto px-4 py-10 sm:py-14">
+
+    <!-- Intro -->
+    <div class="text-center mb-10">
+      <h1 class="text-3xl sm:text-4xl font-black text-white mb-3">Book Your Session</h1>
+      <p class="text-gray-400 text-sm sm:text-base max-w-lg mx-auto">
+        Select one or more available days and times. No payment required.
+      </p>
+    </div>
+
+    <!-- Form Card -->
+    <div class="bg-brandCard border border-gray-800 rounded-2xl p-6 sm:p-8 shadow-xl">
+
+      <form id="booking-form" class="space-y-8">
+
+        <!-- Contact Info -->
+        <div class="space-y-4">
+          <h2 class="text-sm font-bold text-gray-300 uppercase tracking-wider">Your Information</h2>
+          
+          <div>
+            <label class="block text-xs text-gray-400 mb-1.5">Full Name *</label>
+            <input type="text" id="full_name" required
+              class="w-full bg-black/50 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500 transition"
+              placeholder="Jane Doe">
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1.5">Email *</label>
+              <input type="email" id="email" required
+                class="w-full bg-black/50 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500 transition"
+                placeholder="jane@email.com">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1.5">Phone (optional)</label>
+              <input type="tel" id="phone"
+                class="w-full bg-black/50 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500 transition"
+                placeholder="(555) 123-4567">
+            </div>
+          </div>
+        </div>
+
+        <!-- Multi Slot Selection -->
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <h2 class="text-sm font-bold text-gray-300 uppercase tracking-wider">Select Days & Times</h2>
+            <span id="selected-count" class="text-xs text-blue-400 font-medium">0 selected</span>
+          </div>
+          <p class="text-xs text-gray-500">Click multiple slots to book them all at once.</p>
+
+          <div id="slots-container" class="space-y-6">
+            <!-- Slots will be injected here -->
+          </div>
+        </div>
+
+        <!-- Notes -->
+        <div>
+          <label class="block text-xs text-gray-400 mb-1.5">Notes (optional)</label>
+          <textarea id="notes" rows="3"
+            class="w-full bg-black/50 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500 transition resize-none"
+            placeholder="Anything we should know before the session?"></textarea>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" id="submit-btn"
+          class="w-full bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition text-sm">
+          Confirm Booking
+        </button>
+      </form>
+
+      <!-- Success State -->
+      <div id="success-state" class="hidden text-center py-10">
+        <div class="w-16 h-16 bg-emerald-500/10 border border-emerald-500/30 rounded-full flex items-center justify-center mx-auto mb-5">
+          <svg class="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2">Booking Received!</h3>
+        <p class="text-gray-400 text-sm mb-6">We’ll confirm your selected times shortly. Check your email for updates.</p>
+        <button onclick="location.reload()" class="text-sm text-blue-400 hover:text-blue-300 font-medium">
+          Book another session
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    // ========== CONFIGURE YOUR AVAILABLE SLOTS HERE ==========
+    const availableSlots = [
+      {
+        date: "2026-11-18",
+        label: "Tuesday, Nov 18",
+        times: ["9:00 AM", "11:00 AM", "1:00 PM", "3:00 PM"]
+      },
+      {
+        date: "2026-11-19",
+        label: "Wednesday, Nov 19",
+        times: ["10:00 AM", "12:00 PM", "2:00 PM", "4:00 PM"]
+      },
+      {
+        date: "2026-11-20",
+        label: "Thursday, Nov 20",
+        times: ["9:00 AM", "11:00 AM", "1:00 PM"]
+      },
+      {
+        date: "2026-11-21",
+        label: "Friday, Nov 21",
+        times: ["10:00 AM", "1:00 PM", "3:00 PM"]
+      }
+    ];
+    // ========================================================
+
+    const SUPABASE_URL = 'https://thzbqlumohwlxgbodopf.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRoemJxbHVtb2h3bHhnYm9kb3BmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2Mzg1MDMsImV4cCI6MjEwMDIxNDUwM30.oaLH3NqWFdAvzHm3PGyXMgxo4cFfF4BRSPTR90JcLOM';
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    let selectedSlots = [];
+
+    // Render available slots
+    function renderSlots() {
+      const container = document.getElementById('slots-container');
+      container.innerHTML = '';
+
+      availableSlots.forEach(day => {
+        const dayEl = document.createElement('div');
+        dayEl.innerHTML = `
+          <p class="text-sm font-semibold text-white mb-2">${day.label}</p>
+          <div class="flex flex-wrap gap-2" data-date="${day.date}"></div>
+        `;
+        const timesContainer = dayEl.querySelector('div');
+
+        day.times.forEach(time => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'slot-btn px-3.5 py-2 rounded-lg border border-gray-700 text-xs font-medium text-gray-300 hover:border-blue-500/50 transition';
+          btn.textContent = time;
+          btn.dataset.date = day.date;
+          btn.dataset.time = time;
+          btn.dataset.label = day.label;
+
+          btn.addEventListener('click', () => toggleSlot(btn));
+          timesContainer.appendChild(btn);
+        });
+
+        container.appendChild(dayEl);
+      });
+    }
+
+    function toggleSlot(btn) {
+      const slot = {
+        date: btn.dataset.date,
+        time: btn.dataset.time,
+        label: btn.dataset.label
+      };
+      const key = `${slot.date}|${slot.time}`;
+      const exists = selectedSlots.find(s => `${s.date}|${s.time}` === key);
+
+      if (exists) {
+        selectedSlots = selectedSlots.filter(s => `${s.date}|${s.time}` !== key);
+        btn.classList.remove('selected');
+      } else {
+        selectedSlots.push(slot);
+        btn.classList.add('selected');
+      }
+
+      document.getElementById('selected-count').textContent = 
+        `${selectedSlots.length} selected`;
+    }
+
+    // Submit booking
+    document.getElementById('booking-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (selectedSlots.length === 0) {
+        alert('Please select at least one day and time.');
+        return;
+      }
+
+      const submitBtn = document.getElementById('submit-btn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      const payload = {
+        full_name: document.getElementById('full_name').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        phone: document.getElementById('phone').value.trim() || null,
+        notes: document.getElementById('notes').value.trim() || null,
+        selected_slots: selectedSlots
+      };
+
+      try {
+        const { error } = await supabaseClient
+          .from('bookings')
+          .insert([payload]);
+
+        if (error) throw error;
+
+        // Show success
+        document.getElementById('booking-form').classList.add('hidden');
+        document.getElementById('success-state').classList.remove('hidden');
+
+      } catch (err) {
+        console.error(err);
+        alert('Something went wrong. Please try again.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Confirm Booking';
+      }
+    });
+
+    // Init
+    renderSlots();
+  </script>
+</body>
+</html>
