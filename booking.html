@@ -24,10 +24,17 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .slot-btn.selected {
+    .cal-day.active {
       background: linear-gradient(135deg, #1d4ed8, #2563eb);
-      border-color: #3b82f6;
+      border-color: #60a5fa;
       color: white;
+      font-weight: 700;
+    }
+    .time-pill.selected {
+      background: linear-gradient(135deg, #1d4ed8, #2563eb);
+      border-color: #60a5fa;
+      color: white;
+      font-weight: 600;
     }
   </style>
 </head>
@@ -35,7 +42,7 @@
 
   <!-- Header -->
   <header class="border-b border-gray-800/80 bg-brandDark/95 backdrop-blur-md sticky top-0 z-50">
-    <div class="max-w-3xl mx-auto px-4 h-20 flex items-center justify-between">
+    <div class="max-w-4xl mx-auto px-4 h-20 flex items-center justify-between">
       <div>
         <span class="block text-[10px] uppercase tracking-widest metallic-gold-text font-bold">Crown Access</span>
         <span class="text-lg font-black text-white">Book a Session</span>
@@ -44,13 +51,13 @@
     </div>
   </header>
 
-  <main class="max-w-3xl mx-auto px-4 py-10 sm:py-14">
+  <main class="max-w-4xl mx-auto px-4 py-10 sm:py-14">
 
     <!-- Intro -->
     <div class="text-center mb-10">
-      <h1 class="text-3xl sm:text-4xl font-black text-white mb-3">Book Your Session</h1>
+      <h1 class="text-3xl sm:text-4xl font-black text-white mb-3">Schedule Your Sessions</h1>
       <p class="text-gray-400 text-sm sm:text-base max-w-lg mx-auto">
-        Select one or more available days and times. No payment required.
+        Select up to 3 days and times this month (all times in CST). No payment required.
       </p>
     </div>
 
@@ -61,7 +68,7 @@
 
         <!-- Contact Info -->
         <div class="space-y-4">
-          <h2 class="text-sm font-bold text-gray-300 uppercase tracking-wider">Your Information</h2>
+          <h2 class="text-sm font-bold text-gray-300 uppercase tracking-wider">1. Your Information</h2>
           
           <div>
             <label class="block text-xs text-gray-400 mb-1.5">Full Name *</label>
@@ -86,16 +93,64 @@
           </div>
         </div>
 
-        <!-- Multi Slot Selection -->
-        <div class="space-y-4">
-          <div class="flex items-center justify-between">
-            <h2 class="text-sm font-bold text-gray-300 uppercase tracking-wider">Select Days & Times</h2>
-            <span id="selected-count" class="text-xs text-blue-400 font-medium">0 selected</span>
-          </div>
-          <p class="text-xs text-gray-500">Click multiple slots to book them all at once.</p>
+        <hr class="border-gray-800">
 
-          <div id="slots-container" class="space-y-6">
-            <!-- Slots will be injected here dynamically -->
+        <!-- Session Builder -->
+        <div class="space-y-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <h2 class="text-sm font-bold text-gray-300 uppercase tracking-wider">2. Choose Your Days & Times</h2>
+              <p class="text-xs text-gray-500 mt-0.5">Select a session slot below, then pick a date and time on the calendar.</p>
+            </div>
+            <span class="text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-md bg-blue-500/10 text-blue-400 border border-blue-500/20 self-start">
+              Timezone: CST
+            </span>
+          </div>
+
+          <!-- 3 Session Cards -->
+          <div id="session-cards" class="grid sm:grid-cols-3 gap-3">
+            <!-- Injected via JS -->
+          </div>
+
+          <!-- Calendar + Time Picker Panel -->
+          <div class="bg-black/40 border border-gray-800 rounded-2xl p-4 sm:p-6 grid md:grid-cols-12 gap-6">
+            
+            <!-- Left: Calendar Grid (7 cols) -->
+            <div class="md:col-span-7">
+              <div class="flex items-center justify-between mb-4">
+                <h3 id="calendar-month-title" class="text-base font-bold text-white"></h3>
+                <span class="text-xs text-gray-400" id="active-slot-badge">Editing Session 1</span>
+              </div>
+
+              <!-- Weekday Headers -->
+              <div class="grid grid-cols-7 text-center text-[11px] font-semibold text-gray-500 uppercase mb-2">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+              </div>
+
+              <!-- Calendar Days -->
+              <div id="calendar-grid" class="grid grid-cols-7 gap-1.5">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+
+            <!-- Right: Available Times for Selected Date (5 cols) -->
+            <div class="md:col-span-5 border-t md:border-t-0 md:border-l border-gray-800 pt-5 md:pt-0 md:pl-6 flex flex-col">
+              <div class="mb-3">
+                <span class="block text-[11px] uppercase tracking-wider text-gray-500 font-semibold">Available Times</span>
+                <h4 id="selected-date-heading" class="text-sm font-bold text-white mt-0.5">Select a date</h4>
+              </div>
+
+              <div id="time-slots-grid" class="grid grid-cols-2 gap-2 max-h-[260px] overflow-y-auto pr-1">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+
           </div>
         </div>
 
@@ -104,7 +159,7 @@
           <label class="block text-xs text-gray-400 mb-1.5">Notes (optional)</label>
           <textarea id="notes" rows="3"
             class="w-full bg-black/50 border border-gray-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500 transition resize-none"
-            placeholder="Anything we should know before the session?"></textarea>
+            placeholder="Anything we should know before your sessions?"></textarea>
         </div>
 
         <!-- Submit -->
@@ -132,136 +187,251 @@
   </main>
 
   <script>
-    // ========== DYNAMIC SLOT GENERATOR (CURRENT MONTH) ==========
-    function generateCurrentMonthSlots() {
-      const slots = [];
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = now.getMonth(); // 0-indexed
-      const lastDay = new Date(year, month + 1, 0).getDate();
-
-      function formatHour(h) {
-        const period = h >= 12 ? 'PM' : 'AM';
-        const hour12 = h % 12 === 0 ? 12 : h % 12;
-        return `${hour12}:00 ${period}`;
-      }
-
-      // Loop from today through the end of the current month
-      for (let day = now.getDate(); day <= lastDay; day++) {
-        const dateObj = new Date(year, month, day);
-        const dayOfWeek = dateObj.getDay(); // 0: Sun, 1-5: Mon-Fri, 6: Sat
-        
-        const yyyy = dateObj.getFullYear();
-        const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
-        const dd = String(dateObj.getDate()).padStart(2, '0');
-        const dateStr = `${yyyy}-${mm}-${dd}`;
-
-        const options = { weekday: 'long', month: 'short', day: 'numeric' };
-        const label = dateObj.toLocaleDateString('en-US', options);
-
-        // Define hours based on day of week
-        // M-F (1-5): 9 AM - 9 PM (21:00)
-        // Sat (6) & Sun (0): 11 AM - 9 PM (21:00)
-        let startHour = 9;
-        let endHour = 21; 
-
-        if (dayOfWeek === 0 || dayOfWeek === 6) {
-          startHour = 11;
-        }
-
-        const times = [];
-        for (let h = startHour; h < endHour; h++) {
-          // If it's today, filter out past hours
-          if (dateObj.toDateString() === now.toDateString()) {
-            const slotTime = new Date(year, month, day, h, 0, 0);
-            if (slotTime <= now) continue;
-          }
-          times.push(formatHour(h));
-        }
-
-        // Only include the day if there are available time slots remaining
-        if (times.length > 0) {
-          slots.push({
-            date: dateStr,
-            label: label,
-            times: times
-          });
-        }
-      }
-      return slots;
-    }
-
-    const availableSlots = generateCurrentMonthSlots();
-    // ========================================================
-
     const SUPABASE_URL = 'https://thzbqlumohwlxgbodopf.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRoemJxbHVtb2h3bHhnYm9kb3BmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2Mzg1MDMsImV4cCI6MjEwMDIxNDUwM30.oaLH3NqWFdAvzHm3PGyXMgxo4cFfF4BRSPTR90JcLOM';
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    let selectedSlots = [];
+    // Get current date/time strictly in CST (America/Chicago)
+    function getNowInCST() {
+      const cstString = new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' });
+      return new Date(cstString);
+    }
 
-    // Render available slots
-    function renderSlots() {
-      const container = document.getElementById('slots-container');
+    const cstNow = getNowInCST();
+    const currentYear = cstNow.getFullYear();
+    const currentMonth = cstNow.getMonth(); // 0-indexed
+    const todayDateNum = cstNow.getDate();
+    const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+    // State: 3 session slots (index 0 = Day 1, index 1 = Day 2, index 2 = Day 3)
+    let sessionSelections = [null, null, null];
+    let activeSlotIndex = 0; // Which card (0, 1, or 2) is currently being edited
+    let viewedDateStr = null; // Currently highlighted date on the calendar
+
+    function formatHour(h) {
+      const period = h >= 12 ? 'PM' : 'AM';
+      const hour12 = h % 12 === 0 ? 12 : h % 12;
+      return `${hour12}:00 ${period}`;
+    }
+
+    function toDateStr(year, month, day) {
+      return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    }
+
+    function getTimesForDate(dateObj) {
+      const dayOfWeek = dateObj.getDay(); // 0 = Sun, 6 = Sat
+      // M-F: 9 AM - 9 PM (last slot 8:00 PM) | Sat-Sun: 11 AM - 9 PM (last slot 8:00 PM)
+      const startHour = (dayOfWeek === 0 || dayOfWeek === 6) ? 11 : 9;
+      const endHour = 21;
+      const isToday = dateObj.getDate() === todayDateNum;
+      const nowCST = getNowInCST();
+
+      const times = [];
+      for (let h = startHour; h < endHour; h++) {
+        if (isToday && h <= nowCST.getHours()) {
+          continue; // Filter out past same-day hours
+        }
+        times.push(formatHour(h));
+      }
+      return times;
+    }
+
+    // Find first bookable date (today if hours remain, otherwise tomorrow)
+    function getDefaultDateStr() {
+      for (let d = todayDateNum; d <= lastDayOfMonth; d++) {
+        const testDate = new Date(currentYear, currentMonth, d);
+        if (getTimesForDate(testDate).length > 0) {
+          return toDateStr(currentYear, currentMonth, d);
+        }
+      }
+      return null;
+    }
+
+    // Render the 3 Session Cards (Day 1, Day 2, Day 3)
+    function renderSessionCards() {
+      const container = document.getElementById('session-cards');
       container.innerHTML = '';
 
-      if (availableSlots.length === 0) {
-        container.innerHTML = `<p class="text-xs text-gray-500 italic">No available slots remaining for this month.</p>`;
+      sessionSelections.forEach((slot, idx) => {
+        const isEditing = activeSlotIndex === idx;
+        const card = document.createElement('div');
+        card.className = `relative p-3.5 rounded-xl border cursor-pointer transition select-none ${
+          isEditing
+            ? 'bg-blue-950/30 border-blue-500 ring-1 ring-blue-500/40'
+            : 'bg-black/40 border-gray-800 hover:border-gray-700'
+        }`;
+
+        card.addEventListener('click', () => {
+          activeSlotIndex = idx;
+          if (slot && slot.date) {
+            viewedDateStr = slot.date;
+          }
+          renderAll();
+        });
+
+        const clearBtnHtml = slot
+          ? `<button type="button" data-clear="${idx}" class="text-xs text-gray-500 hover:text-red-400 px-1.5 py-0.5 rounded transition" title="Remove">✕</button>`
+          : '';
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-[11px] font-bold uppercase tracking-wider ${isEditing ? 'text-blue-400' : 'text-gray-400'}">
+              Day ${idx + 1} ${idx === 0 ? '*' : '(Optional)'}
+            </span>
+            ${clearBtnHtml}
+          </div>
+          ${
+            slot
+              ? `<div class="text-sm font-bold text-white">${slot.label}</div>
+                 <div class="text-xs text-blue-300 font-medium mt-0.5">${slot.time} CST</div>`
+              : `<div class="text-xs text-gray-500 italic py-1.5">Click to choose date & time</div>`
+          }
+        `;
+
+        const clearBtn = card.querySelector('[data-clear]');
+        if (clearBtn) {
+          clearBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            sessionSelections[idx] = null;
+            activeSlotIndex = idx;
+            renderAll();
+          });
+        }
+
+        container.appendChild(card);
+      });
+
+      document.getElementById('active-slot-badge').textContent = `Selecting Day ${activeSlotIndex + 1}`;
+    }
+
+    // Render Monthly Calendar Grid
+    function renderCalendar() {
+      const monthName = cstNow.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+      document.getElementById('calendar-month-title').textContent = monthName;
+
+      const grid = document.getElementById('calendar-grid');
+      grid.innerHTML = '';
+
+      const firstWeekday = new Date(currentYear, currentMonth, 1).getDay();
+
+      // Empty padding cells before the 1st of the month
+      for (let i = 0; i < firstWeekday; i++) {
+        const blank = document.createElement('div');
+        grid.appendChild(blank);
+      }
+
+      // Days 1 through end of month
+      for (let day = 1; day <= lastDayOfMonth; day++) {
+        const dateObj = new Date(currentYear, currentMonth, day);
+        const dateStr = toDateStr(currentYear, currentMonth, day);
+        const availableTimes = getTimesForDate(dateObj);
+        const isPastOrUnavailable = day < todayDateNum || availableTimes.length === 0;
+        const isSelectedOnCalendar = viewedDateStr === dateStr;
+        const isAssignedToSession = sessionSelections.some(s => s && s.date === dateStr);
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.disabled = isPastOrUnavailable;
+
+        if (isPastOrUnavailable) {
+          btn.className = 'h-10 rounded-lg text-xs text-gray-700 cursor-not-allowed flex items-center justify-center';
+          btn.textContent = day;
+        } else {
+          btn.className = `cal-day relative h-10 rounded-lg border text-xs transition flex flex-col items-center justify-center ${
+            isSelectedOnCalendar
+              ? 'active'
+              : 'border-gray-800 bg-black/30 text-gray-200 hover:border-blue-500/60'
+          }`;
+          btn.innerHTML = `
+            <span>${day}</span>
+            ${isAssignedToSession ? `<span class="w-1.5 h-1.5 rounded-full ${isSelectedOnCalendar ? 'bg-white' : 'bg-blue-400'} mt-0.5"></span>` : ''}
+          `;
+
+          btn.addEventListener('click', () => {
+            viewedDateStr = dateStr;
+            renderAll();
+          });
+        }
+
+        grid.appendChild(btn);
+      }
+    }
+
+    // Render Time Pills for the currently viewed date
+    function renderTimes() {
+      const heading = document.getElementById('selected-date-heading');
+      const grid = document.getElementById('time-slots-grid');
+      grid.innerHTML = '';
+
+      if (!viewedDateStr) {
+        heading.textContent = 'No dates remaining';
+        grid.innerHTML = `<p class="col-span-2 text-xs text-gray-500">No slots left this month.</p>`;
         return;
       }
 
-      availableSlots.forEach(day => {
-        const dayEl = document.createElement('div');
-        dayEl.innerHTML = `
-          <p class="text-sm font-semibold text-white mb-2">${day.label}</p>
-          <div class="flex flex-wrap gap-2" data-date="${day.date}"></div>
-        `;
-        const timesContainer = dayEl.querySelector('div');
+      const [y, m, d] = viewedDateStr.split('-').map(Number);
+      const dateObj = new Date(y, m - 1, d);
+      const label = dateObj.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+      heading.textContent = label;
 
-        day.times.forEach(time => {
-          const btn = document.createElement('button');
-          btn.type = 'button';
-          btn.className = 'slot-btn px-3.5 py-2 rounded-lg border border-gray-700 text-xs font-medium text-gray-300 hover:border-blue-500/50 transition';
-          btn.textContent = time;
-          btn.dataset.date = day.date;
-          btn.dataset.time = time;
-          btn.dataset.label = day.label;
+      const times = getTimesForDate(dateObj);
+      const currentSlot = sessionSelections[activeSlotIndex];
 
-          btn.addEventListener('click', () => toggleSlot(btn));
-          timesContainer.appendChild(btn);
-        });
+      times.forEach(time => {
+        const isSelectedForActive = currentSlot && currentSlot.date === viewedDateStr && currentSlot.time === time;
+        const isTakenByOtherSlot = sessionSelections.some(
+          (s, i) => i !== activeSlotIndex && s && s.date === viewedDateStr && s.time === time
+        );
 
-        container.appendChild(dayEl);
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.disabled = isTakenByOtherSlot;
+        btn.textContent = time;
+
+        if (isTakenByOtherSlot) {
+          btn.className = 'py-2 px-2 rounded-lg border border-gray-800/60 bg-gray-900/40 text-xs text-gray-600 cursor-not-allowed line-through';
+          btn.title = 'Already selected in another session slot';
+        } else {
+          btn.className = `time-pill py-2 px-2 rounded-lg border text-xs transition ${
+            isSelectedForActive
+              ? 'selected'
+              : 'border-gray-700 text-gray-300 hover:border-blue-500/60 hover:text-white'
+          }`;
+
+          btn.addEventListener('click', () => {
+            sessionSelections[activeSlotIndex] = {
+              date: viewedDateStr,
+              time: time,
+              label: label
+            };
+
+            // Auto-advance to the next empty session slot if available
+            const nextEmpty = sessionSelections.findIndex(s => s === null);
+            if (nextEmpty !== -1) {
+              activeSlotIndex = nextEmpty;
+            }
+
+            renderAll();
+          });
+        }
+
+        grid.appendChild(btn);
       });
     }
 
-    function toggleSlot(btn) {
-      const slot = {
-        date: btn.dataset.date,
-        time: btn.dataset.time,
-        label: btn.dataset.label
-      };
-      const key = `${slot.date}|${slot.time}`;
-      const exists = selectedSlots.find(s => `${s.date}|${s.time}` === key);
-
-      if (exists) {
-        selectedSlots = selectedSlots.filter(s => `${s.date}|${s.time}` !== key);
-        btn.classList.remove('selected');
-      } else {
-        selectedSlots.push(slot);
-        btn.classList.add('selected');
-      }
-
-      document.getElementById('selected-count').textContent = 
-        `${selectedSlots.length} selected`;
+    function renderAll() {
+      renderSessionCards();
+      renderCalendar();
+      renderTimes();
     }
 
     // Submit booking
     document.getElementById('booking-form').addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      if (selectedSlots.length === 0) {
-        alert('Please select at least one day and time.');
+      const validSlots = sessionSelections.filter(Boolean);
+      if (validSlots.length === 0) {
+        alert('Please select at least Day 1 and a time.');
         return;
       }
 
@@ -274,7 +444,7 @@
         email: document.getElementById('email').value.trim(),
         phone: document.getElementById('phone').value.trim() || null,
         notes: document.getElementById('notes').value.trim() || null,
-        selected_slots: selectedSlots
+        selected_slots: validSlots
       };
 
       try {
@@ -284,7 +454,6 @@
 
         if (error) throw error;
 
-        // Show success
         document.getElementById('booking-form').classList.add('hidden');
         document.getElementById('success-state').classList.remove('hidden');
 
@@ -296,8 +465,9 @@
       }
     });
 
-    // Init
-    renderSlots();
+    // Initialize
+    viewedDateStr = getDefaultDateStr();
+    renderAll();
   </script>
 </body>
 </html>
