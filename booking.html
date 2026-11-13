@@ -95,7 +95,7 @@
           <p class="text-xs text-gray-500">Click multiple slots to book them all at once.</p>
 
           <div id="slots-container" class="space-y-6">
-            <!-- Slots will be injected here -->
+            <!-- Slots will be injected here dynamically -->
           </div>
         </div>
 
@@ -132,29 +132,66 @@
   </main>
 
   <script>
-    // ========== CONFIGURE YOUR AVAILABLE SLOTS HERE ==========
-    const availableSlots = [
-      {
-        date: "2026-11-18",
-        label: "Tuesday, Nov 18",
-        times: ["9:00 AM", "11:00 AM", "1:00 PM", "3:00 PM"]
-      },
-      {
-        date: "2026-11-19",
-        label: "Wednesday, Nov 19",
-        times: ["10:00 AM", "12:00 PM", "2:00 PM", "4:00 PM"]
-      },
-      {
-        date: "2026-11-20",
-        label: "Thursday, Nov 20",
-        times: ["9:00 AM", "11:00 AM", "1:00 PM"]
-      },
-      {
-        date: "2026-11-21",
-        label: "Friday, Nov 21",
-        times: ["10:00 AM", "1:00 PM", "3:00 PM"]
+    // ========== DYNAMIC SLOT GENERATOR (CURRENT MONTH) ==========
+    function generateCurrentMonthSlots() {
+      const slots = [];
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth(); // 0-indexed
+      const lastDay = new Date(year, month + 1, 0).getDate();
+
+      function formatHour(h) {
+        const period = h >= 12 ? 'PM' : 'AM';
+        const hour12 = h % 12 === 0 ? 12 : h % 12;
+        return `${hour12}:00 ${period}`;
       }
-    ];
+
+      // Loop from today through the end of the current month
+      for (let day = now.getDate(); day <= lastDay; day++) {
+        const dateObj = new Date(year, month, day);
+        const dayOfWeek = dateObj.getDay(); // 0: Sun, 1-5: Mon-Fri, 6: Sat
+        
+        const yyyy = dateObj.getFullYear();
+        const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const dd = String(dateObj.getDate()).padStart(2, '0');
+        const dateStr = `${yyyy}-${mm}-${dd}`;
+
+        const options = { weekday: 'long', month: 'short', day: 'numeric' };
+        const label = dateObj.toLocaleDateString('en-US', options);
+
+        // Define hours based on day of week
+        // M-F (1-5): 9 AM - 9 PM (21:00)
+        // Sat (6) & Sun (0): 11 AM - 9 PM (21:00)
+        let startHour = 9;
+        let endHour = 21; 
+
+        if (dayOfWeek === 0 || dayOfWeek === 6) {
+          startHour = 11;
+        }
+
+        const times = [];
+        for (let h = startHour; h < endHour; h++) {
+          // If it's today, filter out past hours
+          if (dateObj.toDateString() === now.toDateString()) {
+            const slotTime = new Date(year, month, day, h, 0, 0);
+            if (slotTime <= now) continue;
+          }
+          times.push(formatHour(h));
+        }
+
+        // Only include the day if there are available time slots remaining
+        if (times.length > 0) {
+          slots.push({
+            date: dateStr,
+            label: label,
+            times: times
+          });
+        }
+      }
+      return slots;
+    }
+
+    const availableSlots = generateCurrentMonthSlots();
     // ========================================================
 
     const SUPABASE_URL = 'https://thzbqlumohwlxgbodopf.supabase.co';
@@ -167,6 +204,11 @@
     function renderSlots() {
       const container = document.getElementById('slots-container');
       container.innerHTML = '';
+
+      if (availableSlots.length === 0) {
+        container.innerHTML = `<p class="text-xs text-gray-500 italic">No available slots remaining for this month.</p>`;
+        return;
+      }
 
       availableSlots.forEach(day => {
         const dayEl = document.createElement('div');
