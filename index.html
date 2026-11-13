@@ -9,7 +9,6 @@
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Supabase JS Client CDN (kept in case you need it later) -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         tailwind.config = {
@@ -19,10 +18,6 @@
                         brandDark: '#080808',
                         brandCard: '#121212',
                         brandBorder: '#222222',
-                    },
-                    backgroundImage: {
-                        'metallic-gold': 'linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%)',
-                        'metallic-blue': 'linear-gradient(135deg, #1e3a8a 0%, #60a5fa 30%, #1d4ed8 50%, #93c5fd 75%, #1e40af 100%)',
                     }
                 }
             }
@@ -43,16 +38,33 @@
             -webkit-text-fill-color: transparent;
             filter: drop-shadow(0 1px 2px rgba(0,0,0,0.8));
         }
+
+        /* Improved Cards */
         .metallic-card-gold {
             background: linear-gradient(145deg, #161616 0%, #0d0d0d 100%);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            box-shadow: 0 10px 30px -10px rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            box-shadow: 0 10px 30px -10px rgba(212, 175, 55, 0.12);
+            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
         }
+        .metallic-card-gold:hover {
+            transform: translateY(-6px);
+            border-color: rgba(212, 175, 55, 0.55);
+            box-shadow: 0 20px 40px -12px rgba(212, 175, 55, 0.25);
+        }
+
         .metallic-card-blue {
             background: linear-gradient(145deg, #161616 0%, #0d0d0d 100%);
-            border: 1px solid rgba(37, 99, 235, 0.3);
-            box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.15);
+            border: 1px solid rgba(37, 99, 235, 0.25);
+            box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.12);
+            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
         }
+        .metallic-card-blue:hover {
+            transform: translateY(-6px);
+            border-color: rgba(37, 99, 235, 0.55);
+            box-shadow: 0 20px 40px -12px rgba(37, 99, 235, 0.25);
+        }
+
+        /* Buttons */
         .shine-button-gold {
             background: linear-gradient(135deg, #bf953f 0%, #e6ca65 50%, #aa771c 100%);
             box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
@@ -61,8 +73,12 @@
         .shine-button-gold:hover {
             background: linear-gradient(135deg, #fcf6ba 0%, #bf953f 50%, #d4af37 100%);
             box-shadow: 0 6px 25px rgba(212, 175, 55, 0.5);
-            transform: translateY(-1px);
+            transform: translateY(-2px);
         }
+        .shine-button-gold:active {
+            transform: translateY(0);
+        }
+
         .shine-button-blue {
             background: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 50%, #1e40af 100%);
             box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
@@ -71,11 +87,59 @@
         .shine-button-blue:hover {
             background: linear-gradient(135deg, #60a5fa 0%, #1d4ed8 50%, #2563eb 100%);
             box-shadow: 0 6px 25px rgba(37, 99, 235, 0.5);
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+        }
+        .shine-button-blue:active {
+            transform: translateY(0);
+        }
+
+        /* Toast Notification */
+        #toast {
+            position: fixed;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(135deg, #1a1a1a, #0f0f0f);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            color: #fcd34d;
+            padding: 14px 24px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 14px;
+            z-index: 100;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        #toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* Service cards hover */
+        .service-card {
+            transition: all 0.3s ease;
+        }
+        .service-card:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px -8px rgba(212, 175, 55, 0.15);
         }
     </style>
 </head>
 <body class="bg-brandDark text-gray-100 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-yellow-500 selection:text-black">
+
+    <!-- Toast Notification -->
+    <div id="toast">
+        <svg class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        <span id="toast-message">Added to cart</span>
+    </div>
 
     <!-- Header / Navigation -->
     <header class="border-b border-gray-800/80 bg-brandDark/95 backdrop-blur-md sticky top-0 z-50">
@@ -92,7 +156,7 @@
                 </div>
             </div>
 
-            <!-- Desktop Nav Links -->
+            <!-- Desktop Nav -->
             <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold text-gray-300">
                 <a href="#programs" class="hover:text-yellow-400 transition">Programs</a>
                 <a href="#setup" class="hover:text-yellow-400 transition">Full Business Setup</a>
@@ -104,7 +168,7 @@
                 <a href="login.html" class="border border-yellow-500/40 text-yellow-400 px-5 py-2.5 rounded-lg font-bold transition hover:bg-yellow-500/10">Student Portal</a>
             </nav>
 
-            <!-- Mobile Action Buttons -->
+            <!-- Mobile Buttons -->
             <div class="flex md:hidden items-center space-x-2">
                 <button type="button" id="mobile-cart-btn" class="relative shine-button-gold text-black px-3 py-1.5 rounded-lg font-bold text-xs transition flex items-center space-x-1 cursor-pointer">
                     <span>Cart</span>
@@ -118,7 +182,7 @@
             </div>
         </div>
 
-        <!-- Mobile Dropdown Navigation Menu -->
+        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-brandCard border-b border-gray-800 px-6 py-5 space-y-4 shadow-xl">
             <a href="#programs" class="mobile-nav-link block text-sm font-semibold text-gray-300 hover:text-yellow-400 transition py-1">Programs</a>
             <a href="#setup" class="mobile-nav-link block text-sm font-semibold text-gray-300 hover:text-yellow-400 transition py-1">Full Business Setup</a>
@@ -129,27 +193,28 @@
         </div>
     </header>
 
-    <!-- Slide-over Cart Drawer -->
+    <!-- Cart Overlay & Drawer -->
     <div id="cart-overlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden transition-opacity opacity-0 pointer-events-none"></div>
     <div id="cart-drawer" 
          class="fixed inset-y-0 right-0 max-w-md w-full bg-brandCard border-l border-gray-800 z-50 shadow-2xl flex flex-col justify-between transform translate-x-full transition-transform duration-300"
-         role="dialog" 
-         aria-modal="true" 
-         aria-labelledby="cart-title"
-         aria-hidden="true">
+         role="dialog" aria-modal="true" aria-labelledby="cart-title" aria-hidden="true">
         
         <div class="p-6 border-b border-gray-800 flex items-center justify-between">
-            <h3 id="cart-title" class="text-xl font-black text-white flex items-center space-x-2">
-                <span>Your Dispatch Cart</span>
-            </h3>
-            <button type="button" id="cart-close-btn" class="text-gray-400 hover:text-white font-bold text-xl cursor-pointer" aria-label="Close cart">&times;</button>
+            <h3 id="cart-title" class="text-xl font-black text-white">Your Dispatch Cart</h3>
+            <button type="button" id="cart-close-btn" class="text-gray-400 hover:text-white font-bold text-2xl leading-none cursor-pointer" aria-label="Close cart">&times;</button>
         </div>
 
         <div id="cart-items-container" class="p-6 flex-1 overflow-y-auto space-y-4">
-            <p id="empty-cart-msg" class="text-gray-500 text-center py-12 text-sm">Your cart is currently empty.</p>
+            <div id="empty-cart-msg" class="text-center py-16">
+                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-800/80 flex items-center justify-center">
+                    <svg class="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    </svg>
+                </div>
+                <p class="text-gray-500 text-sm">Your cart is currently empty.</p>
+            </div>
         </div>
 
-        <!-- Cart Footer -->
         <div class="p-6 border-t border-gray-800 bg-black/50 space-y-4">
             <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-3">
                 <p class="text-[11px] text-yellow-300/90 leading-relaxed font-medium">
@@ -161,12 +226,18 @@
                 <span id="cart-total" class="text-2xl font-black metallic-gold-text">$0.00</span>
             </div>
             
-            <div class="space-y-3">
-                <button type="button" id="checkout-btn" disabled 
-                        class="w-full shine-button-gold text-black font-extrabold py-4 rounded-xl transition text-sm tracking-wide disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex flex-col items-center justify-center">
-                    <span>Proceed to Secure Checkout</span>
-                </button>
-            </div>
+            <button type="button" id="checkout-btn" disabled 
+                    class="w-full shine-button-gold text-black font-extrabold py-4 rounded-xl transition text-sm tracking-wide disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
+                Proceed to Secure Checkout
+            </button>
+            
+            <!-- Trust Line -->
+            <p class="text-center text-[11px] text-gray-500 flex items-center justify-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+                </svg>
+                Secure checkout powered by Square
+            </p>
         </div>
     </div>
 
@@ -200,14 +271,15 @@
     <section id="programs" class="py-20 sm:py-24 px-6 bg-black/60 border-t border-b border-gray-800/80 relative">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
-                <span class="text-xs uppercase tracking-widest metallic-blue-text font-bold mb-2 block">Comprehensive Curriculum & Pricing</span>
+                <span class="text-xs uppercase tracking-widest metallic-blue-text font-bold mb-3 block">Comprehensive Curriculum & Pricing</span>
                 <h2 class="text-3xl md:text-5xl font-black tracking-tight mb-4 text-white">Academy Programs & Tuition</h2>
                 <p class="text-gray-400 max-w-xl mx-auto text-sm sm:text-base">Engineered to give you absolute command over freight dispatching operations, carrier acquisition, and agency scaling.</p>
             </div>
             
             <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto items-stretch">
-                <!-- Live Cohort Card -->
-                <div class="metallic-card-blue rounded-3xl p-6 sm:p-10 flex flex-col justify-between relative transition duration-300">
+
+                <!-- Live Dispatcher Course -->
+                <div class="metallic-card-blue rounded-3xl p-6 sm:p-10 flex flex-col justify-between relative">
                     <div>
                         <div class="flex justify-between items-center mb-6">
                             <span class="bg-blue-600/20 text-blue-400 border border-blue-500/30 text-xs font-bold px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full uppercase tracking-wider">3-Day Live Intensive</span>
@@ -248,8 +320,8 @@
                     </div>
                 </div>
 
-                <!-- Self-Led Card -->
-                <div class="metallic-card-gold rounded-3xl p-6 sm:p-10 flex flex-col justify-between relative transition duration-300">
+                <!-- Self-Led Dispatcher Course -->
+                <div class="metallic-card-gold rounded-3xl p-6 sm:p-10 flex flex-col justify-between relative">
                     <div>
                         <div class="flex justify-between items-center mb-6">
                             <span class="bg-yellow-500/10 text-yellow-400 border border-yellow-500/30 text-xs font-bold px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full uppercase tracking-wider">Self-Led Mastery</span>
@@ -290,8 +362,8 @@
                     </div>
                 </div>
 
-                <!-- 3-Day Live Carrier Acquisition Card -->
-                <div class="metallic-card-blue rounded-3xl p-6 sm:p-10 flex flex-col justify-between relative transition duration-300">
+                <!-- Live Carrier Acquisition -->
+                <div class="metallic-card-blue rounded-3xl p-6 sm:p-10 flex flex-col justify-between relative">
                     <div>
                         <div class="flex justify-between items-center mb-6">
                             <span class="bg-blue-600/20 text-blue-400 border border-blue-500/30 text-xs font-bold px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full uppercase tracking-wider">Acquisition Masterclass</span>
@@ -327,8 +399,8 @@
                     </div>
                 </div>
 
-                <!-- Self-Led Carrier Acquisition Card -->
-                <div class="metallic-card-gold rounded-3xl p-6 sm:p-10 flex flex-col justify-between relative transition duration-300">
+                <!-- Self-Led Carrier Acquisition -->
+                <div class="metallic-card-gold rounded-3xl p-6 sm:p-10 flex flex-col justify-between relative">
                     <div>
                         <div class="flex justify-between items-center mb-6">
                             <span class="bg-yellow-500/10 text-yellow-400 border border-yellow-500/30 text-xs font-bold px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full uppercase tracking-wider">Digital Masterclass</span>
@@ -368,12 +440,12 @@
         </div>
     </section>
 
-    <!-- Full Business Setup & Individual Services Pricing Section -->
+    <!-- Business Setup Section -->
     <section id="setup" class="py-20 sm:py-24 px-6 bg-brandDark relative">
         <div class="max-w-6xl mx-auto bg-gradient-to-br from-brandCard to-black border border-yellow-500/30 rounded-3xl p-6 sm:p-14 shadow-2xl relative overflow-hidden">
             <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-yellow-500/5 blur-[100px] rounded-full pointer-events-none"></div>
             
-            <div class="text-center max-w-2xl mx-auto mb-16">
+            <div class="text-center max-w-2xl mx-auto mb-14">
                 <span class="inline-block py-1.5 px-4 rounded-full bg-yellow-500/10 border border-yellow-500/30 metallic-gold-text text-xs font-bold tracking-widest uppercase mb-4">
                     Turn-Key Setup & Component Pricing
                 </span>
@@ -384,7 +456,8 @@
             </div>
 
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-black/50 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
+                <!-- Service Cards -->
+                <div class="service-card bg-black/50 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
                     <div>
                         <div class="flex justify-between items-start mb-3">
                             <h4 class="font-bold text-white text-lg">3-Page Website</h4>
@@ -392,10 +465,10 @@
                         </div>
                         <p class="text-xs text-gray-400 leading-relaxed mb-4">Professional, mobile-responsive website tailored to establish your online presence.</p>
                     </div>
-                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer relative z-10" data-name="3-Page Website" data-price="17500">Add to Cart ($175)</button>
+                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer" data-name="3-Page Website" data-price="17500">Add to Cart ($175)</button>
                 </div>
 
-                <div class="bg-black/50 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
+                <div class="service-card bg-black/50 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
                     <div>
                         <div class="flex justify-between items-start mb-3">
                             <h4 class="font-bold text-white text-lg">5-Page Website</h4>
@@ -403,10 +476,10 @@
                         </div>
                         <p class="text-xs text-gray-400 leading-relaxed mb-4">Expanded multi-page layout optimized for growing logistics operations.</p>
                     </div>
-                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer relative z-10" data-name="5-Page Website" data-price="35000">Add to Cart ($350)</button>
+                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer" data-name="5-Page Website" data-price="35000">Add to Cart ($350)</button>
                 </div>
 
-                <div class="bg-black/50 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
+                <div class="service-card bg-black/50 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
                     <div>
                         <div class="flex justify-between items-start mb-3">
                             <h4 class="font-bold text-white text-lg">7-Page Website</h4>
@@ -414,10 +487,10 @@
                         </div>
                         <p class="text-xs text-gray-400 leading-relaxed mb-4">Comprehensive professional web application with custom service breakdowns.</p>
                     </div>
-                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer relative z-10" data-name="7-Page Website" data-price="50000">Add to Cart ($500)</button>
+                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer" data-name="7-Page Website" data-price="50000">Add to Cart ($500)</button>
                 </div>
 
-                <div class="bg-black/50 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
+                <div class="service-card bg-black/50 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
                     <div>
                         <div class="flex justify-between items-start mb-3">
                             <h4 class="font-bold text-white text-lg">TMS System</h4>
@@ -425,10 +498,10 @@
                         </div>
                         <p class="text-xs text-gray-400 leading-relaxed mb-4">Custom Transportation Management System portal to manage dispatching workflows.</p>
                     </div>
-                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer relative z-10" data-name="TMS System" data-price="15000">Add to Cart ($150)</button>
+                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer" data-name="TMS System" data-price="15000">Add to Cart ($150)</button>
                 </div>
 
-                <div class="bg-black/50 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
+                <div class="service-card bg-black/50 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
                     <div>
                         <div class="flex justify-between items-start mb-3">
                             <h4 class="font-bold text-white text-lg">Professional Docs</h4>
@@ -436,10 +509,10 @@
                         </div>
                         <p class="text-xs text-gray-400 leading-relaxed mb-4">Standardized agreements, rate confirmations, and carrier packets.</p>
                     </div>
-                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer relative z-10" data-name="Professional Docs" data-price="8000">Add to Cart ($80)</button>
+                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer" data-name="Professional Docs" data-price="8000">Add to Cart ($80)</button>
                 </div>
 
-                <div class="bg-black/50 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
+                <div class="service-card bg-black/50 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
                     <div>
                         <div class="flex justify-between items-start mb-3">
                             <h4 class="font-bold text-white text-lg">Branding Package</h4>
@@ -447,7 +520,7 @@
                         </div>
                         <p class="text-xs text-gray-400 leading-relaxed mb-4">Professional logo design and brand identity assets for Crown Access.</p>
                     </div>
-                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer relative z-10" data-name="Branding Package" data-price="5000">Add to Cart ($50)</button>
+                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer" data-name="Branding Package" data-price="5000">Add to Cart ($50)</button>
                 </div>
             </div>
         </div>
@@ -461,12 +534,9 @@
         </div>
     </footer>
 
-    <!-- Cart Script & Hosted Checkout Link Integration -->
     <script>
-        // Load cart from localStorage (survives page refresh)
         let cart = JSON.parse(localStorage.getItem('crownCart') || '[]');
 
-        // Your exact Supabase project Anon JWT token key — DO NOT CHANGE
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRoemJxbHVtb2h3bHhnYm9kb3BmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2Mzg1MDMsImV4cCI6MjEwMDIxNDUwM30.oaLH3NqWFdAvzHm3PGyXMgxo4cFfF4BRSPTR90JcLOM';
 
         const cartOverlay = document.getElementById('cart-overlay');
@@ -482,12 +552,13 @@
         const checkoutBtn = document.getElementById('checkout-btn');
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
 
         // Mobile Menu
         mobileMenuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
-
         document.querySelectorAll('.mobile-nav-link').forEach(link => {
             link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
         });
@@ -516,10 +587,18 @@
         cartCloseBtn.addEventListener('click', closeCart);
         cartOverlay.addEventListener('click', closeCart);
 
-        // Escape key closes cart
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeCart();
         });
+
+        // Toast notification
+        function showToast(message = 'Added to cart') {
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
 
         // Add to cart
         document.querySelectorAll('.add-to-cart-btn').forEach(button => {
@@ -535,7 +614,12 @@
 
                 localStorage.setItem('crownCart', JSON.stringify(cart));
                 updateCartUI();
-                openCart();
+                showToast(`Added: ${name}`);
+                
+                // Only auto-open cart on mobile
+                if (window.innerWidth < 768) {
+                    openCart();
+                }
             });
         });
 
@@ -544,8 +628,6 @@
             localStorage.setItem('crownCart', JSON.stringify(cart));
             updateCartUI();
         }
-
-        // Make removeItem available globally
         window.removeItem = removeItem;
 
         function updateCartUI() {
@@ -571,14 +653,14 @@
                 totalCents += item.price;
 
                 const itemEl = document.createElement('div');
-                itemEl.className = 'flex items-center justify-between bg-black/40 border border-gray-800 p-3 rounded-xl';
+                itemEl.className = 'flex items-center justify-between bg-black/40 border border-gray-800 p-3.5 rounded-xl';
 
                 itemEl.innerHTML = `
                     <div>
                         <p class="text-sm font-bold text-white">${item.name}</p>
-                        <p class="text-xs text-yellow-400 font-semibold">$${(item.price / 100).toFixed(2)}</p>
+                        <p class="text-xs text-yellow-400 font-semibold mt-0.5">$${(item.price / 100).toFixed(2)}</p>
                     </div>
-                    <button type="button" onclick="removeItem(${item.id})" class="text-red-400 hover:text-red-300 text-xs font-bold px-2 py-1">Remove</button>
+                    <button type="button" onclick="removeItem(${item.id})" class="text-red-400 hover:text-red-300 text-xs font-bold px-2 py-1 transition">Remove</button>
                 `;
 
                 cartItemsContainer.appendChild(itemEl);
@@ -588,7 +670,6 @@
             checkoutBtn.disabled = false;
         }
 
-        // Run once on page load (restores cart if user refreshed)
         updateCartUI();
 
         // ===== SQUARE + SUPABASE CHECKOUT (UNCHANGED) =====
