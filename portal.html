@@ -56,7 +56,7 @@
 </head>
 <body class="bg-brandDark text-gray-100 font-sans antialiased selection:bg-yellow-500 selection:text-black">
 
-    <!-- Bulletproof Loading Screen -->
+    <!-- Loading Screen -->
     <div id="loading-screen" class="flex min-h-screen flex-col items-center justify-center">
         <div class="text-center animate-pulse">
             <span class="block text-sm uppercase tracking-widest metallic-gold-text font-bold mb-2">Crown Access</span>
@@ -65,216 +65,252 @@
         <div id="debug-error" class="text-red-500 text-sm font-mono mt-6 max-w-md text-center"></div>
     </div>
 
-    <!-- Main Dashboard / Admin Portal Container -->
+    <!-- Main Dashboard -->
     <div id="dashboard-content" style="display: none;" class="flex-col justify-between min-h-screen w-full">
         
-        <!-- Navigation Bar -->
+        <!-- Navigation -->
         <header class="border-b border-gray-800/80 bg-brandDark/95 backdrop-blur-md sticky top-0 z-50">
-            <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
-                <div class="flex items-center space-x-4">
-                    <div class="w-14 h-14 bg-gradient-to-br from-blue-600 via-gray-900 to-yellow-600 rounded-xl p-[2px] shadow-lg shadow-blue-900/30 flex items-center justify-center">
-                        <div class="w-full h-full bg-brandDark rounded-[10px] flex items-center justify-center font-black text-xl tracking-tighter">
-                            <span class="metallic-blue-text font-serif italic text-2xl">C</span><span class="metallic-gold-text font-serif italic text-2xl">A</span>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 sm:h-24 flex items-center justify-between">
+                <div class="flex items-center space-x-3 sm:space-x-4">
+                    <div class="w-11 h-11 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-600 via-gray-900 to-yellow-600 rounded-xl p-[2px] shadow-lg shadow-blue-900/30 flex items-center justify-center">
+                        <div class="w-full h-full bg-brandDark rounded-[10px] flex items-center justify-center font-black tracking-tighter">
+                            <span class="metallic-blue-text font-serif italic text-xl sm:text-2xl">C</span><span class="metallic-gold-text font-serif italic text-xl sm:text-2xl">A</span>
                         </div>
                     </div>
                     <div>
-                        <span id="portal-badge" class="block text-xs uppercase tracking-widest metallic-gold-text font-bold">Crown Access</span>
-                        <span id="portal-heading" class="text-xl md:text-2xl font-black tracking-tight text-white drop-shadow">Student Dashboard</span>
+                        <span id="portal-badge" class="block text-[10px] sm:text-xs uppercase tracking-widest metallic-gold-text font-bold">Crown Access</span>
+                        <span id="portal-heading" class="text-base sm:text-xl md:text-2xl font-black tracking-tight text-white drop-shadow">Student Dashboard</span>
                     </div>
                 </div>
 
-                <!-- Header Actions -->
-                <div class="flex items-center space-x-2 sm:space-x-3">
-                    <span id="user-email" class="text-xs font-semibold text-gray-400 hidden lg:inline mr-2"></span>
+                <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap justify-end">
+                    <span id="user-email" class="text-xs font-semibold text-gray-400 hidden lg:inline mr-1"></span>
                     
-                    <a href="resources.html" class="border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold px-3 py-2 rounded-lg transition">
+                    <a href="booking.html" class="border border-emerald-500/40 hover:bg-emerald-500/10 text-emerald-400 text-xs font-bold px-2.5 sm:px-3 py-2 rounded-lg transition">
+                        📅 Book
+                    </a>
+                    <a href="resources.html" class="border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold px-2.5 sm:px-3 py-2 rounded-lg transition">
                         📁 Resources
                     </a>
-
-                    <a href="chat.html" class="border border-blue-500/40 hover:bg-blue-500/10 text-blue-400 text-xs font-bold px-3 py-2 rounded-lg transition">
+                    <a href="chat.html" class="border border-blue-500/40 hover:bg-blue-500/10 text-blue-400 text-xs font-bold px-2.5 sm:px-3 py-2 rounded-lg transition hidden sm:inline-flex">
                         💬 Chat
                     </a>
-
-                    <a href="loadboard.html" class="border border-blue-500/40 hover:bg-blue-500/10 text-blue-400 text-xs font-bold px-3 py-2 rounded-lg transition">
+                    <a href="loadboard.html" class="border border-blue-500/40 hover:bg-blue-500/10 text-blue-400 text-xs font-bold px-2.5 sm:px-3 py-2 rounded-lg transition hidden md:inline-flex">
                         🚛 Loadboard
                     </a>
-
-                    <button id="logout-btn" class="border border-red-500/40 hover:bg-red-500/10 text-red-400 text-xs font-bold px-3 py-2 rounded-lg transition">
+                    <button id="logout-btn" class="border border-red-500/40 hover:bg-red-500/10 text-red-400 text-xs font-bold px-2.5 sm:px-3 py-2 rounded-lg transition">
                         Sign Out
                     </button>
                 </div>
             </div>
         </header>
 
-        <!-- ================= STUDENT VIEW (With Admin Override Access) ================= -->
-        <main id="student-view" class="max-w-7xl mx-auto px-6 py-16 w-full flex-grow" style="display: none;">
-            <div id="view-header-msg" class="mb-12">
+        <!-- ================= STUDENT VIEW ================= -->
+        <main id="student-view" class="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 w-full flex-grow" style="display: none;">
+            <div id="view-header-msg" class="mb-10 sm:mb-12">
                 <span class="text-xs uppercase tracking-widest metallic-gold-text font-bold mb-2 block">Member Environment</span>
                 <h1 class="text-3xl md:text-5xl font-black text-white mb-3">Welcome to Your Training Portal</h1>
-                <p class="text-gray-400 text-sm md:text-base">Access your masterclasses, resource vault, community chat, and mock loadboard below.</p>
+                <p class="text-gray-400 text-sm md:text-base">Access your masterclasses, book sessions, resources, community chat, and loadboard.</p>
             </div>
 
-            <!-- Admin Quick Switcher Banner (Only shown if user is admin) -->
-            <div id="admin-switcher-banner" style="display: none;" class="mb-8 p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-2xl flex items-center justify-between">
-                <span class="text-sm font-bold text-yellow-400">👑 Admin Privilege Active: You have full access to both courses and the Admin Command Center.</span>
-                <button id="switch-to-admin-portal" class="text-xs bg-yellow-500 text-black px-4 py-2 rounded-xl font-extrabold hover:bg-yellow-400 transition cursor-pointer">
-                    Switch to Admin Portal &rarr;
+            <!-- Admin Switcher Banner -->
+            <div id="admin-switcher-banner" style="display: none;" class="mb-8 p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <span class="text-sm font-bold text-yellow-400">👑 Admin Privilege Active: You have full access to courses and the Admin Command Center.</span>
+                <button id="switch-to-admin-portal" class="text-xs bg-yellow-500 text-black px-4 py-2 rounded-xl font-extrabold hover:bg-yellow-400 transition cursor-pointer whitespace-nowrap">
+                    Switch to Admin Portal →
                 </button>
             </div>
 
-            <!-- 3-Column Grid Layout for Courses -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-                <!-- Card 1: 7-Day Live Intensive -->
-                <div id="live-card-container" class="metallic-card-blue rounded-3xl p-8 flex flex-col justify-between group cursor-pointer" onclick="window.location.href='live-cohort.html'">
+            <!-- Course Cards -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-8">
+                <div id="live-card-container" class="metallic-card-blue rounded-3xl p-6 sm:p-8 flex flex-col justify-between group cursor-pointer" onclick="window.location.href='live-cohort.html'">
                     <div>
                         <span class="bg-blue-600/20 text-blue-400 border border-blue-500/30 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider inline-block mb-4">Live Program</span>
-                        <h3 class="text-2xl font-black text-white mb-2 group-hover:text-blue-400 transition">7-Day Live Intensive</h3>
+                        <h3 class="text-xl sm:text-2xl font-black text-white mb-2 group-hover:text-blue-400 transition">7-Day Live Intensive</h3>
                         <p class="text-gray-300 text-sm mb-6 leading-relaxed">Access your live cohort schedule, daily video links, and instructor materials.</p>
                     </div>
-                    <span class="text-xs bg-blue-500/10 text-blue-400 border border-blue-500/30 px-4 py-2 rounded-full font-bold text-center w-max block group-hover:bg-blue-500/30 transition">Enter Live Portal &rarr;</span>
+                    <span class="text-xs bg-blue-500/10 text-blue-400 border border-blue-500/30 px-4 py-2 rounded-full font-bold text-center w-max block group-hover:bg-blue-500/30 transition">Enter Live Portal →</span>
                 </div>
 
-                <!-- Card 2: Self-Paced Mastery -->
-                <div id="self-card-container" class="metallic-card-gold rounded-3xl p-8 flex flex-col justify-between group cursor-pointer" onclick="window.location.href='self.html'">
+                <div id="self-card-container" class="metallic-card-gold rounded-3xl p-6 sm:p-8 flex flex-col justify-between group cursor-pointer" onclick="window.location.href='self.html'">
                     <div>
                         <span class="bg-yellow-500/10 text-yellow-400 border border-yellow-500/30 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider inline-block mb-4">Self-Led Program</span>
-                        <h3 class="text-2xl font-black text-white mb-2 group-hover:text-yellow-400 transition">Self-Paced Mastery</h3>
+                        <h3 class="text-xl sm:text-2xl font-black text-white mb-2 group-hover:text-yellow-400 transition">Self-Paced Mastery</h3>
                         <p class="text-gray-300 text-sm mb-6 leading-relaxed">Access your masterclasses, interactive video modules, and step-by-step training.</p>
                     </div>
-                    <span class="text-xs bg-yellow-500/10 text-yellow-400 border border-yellow-500/30 px-4 py-2 rounded-full font-bold text-center w-max block group-hover:bg-yellow-500/30 transition">Access Self-Led Course &rarr;</span>
+                    <span class="text-xs bg-yellow-500/10 text-yellow-400 border border-yellow-500/30 px-4 py-2 rounded-full font-bold text-center w-max block group-hover:bg-yellow-500/30 transition">Access Self-Led Course →</span>
                 </div>
 
-                <!-- Card 3: Carrier Acquisition Masterclass -->
-                <div id="carrier-card-container" class="metallic-card-blue rounded-3xl p-8 flex flex-col justify-between group cursor-pointer" onclick="window.location.href='CALive.html'">
+                <div id="carrier-card-container" class="metallic-card-blue rounded-3xl p-6 sm:p-8 flex flex-col justify-between group cursor-pointer" onclick="window.location.href='CALive.html'">
                     <div>
                         <span class="bg-blue-600/20 text-blue-400 border border-blue-500/30 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider inline-block mb-4">Masterclass</span>
-                        <h3 class="text-2xl font-black text-white mb-2 group-hover:text-blue-400 transition">Carrier Acquisition</h3>
+                        <h3 class="text-xl sm:text-2xl font-black text-white mb-2 group-hover:text-blue-400 transition">Carrier Acquisition</h3>
                         <p class="text-gray-300 text-sm mb-6 leading-relaxed">Interactive 3-Day curriculum to build a scalable inbound machine and close high-value carriers.</p>
                     </div>
-                    <span class="text-xs bg-blue-500/10 text-blue-400 border border-blue-500/30 px-4 py-2 rounded-full font-bold text-center w-max block group-hover:bg-blue-500/30 transition">Start Course &rarr;</span>
+                    <span class="text-xs bg-blue-500/10 text-blue-400 border border-blue-500/30 px-4 py-2 rounded-full font-bold text-center w-max block group-hover:bg-blue-500/30 transition">Start Course →</span>
                 </div>
             </div>
 
-            <!-- Resources & Chat Grid -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
-                <!-- Card 4: Resources -->
-                <a href="resources.html" class="metallic-card-gold rounded-3xl p-8 flex flex-col justify-between group cursor-pointer block">
+            <!-- Book + Resources + Chat -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                
+                <!-- BOOK A SESSION (Students) -->
+                <a href="booking.html" class="metallic-card-gold rounded-3xl p-6 sm:p-8 flex flex-col justify-between group cursor-pointer block border-emerald-500/20">
                     <div>
-                        <span class="bg-yellow-500/10 text-yellow-400 border border-yellow-500/30 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider inline-block mb-4">Downloadable Vault</span>
-                        <h3 class="text-2xl font-black text-white mb-2 group-hover:text-yellow-400 transition">Resource Library</h3>
-                        <p class="text-gray-300 text-sm mb-6 leading-relaxed">Explore individual training guides, knowledge checks, scripts, and downloadable files.</p>
+                        <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider inline-block mb-4">Free Booking</span>
+                        <h3 class="text-xl sm:text-2xl font-black text-white mb-2 group-hover:text-emerald-400 transition">Book a Session</h3>
+                        <p class="text-gray-300 text-sm mb-6 leading-relaxed">Choose one or more available days and times. No payment required.</p>
                     </div>
-                    <span class="text-xs bg-yellow-500/10 text-yellow-400 border border-yellow-500/30 px-4 py-2 rounded-full font-bold text-center w-max block group-hover:bg-yellow-500/30 transition">Open Resource Library &rarr;</span>
+                    <span class="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-4 py-2 rounded-full font-bold text-center w-max block group-hover:bg-emerald-500/20 transition">Open Booking Calendar →</span>
                 </a>
 
-                <!-- Card 5: Support Chat Room -->
-                <a href="chat.html" class="metallic-card-gold rounded-3xl p-8 flex flex-col justify-between group cursor-pointer block">
+                <a href="resources.html" class="metallic-card-gold rounded-3xl p-6 sm:p-8 flex flex-col justify-between group cursor-pointer block">
+                    <div>
+                        <span class="bg-yellow-500/10 text-yellow-400 border border-yellow-500/30 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider inline-block mb-4">Downloadable Vault</span>
+                        <h3 class="text-xl sm:text-2xl font-black text-white mb-2 group-hover:text-yellow-400 transition">Resource Library</h3>
+                        <p class="text-gray-300 text-sm mb-6 leading-relaxed">Training guides, scripts, knowledge checks, and downloadable files.</p>
+                    </div>
+                    <span class="text-xs bg-yellow-500/10 text-yellow-400 border border-yellow-500/30 px-4 py-2 rounded-full font-bold text-center w-max block group-hover:bg-yellow-500/30 transition">Open Resource Library →</span>
+                </a>
+
+                <a href="chat.html" class="metallic-card-gold rounded-3xl p-6 sm:p-8 flex flex-col justify-between group cursor-pointer block">
                     <div>
                         <span class="bg-yellow-500/10 text-yellow-400 border border-yellow-500/30 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider inline-block mb-4">Community Support</span>
-                        <h3 class="text-2xl font-black text-white mb-2 group-hover:text-yellow-400 transition">Support Chat Room</h3>
-                        <p class="text-gray-300 text-sm mb-6 leading-relaxed">Connect directly with mentors and peers for live questions, guidance, and assistance.</p>
+                        <h3 class="text-xl sm:text-2xl font-black text-white mb-2 group-hover:text-yellow-400 transition">Support Chat Room</h3>
+                        <p class="text-gray-300 text-sm mb-6 leading-relaxed">Connect with mentors and peers for live questions and guidance.</p>
                     </div>
-                    <span class="text-xs bg-yellow-500/10 text-yellow-400 border border-yellow-500/30 px-4 py-2 rounded-full font-bold text-center w-max block group-hover:bg-yellow-500/30 transition">Open Chat Room &rarr;</span>
+                    <span class="text-xs bg-yellow-500/10 text-yellow-400 border border-yellow-500/30 px-4 py-2 rounded-full font-bold text-center w-max block group-hover:bg-yellow-500/30 transition">Open Chat Room →</span>
                 </a>
             </div>
         </main>
 
-        <!-- ================= ADMIN OVERVIEW PORTAL ================= -->
-        <main id="admin-view" class="max-w-7xl mx-auto px-6 py-16 w-full flex-grow" style="display: none;">
-            <div class="mb-12 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <!-- ================= ADMIN VIEW ================= -->
+        <main id="admin-view" class="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 w-full flex-grow" style="display: none;">
+            <div class="mb-10 sm:mb-12 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
                     <span class="text-xs uppercase tracking-widest metallic-gold-text font-bold mb-2 block">Administrative Command Center</span>
                     <h1 class="text-3xl md:text-5xl font-black text-white mb-2">School Administration Portal</h1>
-                    <p class="text-gray-400 text-sm md:text-base">Complete visibility into enrolled students, active revenue, purchases, and course analytics.</p>
+                    <p class="text-gray-400 text-sm md:text-base">Students, purchases, revenue, and session bookings.</p>
                 </div>
-                <div class="flex items-center space-x-3">
+                <div class="flex items-center gap-3 flex-wrap">
                     <button id="switch-to-student-view" class="bg-blue-600/20 border border-blue-500/30 text-blue-400 hover:bg-blue-600/30 text-xs font-bold px-4 py-2 rounded-xl transition cursor-pointer">
-                        🎓 View Student Portal & Courses
+                        🎓 View Student Portal
                     </button>
                     <span class="bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 text-xs font-bold px-4 py-2 rounded-xl">👑 Admin Privilege Active</span>
                 </div>
             </div>
 
-            <!-- Stats Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                <div class="metallic-card-gold rounded-2xl p-6">
-                    <span class="text-xs uppercase tracking-wider text-gray-400 font-semibold block mb-1">Total Enrolled Students</span>
-                    <span id="stat-students" class="text-3xl font-black text-white">--</span>
+            <!-- Stats -->
+            <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6 mb-10">
+                <div class="metallic-card-gold rounded-2xl p-5">
+                    <span class="text-xs uppercase tracking-wider text-gray-400 font-semibold block mb-1">Students</span>
+                    <span id="stat-students" class="text-2xl sm:text-3xl font-black text-white">--</span>
                 </div>
-                <div class="metallic-card-blue rounded-2xl p-6">
-                    <span class="text-xs uppercase tracking-wider text-gray-400 font-semibold block mb-1">Total Purchases</span>
-                    <span id="stat-purchases" class="text-3xl font-black text-white">--</span>
+                <div class="metallic-card-blue rounded-2xl p-5">
+                    <span class="text-xs uppercase tracking-wider text-gray-400 font-semibold block mb-1">Purchases</span>
+                    <span id="stat-purchases" class="text-2xl sm:text-3xl font-black text-white">--</span>
                 </div>
-                <div class="metallic-card-gold rounded-2xl p-6">
-                    <span class="text-xs uppercase tracking-wider text-gray-400 font-semibold block mb-1">Total Gross Revenue</span>
-                    <span id="stat-revenue" class="text-3xl font-black text-yellow-400">--</span>
+                <div class="metallic-card-gold rounded-2xl p-5">
+                    <span class="text-xs uppercase tracking-wider text-gray-400 font-semibold block mb-1">Revenue</span>
+                    <span id="stat-revenue" class="text-2xl sm:text-3xl font-black text-yellow-400">--</span>
                 </div>
-                <div class="metallic-card-blue rounded-2xl p-6">
-                    <span class="text-xs uppercase tracking-wider text-gray-400 font-semibold block mb-1">Active Courses</span>
-                    <span class="text-3xl font-black text-blue-400">3 Programs</span>
+                <div class="metallic-card-blue rounded-2xl p-5">
+                    <span class="text-xs uppercase tracking-wider text-gray-400 font-semibold block mb-1">Bookings</span>
+                    <span id="stat-bookings" class="text-2xl sm:text-3xl font-black text-emerald-400">--</span>
+                </div>
+                <div class="metallic-card-blue rounded-2xl p-5 col-span-2 lg:col-span-1">
+                    <span class="text-xs uppercase tracking-wider text-gray-400 font-semibold block mb-1">Courses</span>
+                    <span class="text-2xl sm:text-3xl font-black text-blue-400">3</span>
                 </div>
             </div>
 
-            <!-- Data Tables Section -->
+            <!-- Bookings Panel (Admin) -->
+            <div class="metallic-card-gold rounded-3xl p-6 mb-8">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+                    <div>
+                        <h3 class="text-xl font-black text-white">Session Bookings</h3>
+                        <p class="text-xs text-gray-400 mt-1">All free bookings submitted by students</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span id="bookings-count-badge" class="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-3 py-1 rounded-full font-bold">0 bookings</span>
+                        <a href="booking.html" class="text-xs bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 rounded-lg font-bold transition">+ New Booking</a>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse min-w-[640px]">
+                        <thead>
+                            <tr class="border-b border-gray-800 text-xs uppercase tracking-wider text-gray-400">
+                                <th class="py-3 px-3">Name / Email</th>
+                                <th class="py-3 px-3">Selected Sessions</th>
+                                <th class="py-3 px-3">Phone</th>
+                                <th class="py-3 px-3">Notes</th>
+                                <th class="py-3 px-3">Booked</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-bookings-table" class="text-sm divide-y divide-gray-800/50">
+                            <tr><td colspan="5" class="py-8 text-center text-gray-500">Loading bookings...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Students + Purchases -->
             <div class="grid lg:grid-cols-2 gap-8">
-                <!-- Students Table -->
                 <div class="metallic-card-blue rounded-3xl p-6 flex flex-col">
                     <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-xl font-black text-white">Enrolled Students & User Profiles</h3>
-                        <span class="text-xs bg-blue-500/10 text-blue-400 border border-blue-500/30 px-3 py-1 rounded-full font-bold">Database Roster</span>
+                        <h3 class="text-xl font-black text-white">Enrolled Students</h3>
+                        <span class="text-xs bg-blue-500/10 text-blue-400 border border-blue-500/30 px-3 py-1 rounded-full font-bold">Roster</span>
                     </div>
                     <div class="overflow-x-auto flex-grow">
                         <table class="w-full text-left border-collapse">
                             <thead>
                                 <tr class="border-b border-gray-800 text-xs uppercase tracking-wider text-gray-400">
-                                    <th class="py-3 px-4">User ID / Email</th>
-                                    <th class="py-3 px-4">Role / Status</th>
-                                    <th class="py-3 px-4">Joined Date</th>
+                                    <th class="py-3 px-4">Email</th>
+                                    <th class="py-3 px-4">Role</th>
+                                    <th class="py-3 px-4">Joined</th>
                                 </tr>
                             </thead>
-                            <tbody id="admin-students-table" class="text-sm divide-y divide-gray-800/50">
-                                <!-- Populated dynamically -->
-                            </tbody>
+                            <tbody id="admin-students-table" class="text-sm divide-y divide-gray-800/50"></tbody>
                         </table>
                     </div>
                 </div>
 
-                <!-- Purchases Table -->
                 <div class="metallic-card-gold rounded-3xl p-6 flex flex-col">
                     <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-xl font-black text-white">Purchase & Order History</h3>
+                        <h3 class="text-xl font-black text-white">Purchase History</h3>
                         <span class="text-xs bg-yellow-500/10 text-yellow-400 border border-yellow-500/30 px-3 py-1 rounded-full font-bold">Transactions</span>
                     </div>
                     <div class="overflow-x-auto flex-grow">
                         <table class="w-full text-left border-collapse">
                             <thead>
                                 <tr class="border-b border-gray-800 text-xs uppercase tracking-wider text-gray-400">
-                                    <th class="py-3 px-4">Course / Item</th>
+                                    <th class="py-3 px-4">Item</th>
                                     <th class="py-3 px-4">Price</th>
-                                    <th class="py-3 px-4">Purchase Date</th>
+                                    <th class="py-3 px-4">Date</th>
                                 </tr>
                             </thead>
-                            <tbody id="admin-purchases-table" class="text-sm divide-y divide-gray-800/50">
-                                <!-- Populated dynamically -->
-                            </tbody>
+                            <tbody id="admin-purchases-table" class="text-sm divide-y divide-gray-800/50"></tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </main>
 
-        <!-- Footer -->
-        <footer class="py-12 px-6 border-t border-gray-800 text-center text-sm text-gray-500 bg-brandDark">
-            <p class="mb-2 font-medium">&copy; 2026 Crown Access. Secure Student Environment & Admin Portal.</p>
+        <footer class="py-10 px-6 border-t border-gray-800 text-center text-sm text-gray-500 bg-brandDark">
+            <p class="font-medium">&copy; 2026 Crown Access. Secure Student Environment & Admin Portal.</p>
         </footer>
-
     </div>
 
-    <!-- Script Logic -->
     <script>
         const SUPABASE_URL = 'https://thzbqlumohwlxgbodopf.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRoemJxbHVtb2h3bHhnYm9kb3BmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ2Mzg1MDMsImV4cCI6MjEwMDIxNDUwM30.oaLH3NqWFdAvzHm3PGyXMgxo4cFfF4BRSPTR90JcLOM';
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        function formatSlots(slots) {
+            if (!slots || !Array.isArray(slots) || slots.length === 0) return '—';
+            return slots.map(s => `${s.label || s.date} @ ${s.time}`).join('<br>');
+        }
 
         window.onload = async function() {
             const debugDiv = document.getElementById('debug-error');
@@ -291,7 +327,6 @@
                 const user = sessionData.session.user;
                 document.getElementById('user-email').textContent = user.email;
                 
-                // Query the 'profiles' table in Supabase to check if the user has an admin role
                 let isAdmin = false;
                 try {
                     const { data: profileData, error: profileError } = await supabaseClient
@@ -302,22 +337,18 @@
 
                     if (!profileError && profileData) {
                         const role = (profileData.role || '').toLowerCase();
-                        if (role === 'admin' || role === 'administrator') {
-                            isAdmin = true;
-                        }
+                        if (role === 'admin' || role === 'administrator') isAdmin = true;
                     }
                 } catch (profErr) {
                     console.warn("Could not query profiles table:", profErr);
                 }
 
                 if (isAdmin) {
-                    // ================= LOAD ADMIN PORTAL BY DEFAULT FOR ADMINS =================
                     document.getElementById('portal-badge').textContent = "Crown Access Admin";
                     document.getElementById('portal-heading').textContent = "Administration Portal";
                     document.getElementById('admin-view').style.display = 'block';
                     document.getElementById('admin-switcher-banner').style.display = 'flex';
 
-                    // Wire up toggle buttons for admins
                     document.getElementById('switch-to-admin-portal').onclick = () => {
                         document.getElementById('student-view').style.display = 'none';
                         document.getElementById('admin-view').style.display = 'block';
@@ -329,29 +360,51 @@
                         document.getElementById('portal-heading').textContent = "Training Portal & Courses";
                     };
 
-                    // Fetch all purchases and profiles for the admin overview
-                    const { data: allPurchases } = await supabaseClient
-                        .from('purchases')
-                        .select('*')
-                        .order('created_at', { ascending: false });
+                    // Fetch purchases, profiles, bookings
+                    const [{ data: allPurchases }, { data: allProfiles }, { data: allBookings }] = await Promise.all([
+                        supabaseClient.from('purchases').select('*').order('created_at', { ascending: false }),
+                        supabaseClient.from('profiles').select('*'),
+                        supabaseClient.from('bookings').select('*').order('created_at', { ascending: false })
+                    ]);
 
-                    const { data: allProfiles } = await supabaseClient
-                        .from('profiles')
-                        .select('*');
-
-                    let purchasesList = allPurchases || [];
-                    let profilesList = allProfiles || [];
+                    const purchasesList = allPurchases || [];
+                    const profilesList = allProfiles || [];
+                    const bookingsList = allBookings || [];
                     
-                    // Populate Stats
                     document.getElementById('stat-purchases').textContent = purchasesList.length;
-                    document.getElementById('stat-students').textContent = profilesList.length > 0 ? profilesList.length : "1";
+                    document.getElementById('stat-students').textContent = profilesList.length || "1";
+                    document.getElementById('stat-bookings').textContent = bookingsList.length;
                     
-                    let totalRev = purchasesList.reduce((sum, item) => sum + (parseFloat(item.price) || 0), 0);
+                    const totalRev = purchasesList.reduce((sum, item) => sum + (parseFloat(item.price) || 0), 0);
                     document.getElementById('stat-revenue').textContent = `$${totalRev.toFixed(2)}`;
 
-                    // Populate Purchases Table
+                    // Bookings table
+                    const bookTbody = document.getElementById('admin-bookings-table');
+                    document.getElementById('bookings-count-badge').textContent = `${bookingsList.length} booking${bookingsList.length !== 1 ? 's' : ''}`;
+                    bookTbody.innerHTML = '';
+
+                    if (bookingsList.length > 0) {
+                        bookingsList.forEach(b => {
+                            bookTbody.innerHTML += `
+                                <tr class="hover:bg-gray-900/50 transition align-top">
+                                    <td class="py-3 px-3">
+                                        <p class="font-bold text-white">${b.full_name || '—'}</p>
+                                        <p class="text-xs text-gray-400">${b.email || ''}</p>
+                                    </td>
+                                    <td class="py-3 px-3 text-emerald-400/90 text-xs leading-relaxed">${formatSlots(b.selected_slots)}</td>
+                                    <td class="py-3 px-3 text-gray-300 text-xs">${b.phone || '—'}</td>
+                                    <td class="py-3 px-3 text-gray-400 text-xs max-w-[180px]">${b.notes || '—'}</td>
+                                    <td class="py-3 px-3 text-gray-500 text-xs whitespace-nowrap">${b.created_at ? new Date(b.created_at).toLocaleString() : '—'}</td>
+                                </tr>
+                            `;
+                        });
+                    } else {
+                        bookTbody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-gray-500">No bookings yet.</td></tr>`;
+                    }
+
+                    // Purchases table
                     const purTbody = document.getElementById('admin-purchases-table');
-                    purTbody.innerHTML = "";
+                    purTbody.innerHTML = '';
                     if (purchasesList.length > 0) {
                         purchasesList.forEach(p => {
                             purTbody.innerHTML += `
@@ -366,12 +419,12 @@
                         purTbody.innerHTML = `<tr><td colspan="3" class="py-6 text-center text-gray-500">No purchases recorded yet.</td></tr>`;
                     }
 
-                    // Populate Students Table
+                    // Students table
                     const studTbody = document.getElementById('admin-students-table');
-                    studTbody.innerHTML = "";
+                    studTbody.innerHTML = '';
                     if (profilesList.length > 0) {
                         profilesList.forEach(prof => {
-                            let roleBadge = (prof.role || '').toLowerCase() === 'admin' 
+                            const roleBadge = (prof.role || '').toLowerCase() === 'admin' 
                                 ? '<span class="bg-green-500/10 text-green-400 border border-green-500/30 px-2.5 py-1 rounded-full text-xs font-bold">Admin</span>'
                                 : '<span class="bg-blue-500/10 text-blue-400 border border-blue-500/30 px-2.5 py-1 rounded-full text-xs font-bold">Student</span>';
                             
@@ -385,7 +438,7 @@
                         });
                     } else {
                         studTbody.innerHTML = `
-                            <tr class="hover:bg-gray-900/50 transition">
+                            <tr>
                                 <td class="py-3 px-4 font-bold text-white">${user.email}</td>
                                 <td class="py-3 px-4"><span class="bg-green-500/10 text-green-400 border border-green-500/30 px-2.5 py-1 rounded-full text-xs font-bold">Admin</span></td>
                                 <td class="py-3 px-4 text-gray-400 text-xs">Today</td>
@@ -394,37 +447,32 @@
                     }
 
                 } else {
-                    // ================= LOAD REGULAR STUDENT DASHBOARD =================
+                    // Regular student
                     document.getElementById('student-view').style.display = 'block';
 
-                    const { data: purchases, error: purchaseError } = await supabaseClient
+                    const { data: purchases } = await supabaseClient
                         .from('purchases')
                         .select('*')
                         .eq('user_id', user.id);
 
-                    // Convert purchase array into a single lowercase string for easy ID scanning
-                    let purchaseDataString = purchases && purchases.length > 0 ? JSON.stringify(purchases).toLowerCase() : "";
+                    const purchaseDataString = purchases && purchases.length > 0 ? JSON.stringify(purchases).toLowerCase() : "";
 
-                    // STRICT VERIFICATION CHECK
-                    let hasLive = purchaseDataString.includes("42c3c928-d4ab-4c33-b350-96b8117a3e23");
-                    let hasSelf = purchaseDataString.includes("21d4cd05-7960-4096-9485-7e964b4f7b06");
-                    let hasCarrier = purchaseDataString.includes("c54c173b-cb2f-4831-87b5-7e70f4974e9d");
+                    const hasLive = purchaseDataString.includes("42c3c928-d4ab-4c33-b350-96b8117a3e23");
+                    const hasSelf = purchaseDataString.includes("21d4cd05-7960-4096-9485-7e964b4f7b06");
+                    const hasCarrier = purchaseDataString.includes("c54c173b-cb2f-4831-87b5-7e70f4974e9d");
 
                     const liveCard = document.getElementById('live-card-container');
                     const selfCard = document.getElementById('self-card-container');
                     const carrierCard = document.getElementById('carrier-card-container');
 
-                    // If they don't have the explicit ID, lock the card down.
                     if (!hasLive) {
                         liveCard.style.opacity = '0.4';
                         liveCard.onclick = (e) => { e.preventDefault(); alert('You are not enrolled in the Live Intensive program. Upgrade to access.'); };
                     }
-                    
                     if (!hasSelf) {
                         selfCard.style.opacity = '0.4';
                         selfCard.onclick = (e) => { e.preventDefault(); alert('You are not enrolled in Self-Paced Mastery. Upgrade to access.'); };
                     }
-
                     if (!hasCarrier) {
                         carrierCard.style.opacity = '0.4';
                         carrierCard.onclick = (e) => { e.preventDefault(); alert('You are not enrolled in the Carrier Acquisition Masterclass. Upgrade to access.'); };
