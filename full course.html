@@ -1,216 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete 3-Day Freight Dispatcher Training Course | Crown Access</title>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --slide-bg: #111827;
+            --border-color: #1f2937;
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --accent: #8b5cf6;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .master-container {
+            width: 100%;
+            max-width: 1050px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .module-nav {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            background: #111827;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .module-tab {
+            background: #1f2937;
+            border: none;
+            color: var(--text-muted);
+            padding: 12px 8px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .module-tab:hover {
+            color: var(--text-main);
+            background: #374151;
+        }
+
+        .module-tab.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .deck-viewport {
+            background-color: var(--slide-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            min-height: 620px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            flex-direction: column;
+            padding: 40px;
+            flex-grow: 1;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .slide-header h2 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: #60a5fa;
+        }
+
+        .duration-badge {
+            background: rgba(139, 92, 246, 0.15);
+            color: #c084fc;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .slide-content-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 35px;
+            align-items: start;
+            flex-grow: 1;
+        }
+
+        .slide-text-side p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .slide-text-side ul {
+            padding-left: 18px;
+            color: var(--text-muted);
+            margin: 0 0 12px 0;
+        }
+
+        .slide-text-side li {
+            margin-bottom: 8px;
+            font-size: 0.88rem;
+            line-height: 1.4;
+        }
+
+        .slide-text-side strong {
+            color: var(--text-main);
+        }
+
+        .slide-image-side {
+            background: #1f2937;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            height: 340px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide-image-side img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .image-caption {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        .deck-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: #0f172a;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .deck-controls-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .deck-controls-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: #374151;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: var(--primary);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .back-dashboard-btn {
+            background: #1f2937;
+            color: white;
+            border: 1px solid var(--border-color);
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .back-dashboard-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .slide-counter {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .qa-box {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin-top: 12px;
+        }
+
+        .qa-box strong {
+            color: #60a5fa;
+        }
+
+        @media(max-width: 768px) {
+            .slide-content-grid {
+                grid-template-columns: 1fr;
+            }
+            .module-nav {
+                grid-template-columns: 1fr;
+            }
+            .deck-controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .deck-controls-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="master-container">
+
+    <!-- Top Day Navigation -->
+    <div class="module-nav">
+        <button class="module-tab active" onclick="switchModule(0)">Day 1: Foundations</button>
+        <button class="module-tab" onclick="switchModule(1)">Day 2: Acquisition</button>
+        <button class="module-tab" onclick="switchModule(2)">Day 3: Operations</button>
+    </div>
+
+    <!-- Presentation Deck Viewport -->
+    <div class="deck-viewport" id="deckViewport">
+      <!-- ================= DAY 1 ================= -->
 <div class="module-deck" data-module="0">
-    <!-- SLIDE 1 -->
-    <div class="slide active">
-        <div class="slide-header">
-            <h2>Day 1 Welcome & Agenda</h2>
-            <span class="duration-badge">Day 1 • Slide 1 of 9</span>
-        </div>
-        <div class="slide-content-grid">
-            <div class="slide-text-side">
-                <p>Welcome to the <strong>Complete 3-Day Freight Dispatcher Training Course</strong>. Format: 3 daily sessions × 45 minutes. Each day ends with Q&A checkpoints and clear action items.</p>
-                <ul>
-                    <li><strong>Module 1 (15 min):</strong> Industry Essentials & Key Terms</li>
-                    <li><strong>Module 2 (15 min):</strong> Business Structure, Tech Stack & Niche Selection</li>
-                    <li><strong>Module 3 (15 min):</strong> Marketing Strategy & Sourcing Leads</li>
-                </ul>
-                <p>By the end of Day 1 you will understand the core language of the industry, have a clear brand foundation, legal structure plan, and first lead-generation channels ready to activate.</p>
-            </div>
-            <div class="slide-image-side">
-                <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80" alt="Day 1 Agenda">
-                <span class="image-caption">3-Day Freight Dispatcher Training • Day 1 Roadmap</span>
-            </div>
-        </div>
-    </div>
-    <!-- SLIDE 2 -->
-    <div class="slide">
-        <div class="slide-header">
-            <h2>Module 1: Industry Essentials & Key Terms</h2>
-            <span class="duration-badge">Day 1 • Slide 2 of 9</span>
-        </div>
-        <div class="slide-content-grid">
-            <div class="slide-text-side">
-                <p><strong>Overview:</strong> Master the core trucking vocabulary, the four main industry players, and the strict legal line between dispatching and brokering.</p>
-                
-                <p><strong>Core Vocabulary – Definitions:</strong></p>
-                <ul>
-                    <li><strong>FMCSA</strong> – Federal Motor Carrier Safety Administration. The U.S. government agency that regulates the trucking industry, safety, and operating authority.</li>
-                    <li><strong>DOT Number</strong> – A unique identification number issued by the FMCSA to every commercial motor carrier that operates in interstate commerce.</li>
-                    <li><strong>MC Number</strong> – Motor Carrier Number. Issued by the FMCSA to carriers and brokers that have operating authority to haul regulated commodities for hire.</li>
-                    <li><strong>MOTUS</strong> – A real-time motor carrier monitoring system used by many brokers and dispatchers to check authority status, insurance, and safety data.</li>
-                    <li><strong>Load Board</strong> – An online marketplace (DAT, Truckstop, Trucker Path, etc.) where brokers post available freight and carriers/dispatchers search for loads.</li>
-                    <li><strong>Capacity</strong> – Available trucks/trailers that are empty and ready to haul freight.</li>
-                    <li><strong>Deadhead</strong> – Miles driven with an empty trailer (no paying load). Also called “empty miles.”</li>
-                    <li><strong>Backhaul</strong> – A return load that takes the truck back toward its home base or next desired region, reducing deadhead.</li>
-                </ul>
-            </div>
-            <div class="slide-image-side">
-                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" alt="Industry Terms">
-                <span class="image-caption">Core industry terms you must know cold</span>
-            </div>
-        </div>
-    </div>
-    <!-- SLIDE 3 -->
-    <div class="slide">
-        <div class="slide-header">
-            <h2>Key Players & The Legal Line</h2>
-            <span class="duration-badge">Day 1 • Slide 3 of 9</span>
-        </div>
-        <div class="slide-content-grid">
-            <div class="slide-text-side">
-                <p><strong>Roles & Relationships – Clear Definitions:</strong></p>
-                <ul>
-                    <li><strong>Shipper / Receiver</strong> – The company that owns the freight (shipper) or the company that receives it (receiver). They pay the broker or carrier.</li>
-                    <li><strong>Carrier</strong> – The trucking company (owner-operator or fleet) that actually moves the freight with its own authority (MC/DOT numbers) and equipment.</li>
-                    <li><strong>Freight Broker</strong> – A company that arranges transportation between shippers and carriers. Brokers never own the trucks. They must hold a $75,000 surety bond and FMCSA broker authority.</li>
-                    <li><strong>Freight Dispatcher</strong> – An independent agent who works exclusively for the carrier under a written agreement. The dispatcher finds loads, negotiates rates, and handles paperwork on behalf of the carrier. The dispatcher never takes possession of the freight or the money paid for the load.</li>
-                </ul>
-                <p><strong>Critical Legal Rule:</strong> If you ever handle the load money or act as a middleman between shipper and carrier without a written carrier agreement, you are brokering and must have a broker bond. Stay strictly on the dispatcher side of the line.</p>
-            </div>
-            <div class="slide-image-side">
-                <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Roles">
-                <span class="image-caption">Shipper → Broker → Carrier (Dispatcher works only for the Carrier)</span>
-            </div>
-        </div>
-    </div>
-    <!-- SLIDE 4 -->
-    <div class="slide">
-        <div class="slide-header">
-            <h2>Q&A Checkpoint — Module 1</h2>
-            <span class="duration-badge">Day 1 • Slide 4 of 9</span>
-        </div>
-        <div class="slide-content-grid">
-            <div class="slide-text-side">
-                <div class="qa-box">
-                    <p><strong>Open floor for questions on:</strong></p>
-                    <ul>
-                        <li>Any of the core terms (FMCSA, MC, DOT, Deadhead, Backhaul, etc.)</li>
-                        <li>Difference between Broker and Dispatcher</li>
-                        <li>Why the $75k bond matters and how to stay on the legal side of the line</li>
-                    </ul>
-                </div>
-                <p style="margin-top:18px;">Take notes on any terms that still feel unclear — we will use them constantly for the rest of the course.</p>
-            </div>
-            <div class="slide-image-side">
-                <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Q&A">
-                <span class="image-caption">Module 1 Q&A Checkpoint</span>
-            </div>
-        </div>
-    </div>
-    <!-- SLIDE 5 -->
-    <div class="slide">
-        <div class="slide-header">
-            <h2>Module 2: Business Structure, Tech Stack & Niche</h2>
-            <span class="duration-badge">Day 1 • Slide 5 of 9</span>
-        </div>
-        <div class="slide-content-grid">
-            <div class="slide-text-side">
-                <p><strong>Overview:</strong> Form your LLC, set up essential tech/cloud systems, and choose a profitable equipment niche.</p>
-                <ul>
-                    <li><strong>LLC (Limited Liability Company)</strong> – A legal business structure that protects your personal assets from business debts and lawsuits.</li>
-                    <li><strong>EIN (Employer Identification Number)</strong> – A free nine-digit tax ID number issued by the IRS. Required to open a business bank account and file taxes as a business.</li>
-                    <li><strong>Merchant Processing</strong> – Services such as Square or Stripe that allow you to accept credit cards and send automated invoices to your carriers.</li>
-                    <li><strong>VoIP Phone</strong> – Voice over Internet Protocol. A business phone system that runs over the internet (OpenPhone, Google Voice, RingCentral) instead of a traditional landline.</li>
-                    <li><strong>E-Signature Software</strong> – Tools such as DocuSign or PandaDoc that let carriers sign contracts and Ratecons electronically.</li>
-                    <li><strong>Niche</strong> – A focused segment of the market (Box Trucks, Dry Vans, Reefers, Flatbeds, specific geographic lanes, or new-authority carriers) that you specialize in to stand out and win higher rates.</li>
-                </ul>
-            </div>
-            <div class="slide-image-side">
-                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" alt="Business Setup">
-                <span class="image-caption">LLC, tech stack, and niche selection with definitions</span>
-            </div>
-        </div>
-    </div>
-    <!-- SLIDE 6 -->
-    <div class="slide">
-        <div class="slide-header">
-            <h2>Visual Walkthrough — Drive Structure & Carrier Packet</h2>
-            <span class="duration-badge">Day 1 • Slide 6 of 9</span>
-        </div>
-        <div class="slide-content-grid">
-            <div class="slide-text-side">
-                <p>Live / screenshot preview of:</p>
-                <ul>
-                    <li><strong>Google Drive / Dropbox Hierarchy</strong> – One root folder per carrier containing sub-folders for Contracts, Ratecons, BOLs, Invoices, and Insurance.</li>
-                    <li><strong>Dispatch Agreement</strong> – The contract between you and the carrier that outlines your services, fee percentage, and responsibilities.</li>
-                    <li><strong>Limited Power of Attorney (POA)</strong> – A legal document that allows you to book loads and sign Ratecons on the carrier’s behalf without giving you ownership of the company.</li>
-                </ul>
-                <p>These documents become the backbone of every carrier relationship. Keep them clean, consistent, and always signed before the first load.</p>
-            </div>
-            <div class="slide-image-side">
-                <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80" alt="Documents">
-                <span class="image-caption">Sample folder structure, Dispatch Agreement & Limited POA</span>
-            </div>
-        </div>
-    </div>
-    <!-- SLIDE 7 -->
-    <div class="slide">
-        <div class="slide-header">
-            <h2>Q&A Checkpoint — Module 2</h2>
-            <span class="duration-badge">Day 1 • Slide 7 of 9</span>
-        </div>
-        <div class="slide-content-grid">
-            <div class="slide-text-side">
-                <div class="qa-box">
-                    <p><strong>Open floor for questions on:</strong></p>
-                    <ul>
-                        <li>LLC formation and EIN process</li>
-                        <li>IONOS domain + professional email setup</li>
-                        <li>What “niche” really means and how to choose one</li>
-                        <li>Recommended tech stack tools and why each is needed</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="slide-image-side">
-                <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Q&A">
-                <span class="image-caption">Module 2 Q&A Checkpoint</span>
-            </div>
-        </div>
-    </div>
-    <!-- SLIDE 8 -->
-    <div class="slide">
-        <div class="slide-header">
-            <h2>Module 3: Marketing Strategy & Sourcing Leads</h2>
-            <span class="duration-badge">Day 1 • Slide 8 of 9</span>
-        </div>
-        <div class="slide-content-grid">
-            <div class="slide-text-side">
-                <p><strong>Overview:</strong> Multi-channel outreach using Carrier IQ, Facebook groups, Reddit, and truck-stop networking.</p>
-                <ul>
-                    <li><strong>Cold Calling</strong> – Calling owner-operators directly from public lists or Carrier IQ data to offer dispatch services.</li>
-                    <li><strong>Grassroots / Digital Communities</strong> – Providing value in Facebook groups and Reddit communities (r/trucking, Box Truck Owners, Hotshot groups) before pitching.</li>
-                    <li><strong>Truck-Stop Marketing</strong> – Handing out professional business cards and flyers at Pilot Flying J, Love’s, TA, and local truck stops.</li>
-                    <li><strong>Carrier IQ</strong> – A data platform that lists active motor carriers, their equipment, and contact information to help you find potential clients.</li>
-                </ul>
-            </div>
-            <div class="slide-image-side">
-                <img src="https://images.unsplash.com/photo-1432888622747-4eb9a1efeb05?auto=format&fit=crop&w=600&q=80" alt="Marketing">
-                <span class="image-caption">Multi-channel lead generation with clear terms</span>
-            </div>
-        </div>
-    </div>
-    <!-- SLIDE 9 -->
-    <div class="slide">
-        <div class="slide-header">
-            <h2>Q&A Checkpoint — Module 3 & Day 1 Wrap-Up</h2>
-            <span class="duration-badge">Day 1 • Slide 9 of 9</span>
-        </div>
-        <div class="slide-content-grid">
-            <div class="slide-text-side">
-                <div class="qa-box">
-                    <p><strong>Final Day 1 questions on:</strong></p>
-                    <ul>
-                        <li>Any remaining industry terminology</li>
-                        <li>Facebook / Reddit outreach tactics</li>
-                        <li>Truck-stop flyer design & distribution</li>
-                        <li>Using Carrier IQ or similar lead databases</li>
-                    </ul>
-                </div>
-                <p style="margin-top:16px;"><strong>Day 1 Homework:</strong> Finish Branding & Domain Worksheet, register domain + professional email, and prepare first draft of business card / flyer.</p>
-            </div>
-            <div class="slide-image-side">
-                <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Wrap-up">
-                <span class="image-caption">Day 1 complete — see you tomorrow</span>
-            </div>
-        </div>
-    </div>
+
+    <!-- SLIDE 1 -->
+    <div class="slide active">
+        <div class="slide-header">
+            <h2>Day 1 Welcome & Agenda</h2>
+            <span class="duration-badge">Day 1 • Slide 1 of 9</span>
+        </div>
+        <div class="slide-content-grid">
+            <div class="slide-text-side">
+                <p>Welcome to the <strong>Complete 3-Day Freight Dispatcher Training Course</strong>. Format: 3 daily sessions × 45 minutes. Each day ends with Q&A checkpoints and clear action items.</p>
+                <ul>
+                    <li><strong>Module 1 (15 min):</strong> Industry Essentials & Key Terms</li>
+                    <li><strong>Module 2 (15 min):</strong> Business Structure, Tech Stack & Niche Selection</li>
+                    <li><strong>Module 3 (15 min):</strong> Marketing Strategy & Sourcing Leads</li>
+                </ul>
+                <p>By the end of Day 1 you will understand the core language of the industry, have a clear brand foundation, legal structure plan, and first lead-generation channels ready to activate.</p>
+            </div>
+            <div class="slide-image-side">
+                <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80" alt="Day 1 Agenda">
+                <span class="image-caption">3-Day Freight Dispatcher Training • Day 1 Roadmap</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 2 -->
+    <div class="slide">
+        <div class="slide-header">
+            <h2>Module 1: Industry Essentials & Key Terms</h2>
+            <span class="duration-badge">Day 1 • Slide 2 of 9</span>
+        </div>
+        <div class="slide-content-grid">
+            <div class="slide-text-side">
+                <p><strong>Overview:</strong> Master the core trucking vocabulary, the four main industry players, and the strict legal line between dispatching and brokering.</p>
+                
+                <p><strong>Core Vocabulary – Definitions:</strong></p>
+                <ul>
+                    <li><strong>FMCSA</strong> – Federal Motor Carrier Safety Administration. The U.S. government agency that regulates the trucking industry, safety, and operating authority.</li>
+                    <li><strong>DOT Number</strong> – A unique identification number issued by the FMCSA to every commercial motor carrier that operates in interstate commerce.</li>
+                    <li><strong>MC Number</strong> – Motor Carrier Number. Issued by the FMCSA to carriers and brokers that have operating authority to haul regulated commodities for hire.</li>
+                    <li><strong>MOTUS</strong> – A real-time motor carrier monitoring system used by many brokers and dispatchers to check authority status, insurance, and safety data.</li>
+                    <li><strong>Load Board</strong> – An online marketplace (DAT, Truckstop, Trucker Path, etc.) where brokers post available freight and carriers/dispatchers search for loads.</li>
+                    <li><strong>Capacity</strong> – Available trucks/trailers that are empty and ready to haul freight.</li>
+                    <li><strong>Deadhead</strong> – Miles driven with an empty trailer (no paying load). Also called “empty miles.”</li>
+                    <li><strong>Backhaul</strong> – A return load that takes the truck back toward its home base or next desired region, reducing deadhead.</li>
+                </ul>
+            </div>
+            <div class="slide-image-side">
+                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" alt="Industry Terms">
+                <span class="image-caption">Core industry terms you must know cold</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 3 -->
+    <div class="slide">
+        <div class="slide-header">
+            <h2>Key Players & The Legal Line</h2>
+            <span class="duration-badge">Day 1 • Slide 3 of 9</span>
+        </div>
+        <div class="slide-content-grid">
+            <div class="slide-text-side">
+                <p><strong>Roles & Relationships – Clear Definitions:</strong></p>
+                <ul>
+                    <li><strong>Shipper / Receiver</strong> – The company that owns the freight (shipper) or the company that receives it (receiver). They pay the broker or carrier.</li>
+                    <li><strong>Carrier</strong> – The trucking company (owner-operator or fleet) that actually moves the freight with its own authority (MC/DOT numbers) and equipment.</li>
+                    <li><strong>Freight Broker</strong> – A company that arranges transportation between shippers and carriers. Brokers never own the trucks. They must hold a $75,000 surety bond and FMCSA broker authority.</li>
+                    <li><strong>Freight Dispatcher</strong> – An independent agent who works exclusively for the carrier under a written agreement. The dispatcher finds loads, negotiates rates, and handles paperwork on behalf of the carrier. The dispatcher never takes possession of the freight or the money paid for the load.</li>
+                </ul>
+                <p><strong>Critical Legal Rule:</strong> If you ever handle the load money or act as a middleman between shipper and carrier without a written carrier agreement, you are brokering and must have a broker bond. Stay strictly on the dispatcher side of the line.</p>
+            </div>
+            <div class="slide-image-side">
+                <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Roles">
+                <span class="image-caption">Shipper → Broker → Carrier (Dispatcher works only for the Carrier)</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 4 -->
+    <div class="slide">
+        <div class="slide-header">
+            <h2>Q&A Checkpoint — Module 1</h2>
+            <span class="duration-badge">Day 1 • Slide 4 of 9</span>
+        </div>
+        <div class="slide-content-grid">
+            <div class="slide-text-side">
+                <div class="qa-box">
+                    <p><strong>Open floor for questions on:</strong></p>
+                    <ul>
+                        <li>Any of the core terms (FMCSA, MC, DOT, Deadhead, Backhaul, etc.)</li>
+                        <li>Difference between Broker and Dispatcher</li>
+                        <li>Why the $75k bond matters and how to stay on the legal side of the line</li>
+                    </ul>
+                </div>
+                <p style="margin-top:18px;">Take notes on any terms that still feel unclear — we will use them constantly for the rest of the course.</p>
+            </div>
+            <div class="slide-image-side">
+                <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Q&A">
+                <span class="image-caption">Module 1 Q&A Checkpoint</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 5 -->
+    <div class="slide">
+        <div class="slide-header">
+            <h2>Module 2: Business Structure, Tech Stack & Niche</h2>
+            <span class="duration-badge">Day 1 • Slide 5 of 9</span>
+        </div>
+        <div class="slide-content-grid">
+            <div class="slide-text-side">
+                <p><strong>Overview:</strong> Form your LLC, set up essential tech/cloud systems, and choose a profitable equipment niche.</p>
+                <ul>
+                    <li><strong>LLC (Limited Liability Company)</strong> – A legal business structure that protects your personal assets from business debts and lawsuits.</li>
+                    <li><strong>EIN (Employer Identification Number)</strong> – A free nine-digit tax ID number issued by the IRS. Required to open a business bank account and file taxes as a business.</li>
+                    <li><strong>Merchant Processing</strong> – Services such as Square or Stripe that allow you to accept credit cards and send automated invoices to your carriers.</li>
+                    <li><strong>VoIP Phone</strong> – Voice over Internet Protocol. A business phone system that runs over the internet (OpenPhone, Google Voice, RingCentral) instead of a traditional landline.</li>
+                    <li><strong>E-Signature Software</strong> – Tools such as DocuSign or PandaDoc that let carriers sign contracts and Ratecons electronically.</li>
+                    <li><strong>Niche</strong> – A focused segment of the market (Box Trucks, Dry Vans, Reefers, Flatbeds, specific geographic lanes, or new-authority carriers) that you specialize in to stand out and win higher rates.</li>
+                </ul>
+            </div>
+            <div class="slide-image-side">
+                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" alt="Business Setup">
+                <span class="image-caption">LLC, tech stack, and niche selection with definitions</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 6 -->
+    <div class="slide">
+        <div class="slide-header">
+            <h2>Visual Walkthrough — Drive Structure & Carrier Packet</h2>
+            <span class="duration-badge">Day 1 • Slide 6 of 9</span>
+        </div>
+        <div class="slide-content-grid">
+            <div class="slide-text-side">
+                <p>Live / screenshot preview of:</p>
+                <ul>
+                    <li><strong>Google Drive / Dropbox Hierarchy</strong> – One root folder per carrier containing sub-folders for Contracts, Ratecons, BOLs, Invoices, and Insurance.</li>
+                    <li><strong>Dispatch Agreement</strong> – The contract between you and the carrier that outlines your services, fee percentage, and responsibilities.</li>
+                    <li><strong>Limited Power of Attorney (POA)</strong> – A legal document that allows you to book loads and sign Ratecons on the carrier’s behalf without giving you ownership of the company.</li>
+                </ul>
+                <p>These documents become the backbone of every carrier relationship. Keep them clean, consistent, and always signed before the first load.</p>
+            </div>
+            <div class="slide-image-side">
+                <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80" alt="Documents">
+                <span class="image-caption">Sample folder structure, Dispatch Agreement & Limited POA</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 7 -->
+    <div class="slide">
+        <div class="slide-header">
+            <h2>Q&A Checkpoint — Module 2</h2>
+            <span class="duration-badge">Day 1 • Slide 7 of 9</span>
+        </div>
+        <div class="slide-content-grid">
+            <div class="slide-text-side">
+                <div class="qa-box">
+                    <p><strong>Open floor for questions on:</strong></p>
+                    <ul>
+                        <li>LLC formation and EIN process</li>
+                        <li>IONOS domain + professional email setup</li>
+                        <li>What “niche” really means and how to choose one</li>
+                        <li>Recommended tech stack tools and why each is needed</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-image-side">
+                <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Q&A">
+                <span class="image-caption">Module 2 Q&A Checkpoint</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 8 -->
+    <div class="slide">
+        <div class="slide-header">
+            <h2>Module 3: Marketing Strategy & Sourcing Leads</h2>
+            <span class="duration-badge">Day 1 • Slide 8 of 9</span>
+        </div>
+        <div class="slide-content-grid">
+            <div class="slide-text-side">
+                <p><strong>Overview:</strong> Multi-channel outreach using Carrier IQ, Facebook groups, Reddit, and truck-stop networking.</p>
+                <ul>
+                    <li><strong>Cold Calling</strong> – Calling owner-operators directly from public lists or Carrier IQ data to offer dispatch services.</li>
+                    <li><strong>Grassroots / Digital Communities</strong> – Providing value in Facebook groups and Reddit communities (r/trucking, Box Truck Owners, Hotshot groups) before pitching.</li>
+                    <li><strong>Truck-Stop Marketing</strong> – Handing out professional business cards and flyers at Pilot Flying J, Love’s, TA, and local truck stops.</li>
+                    <li><strong>Carrier IQ</strong> – A data platform that lists active motor carriers, their equipment, and contact information to help you find potential clients.</li>
+                </ul>
+            </div>
+            <div class="slide-image-side">
+                <img src="https://images.unsplash.com/photo-1432888622747-4eb9a1efeb05?auto=format&fit=crop&w=600&q=80" alt="Marketing">
+                <span class="image-caption">Multi-channel lead generation with clear terms</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 9 -->
+    <div class="slide">
+        <div class="slide-header">
+            <h2>Q&A Checkpoint — Module 3 & Day 1 Wrap-Up</h2>
+            <span class="duration-badge">Day 1 • Slide 9 of 9</span>
+        </div>
+        <div class="slide-content-grid">
+            <div class="slide-text-side">
+                <div class="qa-box">
+                    <p><strong>Final Day 1 questions on:</strong></p>
+                    <ul>
+                        <li>Any remaining industry terminology</li>
+                        <li>Facebook / Reddit outreach tactics</li>
+                        <li>Truck-stop flyer design & distribution</li>
+                        <li>Using Carrier IQ or similar lead databases</li>
+                    </ul>
+                </div>
+                <p style="margin-top:16px;"><strong>Day 1 Homework:</strong> Finish Branding & Domain Worksheet, register domain + professional email, and prepare first draft of business card / flyer.</p>
+            </div>
+            <div class="slide-image-side">
+                <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Wrap-up">
+                <span class="image-caption">Day 1 complete — see you tomorrow</span>
+            </div>
+        </div>
+    </div>
 </div>
+<!-- ================= DAY 2 ================= -->
+        <div class="module-deck" data-module="1" style="display: none;">
+
+            <!-- SLIDE 10 -->
+            <div class="slide active">
+                <div class="slide-header">
+                    <h2>Day 2 Welcome & Agenda</h2>
+                    <span class="duration-badge">Day 2 • Slide 1 of 13</span>
+                </div>
+                <div class="slide-content-grid">
+                    <div class="slide-text-side">
+                        <p>Quick recap of Day 1 (legal structure, niche, brand foundation). Today we move into carrier acquisition and closing deals.</p>
+                        <ul>
+                            <li><strong>Module 1 (10 min):</strong> Acquisition, Cold Calling & Grassroots Pitching</li>
+                            <li><strong>Module 2 (10 min):</strong> Carrier Onboarding & Risk Verification</li>
+                            <li><strong>Module 3 (15 min):</strong> Rate Negotiation, Load Boards & Fraud Prevention</li>
+                            <li><strong>Module 4 (10 min):</strong> Rate Confirmations (Ratecons)</li>
+                        </ul>
+                    </div>
+                    <div class="slide-image-side">
+                        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80" alt="Day 2">
+                        <span class="image-caption">Day 2 Roadmap — Acquisition & Closing</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 11 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h2>Module 1: Acquisition, Cold Calling & Grassroots</h2>
+                    <span class="duration-badge">Day 2 • Slide 2 of 13</span>
+                </div>
+                <div class="slide-content-grid">
+                    <div class="slide-text-side">
+                        <p><strong>Overview:</strong> Proven cold-call scripts, in-person truck-stop approaches, and handling objections.</p>
+                        <ul>
+                            <li><strong>Cold Call Flow:</strong> Intro → Pain-point hook → Rate-per-mile pitch → Clear call to action.</li>
+                            <li><strong>Truck Stop & Online Pitch:</strong> Respectful approach at fuel islands or converting a Facebook inquiry into a phone consultation.</li>
+                            <li><strong>Qualifying & Objections:</strong> Filter leads quickly and handle “fee is too high” / “I dispatch myself” pushback.</li>
+                        </ul>
+                    </div>
+                    <div class="slide-image-side">
+                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80" alt="Cold Calling">
+                        <span class="image-caption">Cold call flow and grassroots pitching</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 12 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h2>Example Script — Cold Call & Objection Rebuttals</h2>
+                    <span class="duration-badge">Day 2 • Slide 3 of 13</span>
+                </div>
+                <div class="slide-content-grid">
+                    <div class="slide-text-side">
+                        <p>Full visual breakdown of the word-for-word cold-call script plus the most common objection responses.</p>
+                        <ul>
+                            <li>Opening that references equipment type and current market rates.</li>
+                            <li>Pain-point questions that surface real frustration.</li>
+                            <li>Clean close that moves the prospect to a packet review.</li>
+                            <li>Top 4–5 objection rebuttals used in the field.</li>
+                        </ul>
+                    </div>
+                    <div class="slide-image-side">
+                        <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600&q=80" alt="Script">
+                        <span class="image-caption">Word-for-word cold call script + rebuttal sheet</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 13 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h2>Q&A Checkpoint — Module 1</h2>
+                    <span class="duration-badge">Day 2 • Slide 4 of 13</span>
+                </div>
+                <div class="slide-content-grid">
+                    <div class="slide-text-side">
+                        <div class="qa-box">
+                            <p><strong>Open floor for questions on:</strong></p>
+                            <ul>
+                                <li>Cold-call delivery and timing</li>
+                                <li>Handling driver pushback</li>
+                                <li>Truck-stop approach etiquette</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-image-side">
+                        <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Q&A">
+                        <span class="image-caption">Module 1 Q&A Checkpoint</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 14 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h2>Module 2: Carrier Onboarding & Risk Verification</h2>
+                    <span class="duration-badge">Day 2 • Slide 5 of 13</span>
+                </div>
+                <div class="slide-content-grid">
+                    <div class="slide-text-side">
+                        <p><strong>Overview:</strong> Collect mandatory documents, verify active MC authority, and avoid cargo-insurance traps.</p>
+                        <ul>
+                            <li><strong>Required Documents:</strong> Dispatch Agreement, Limited POA, Active MC/DOT Certificate, Form W-9, COI ($1M Auto / $100k Cargo), Factoring NOA.</li>
+                            <li><strong>Authority Status Verification:</strong> Always check FMCSA SAFER, directory platforms, and MOTUS on the exact day of booking. Confirm “Active” status.</li>
+                            <li><strong>The $100k Cargo Insurance Trap:</strong> Compare load value on the Ratecon against the carrier’s maximum cargo coverage before booking high-value freight.</li>
+                        </ul>
+                    </div>
+                    <div class="slide-image-side">
+                        <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=600&q=80" alt="Onboarding">
+                        <span class="image-caption">Document checklist and authority verification</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 15 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h2>Example Documents — COI, W-9, NOA & SAFER</h2>
+                    <span class="duration-badge">Day 2 • Slide 6 of 13</span>
+                </div>
+                <div class="slide-content-grid">
+                    <div class="slide-text-side">
+                        <p>Visual examples highlighting the exact fields you must verify:</p>
+                        <ul>
+                            <li>Certificate of Insurance — liability limits, cargo limit, additional insured language.</li>
+                            <li>W-9 — correct legal name and EIN.</li>
+                            <li>Factoring Notice of Assignment (NOA).</li>
+                            <li>FMCSA SAFER snapshot confirming Active authority and safety rating.</li>
+                        </ul>
+                    </div>
+                    <div class="slide-image-side">
+                        <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80" alt="Documents">
+                        <span class="image-caption">Sample COI, W-9, NOA and SAFER check</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 16 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h2>Q&A Checkpoint — Module 2</h2>
+                    <span class="duration-badge">Day 2 • Slide 7 of 13</span>
+                </div>
+                <div class="slide-content-grid">
+                    <div class="slide-text-side">
+                        <div class="qa-box">
+                            <p><strong>Open floor for questions on:</strong></p>
+                            <ul>
+                                <li>Carrier packet contents</li>
+                                <li>COI limits and cargo traps</li>
+                                <li>Authority status checks</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-image-side">
+                        <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Q&A">
+                        <span class="image-caption">Module 2 Q&A Checkpoint</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 17 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h2>Module 3: Rate Negotiation, Load Boards & Fraud</h2>
+                    <span class="duration-badge">Day 2 • Slide 8 of 13</span>
+                </div>
+                <div class="slide-content-grid">
+                    <div class="slide-text-side">
+                        <p><strong>Overview:</strong> Free/paid load boards, HOS clocks, double-brokering red flags, and negotiating top rates.</p>
+                        <ul>
+                            <li><strong>Free Load Boards:</strong> Trucker Path, Freight Finder, Selectus, Trulos, Free Freight Search.</li>
+                            <li><strong>Sub-Account Rule:</strong> Paid boards (DAT, Truckstop) require an MC/DOT — drivers must add you as an authorized sub-user.</li>
+                            <li><strong>HOS & Trip Planning:</strong> 11-hour driving limit, 14-hour on-duty window, 34-hour restart, 80,000-lb gross weight.</li>
+                            <li><strong>Broker Vetting & Fraud Prevention:</strong> Credit scores, $75k surety bond, matching FMCSA email domains.</li>
+                            <li><strong>Negotiation:</strong> Cost-per-mile floor → lane rate analysis → confident broker pitch.</li>
+                        </ul>
+                    </div>
+                    <div class="slide-image-side">
+                        <img src="https://images.unsplash.com/photo-1542744094-24638eff58bb?auto=format&fit=crop&w=600&q=80" alt="Load Boards">
+                        <span class="image-caption">Load boards, HOS, and fraud prevention</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 18 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h2>Live Demo — Load Board Search & Broker Pitch</h2>
+                    <span class="duration-badge">Day 2 • Slide 9 of 13</span>
+                </div>
+                <div class="slide-content-grid">
+                    <div class="slide-text-side">
+                        <p>Live look at filtering loads on free and paid boards plus a sample broker negotiation script.</p>
+                        <ul>
+                            <li>Origin radius, deadhead, equipment, weight, and rate filters.</li>
+                            <li>Quick credit-score and days-to-pay check.</li>
+                            <li>Word-for-word broker pitch that protects carrier RPM.</li>
+                        </ul>
+                    </div>
+                    <div class="slide-image-side">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" alt="Demo">
+                        <span class="image-caption">Load board walkthrough + sample broker pitch</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 19 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h2>Q&A Checkpoint — Module 3</h2>
+                    <span class="duration-badge">Day 2 • Slide 10 of 13</span>
+                </div>
+                <div class="slide-content-grid">
+                    <div class="slide-text-side">
+                        <div class="qa-box">
+                            <p><strong>Open floor for questions on:</strong></p>
+                            <ul>
+                                <li>Free vs. paid load board access</li>
+                                <li>HOS rules and trip planning</li>
+                                <li>Broker negotiation tactics</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-image-side">
+                        <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Q&A">
+                        <span class="image-caption">Module 3 Q&A Checkpoint</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 20 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h2>Module 4: Rate Confirmations (Ratecons)</h2>
+                    <span class="duration-badge">Day 2 • Slide 11 of 13</span>
+                </div>
+                <div class="slide-content-grid">
+                    <div class="slide-text-side">
+                        <p><strong>Overview:</strong> Auditing binding broker contracts, checking fine print, and executing Ratecons safely.</p>
+                        <ul>
+                            <li><strong>Ratecon Audit Checklist:</strong> Pickup/drop windows, weight, rates, accessorial clauses, hidden penalties, commodity description, and appointment times.</li>
+                            <li>Never sign until every field has been verified against the verbal agreement and the carrier’s equipment/weight limits.</li>
+                        </ul>
+                    </div>
+                    <div class="slide-image-side">
+                        <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80" alt="Ratecon">
+                        <span class="image-caption">Rate confirmation audit process</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 21 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h2>Example Document — Annotated Sample Ratecon</h2>
+                    <span class="duration-badge">Day 2 • Slide 12 of 13</span>
+                </div>
+                <div class="slide-content-grid">
+                    <div class="slide-text-side">
+                        <p>Visual walkthrough of a real Ratecon highlighting:</p>
+                        <ul>
+                            <li>Critical fields that must match the verbal agreement</li>
+                            <li>Common fine-print traps (late fees, lumper language, detention windows)</li>
+                            <li>Signature blocks and e-sign best practices</li>
+                        </ul>
+                    </div>
+                    <div class="slide-image-side">
+                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" alt="Annotated Ratecon">
+                        <span class="image-caption">Annotated sample Rate Confirmation</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 22 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h2>Q&A Checkpoint — Module 4 & Day 2 Wrap-Up</h2>
+                    <span class="duration-badge">Day 2 • Slide 13 of 13</span>
+                </div>
+                <div class="slide-content-grid">
+                    <div class="slide-text-side">
+                        <div class="qa-box">
+                            <p><strong>Final Day 2 questions on:</strong></p>
+                            <ul>
+                                <li>Ratecon fine print and red flags</li>
+                                <li>Any remaining acquisition or negotiation questions</li>
+                            </ul>
+                        </div>
+                        <p style="margin-top:16px;"><strong>Day 2 Homework:</strong> Practice the cold-call script out loud and review one real Ratecon (sample provided) using the audit checklist.</p>
+                    </div>
+                    <div class="slide-image-side">
+                        <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Wrap-up">
+                        <span class="image-caption">Day 2 complete</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= DAY 3 ================= -->
+        <div class="module-deck" data-module="2" style="display: none;">
+
+            <!-- SLIDE 23 -->
+            <div class="slide active">
+                <div class="slide-header">
+                    <h2>Day 3 Welcome & Agenda</h2>
+                    <span class="duration-badge">Day 3 • Slide 1 of 12</span>
+                </div>
+                <div class="slide-content-grid">
+                    <div class="slide-text-side">
+                        <p>Recap of Day 2 (acquisition, onboarding, negotiation, Ratecons). Today we cover live operations, accessorials, financials, and growth.</p>
+                        <ul>
+                            <li><strong>Module 1 (10 min):</strong> Live Dispatching, BOLs, Free Tools & Exception Handling</li>
+                            <li><strong>Module 2 (15 min):</strong> Detention, TONU & Accessorial Routing</li>
+                            <li><strong>Module 3 (10 min):</strong> Factoring & Financial Workflows</li>
+                            <li><strong>Module 4 (10 min):</strong> Industry Networking & Course Wrap-Up</li>
+                        </ul>
+                    </div>
+                    <div class="slide-image-side">
+                        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80" alt="Day 3">
+                        <span class="image-caption">Day 3 Roadmap — Operations & Growth</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 24 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h2>Module 1: Live Dispatching, BOLs & Exceptions</h2>
+                    <span class="duration-badge">Day 3 • Slide 2 of 12</span>
+                </div>
+                <div class="slide-content-grid">
+                    <div class="slide-text-side">
+                        <p><strong>Overview:</strong> Managing active loads, free PDF tools, OS&D/breakdowns, and after-hours boundaries.</p>
+                        <ul>
+                            <li><strong>Free Document Tools:</strong> Adobe Scan / CamScanner for clean PDFs; I Love PDF or Smallpdf for merging Ratecons + BOLs + PODs.</li>
+                            <li><strong>BOL & POD Flow:</strong> BOL as receipt/contract/title; note pre-existing damage at pickup; secure clean POD/COD documentation.</li>
+                            <li><strong>Tracking & Check-Calls:</strong> MacroPoint, Trucker Tools, and proactive status updates.</li>
+                            <li><strong>Disasters & Exceptions:</strong> OS&D, mechanical breakdowns, immediate broker communication.</li>
+                            <li><strong>After-Hours Protocols:</strong> Clear boundaries, emergency contact numbers, roadside assistance guidance.</li>
+                        </ul>
+                    </div>
+                    <div class="slide-image-side">
+                        <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600&q=80" alt="Dispatching">
+                        <span class="image-caption">Live dispatch tools and exception handling</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 25 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h2>Example Documents — BOL, Signed POD & COD</h2>
+                    <span class="duration-badge">Day 3 • Slide 3 of 12</span>
+                </div>
+                <div class="slide-content-grid">
+                    <div class="slide-text-side">
+                        <p>Visual examples showing:</p>
+                        <ul>
+                            <li>Clean vs. damaged cargo notations on the BOL</li>
+                            <li>Proper receiver signature / stamp locations</li>
+                            <li>COD receipt best practices</li>
+                        </ul>
+                    </div>
+                    <div class="slide-image-side">
+                        <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80" alt="BOL POD">
+                        <span class="image-caption">Sample BOL, signed POD and COD receipt</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 26 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h2>Q&A Checkpoint — Module 1</h2>
+                    <span class="duration-badge">Day 3 • Slide 4 of 12</span>
+                </div>
+                <div class="slide-content-grid">
+                    <div class="slide-text-side">
+                        <div class="qa-box">
+                            <p><strong>Open floor for questions on:</strong></p>
+                            <ul>
+                                <li>BOL / POD best practices</li>
+                                <li>Free PDF tools</li>
+                                <li>OS&D and after-hours protocols</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-image-side">
+                        <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Q&A">
+                        <span class="image-caption">Module 1 Q&A Checkpoint</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 27 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h2>Module 2: Detention, TONU & Accessorial Routing</h2>
+                    <span class="duration-badge">Day 3 • Slide 5 of 12</span>
+                </div>
+                <div class="slide-content-grid">
+                    <div class="slide-text-side">
+                        <p><strong>Overview:</strong> Enforcing upfront detention and TONU terms and properly logging timestamps.</p>
+                        <ul>
+                            <li><strong>Upfront Ratecon Rule:</strong> Detention ($50–$100/hr after 2 free hours) and TONU ($150–$250+) must appear on the initial Ratecon or Master Agreement — otherwise default is $0.</li>
+                            <li><strong>Where Details Go:</strong> Write exact arrival/departure timestamps on the physical BOL, get receiver signature/stamp, and email the broker immediately on the Ratecon thread.</li>
+                            <li><strong>Layovers & Cancellations:</strong> Overnight layover fees and TONU claims process.</li>
+                        </ul>
+                    </div>
+                    <div class="slide-image-side">
+                        <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80" alt="Accessorials">
+                        <span class="image-caption">Detention, TONU and layover protocols</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 28 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h2>Visual Example — BOL Timestamps & Detention Email</h2>
+                    <span class="duration-badge">Day 3 • Slide 6 of 12</span>
+                </div>
+                <div class="slide-content-grid">
+                    <div class="slide-text-side">
+                        <p>Step-by-step visual showing:</p>
+                        <ul>
+                            <li>How in/out timestamps should appear on the BOL</li>
+                            <li>Exact email template to send brokers when claiming detention or TONU</li>
+                        </ul>
+                    </div>
+                    <div class="slide-image-side">
+                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" alt="Timestamps">
+                        <span class="image-caption">BOL timestamp annotation + detention email template</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 29 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h2>Q&A Checkpoint — Module 2</h2>
+                    <span class="duration-badge">Day 3 • Slide 7 of 12</span>
+                </div>
+                <div class="slide-content-grid">
+                    <div class="slide-text-side">
+                        <div class="qa-box">
+                            <p><strong>Open floor for questions on:</strong></p>
+                            <ul>
+                                <li>Detention payout rules</li>
+                                <li>TONU disputes</li>
+                                <li>Layover claims</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-image-side">
+                        <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Q&A">
+                        <span class="image-caption">Module 2 Q&A Checkpoint</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 30 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h2>Module 3: Factoring & Financial Workflows</h2>
+                    <span class="duration-badge">Day 3 • Slide 8 of 12</span>
+                </div>
+                <div class="slide-content-grid">
+                    <div class="slide-text-side">
+                        <p><strong>Overview:</strong> Broker credit checks, factoring packets for 24-hour payouts, and weekly carrier invoicing.</p>
+                        <ul>
+                            <li><strong>Factoring Pipeline:</strong> Pre-booking credit check → Delivery & signed POD → Submit Ratecon + POD + Invoice for 24-hour payout.</li>
+                            <li><strong>Dispatch Billing:</strong> Invoice carriers weekly via Square/Stripe or digital payment apps (PayPal, Venmo, Cash App).</li>
+                        </ul>
+                    </div>
+                    <div class="slide-image-side">
+                        <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80" alt="Factoring">
+                        <span class="image-caption">Factoring packet and weekly invoice flow</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 31 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h2>Example Documents — & Weekly Invoice</h2>
+                    <span class="duration-badge">Day 3 • Slide 9 of 12</span>
+                </div>
+                <div class="slide-content-grid">
+                    <div class="slide-text-side">
+                        <p>Visual walkthrough of a merged factoring submission packet and a clean weekly dispatch service invoice.</p>
+                    </div>
+                    <div class="slide-image-side">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" alt="Invoice">
+                        <span class="image-caption">Sample factoring packet + weekly service invoice</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 32 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h2>Q&A Checkpoint — Module 3</h2>
+                    <span class="duration-badge">Day 3 • Slide 10 of 12</span>
+                </div>
+                <div class="slide-content-grid">
+                    <div class="slide-text-side">
+                        <div class="qa-box">
+                            <p><strong>Open floor for questions on:</strong></p>
+                            <ul>
+                                <li>Factoring companies and quick-pay options</li>
+                                <li>Weekly billing process</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-image-side">
+                        <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Q&A">
+                        <span class="image-caption">Module 3 Q&A Checkpoint</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 33 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h2>Module 4: Industry Networking & Course Wrap-Up</h2>
+                    <span class="duration-badge">Day 3 • Slide 11 of 12</span>
+                </div>
+                <div class="slide-content-grid">
+                    <div class="slide-text-side">
+                        <p><strong>Overview:</strong> Building direct broker relationships for dedicated lanes, daily dispatcher routines, and next steps.</p>
+                        <ul>
+                            <li>Scaling through direct broker relationships and dedicated lanes.</li>
+                            <li>Recommended daily routine (morning loadboard scan → mid-day tracking → end-of-day financial debrief).</li>
+                            <li>Launch checklist: legal entity, brand assets, carrier packet, first 5–10 target carriers, load-board access.</li>
+                        </ul>
+                    </div>
+                    <div class="slide-image-side">
+                        <img src="https://images.unsplash.com/photo-152202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80" alt="Networking">
+                        <span class="image-caption">Networking, routines and launch checklist</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 34 -->
+            <div class="slide">
+                <div class="slide-header">
+                    <h2>Final Course Q&A & Graduation Next Steps</h2>
+                    <span class="duration-badge">Day 3 • Slide 12 of 12</span>
+                </div>
+                <div class="slide-content-grid">
+                    <div class="slide-text-side">
+                        <div class="qa-box">
+                            <p><strong>Comprehensive open-floor Q&A</strong> covering any topic from the three days.</p>
+                        </div>
+                        <p style="margin-top:16px;"><strong>Action Plan to Launch:</strong></p>
+                        <ul>
+                            <li>Finalize LLC + EIN + business bank account</li>
+                            <li>Complete brand assets and carrier packet</li>
+                            <li>Secure first 3–5 carriers</li>
+                            <li>Book first loads under the processes learned</li>
+                        </ul>
+                        <p>Congratulations — you now have the full operating system to run a professional independent dispatch agency.</p>
+                    </div>
+                    <div class="slide-image-side">
+                        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=600&q=80" alt="Graduation">
+                        <span class="image-caption">Course complete — time to launch</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Presentation Controls -->
+    <div class="deck-controls">
+        <div class="deck-controls-left">
+            <a href="dashboard.html" class="back-dashboard-btn">
+                ← Back to Dashboard
+            </a>
+        </div>
+        <div class="deck-controls-right">
+            <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">Previous</button>
+            <span class="slide-counter" id="slideCounter">Day 1 • Slide 1 / 9</span>
+            <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    let currentModule = 0;
+    let currentSlide = 0;
+
+    // Slide counts: Day 1 = 9, Day 2 = 13, Day 3 = 12
+    const moduleSlideCounts = [9, 13, 12];
+    const moduleNames = ["Day 1", "Day 2", "Day 3"];
+
+    function switchModule(moduleIndex) {
+        currentModule = moduleIndex;
+        currentSlide = 0;
+
+        // Update active tabs
+        const tabs = document.querySelectorAll('.module-tab');
+        tabs.forEach((tab, idx) => {
+            if (idx === moduleIndex) {
+                tab.classList.add('active');
+            } else {
+                tab.classList.remove('active');
+            }
+        });
+
+        // Update visible module deck
+        const decks = document.querySelectorAll('.module-deck');
+        decks.forEach((deck, idx) => {
+            if (idx === moduleIndex) {
+                deck.style.display = 'block';
+                const slides = deck.querySelectorAll('.slide');
+                slides.forEach((s, sIdx) => {
+                    if (sIdx === 0) s.classList.add('active');
+                    else s.classList.remove('active');
+                });
+            } else {
+                deck.style.display = 'none';
+            }
+        });
+
+        updateControls();
+    }
+
+    function changeSlide(direction) {
+        const deck = document.querySelector(`.module-deck[data-module="${currentModule}"]`);
+        const slides = deck.querySelectorAll('.slide');
+
+        slides[currentSlide].classList.remove('active');
+        currentSlide += direction;
+
+        if (currentSlide < 0) {
+            if (currentModule > 0) {
+                switchModule(currentModule - 1);
+                currentSlide = moduleSlideCounts[currentModule] - 1;
+                const prevDeck = document.querySelector(`.module-deck[data-module="${currentModule}"]`);
+                const prevSlides = prevDeck.querySelectorAll('.slide');
+                prevSlides.forEach(s => s.classList.remove('active'));
+                prevSlides[currentSlide].classList.add('active');
+            } else {
+                currentSlide = 0;
+            }
+        } else if (currentSlide >= slides.length) {
+            if (currentModule < moduleSlideCounts.length - 1) {
+                switchModule(currentModule + 1);
+                return;
+            } else {
+                currentSlide = slides.length - 1;
+            }
+        }
+
+        slides[currentSlide].classList.add('active');
+        updateControls();
+    }
+
+    function updateControls() {
+        const totalSlides = moduleSlideCounts[currentModule];
+        document.getElementById('slideCounter').innerText = 
+            `${moduleNames[currentModule]} • Slide ${currentSlide + 1} / ${totalSlides}`;
+
+        document.getElementById('prevBtn').disabled = (currentModule === 0 && currentSlide === 0);
+        document.getElementById('nextBtn').disabled = 
+            (currentModule === moduleSlideCounts.length - 1 && currentSlide === totalSlides - 1);
+    }
+
+    // Initialize
+    updateControls();
+</script>
+
+</body>
+</html>
