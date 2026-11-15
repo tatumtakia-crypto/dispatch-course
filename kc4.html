@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Knowledge Check | Crown Access</title>
+    <title>Ratecon Audit Challenge | Freight Dispatcher Training</title>
     <style>
         :root {
             --bg-color: #0b0f19;
@@ -13,56 +13,51 @@
             --text-muted: #9ca3af;
             --primary: #3b82f6;
             --primary-hover: #2563eb;
-            --success: #22c55e;
-            --error: #ef4444;
+            --accent: #8b5cf6;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
         }
+
+        * { box-sizing: border-box; }
 
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
             margin: 0;
-            padding: 20px;
+            padding: 30px 20px;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: center;
             min-height: 100vh;
         }
 
-        .master-container {
+        .wrapper {
             width: 100%;
-            max-width: 1050px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .deck-viewport {
-            background-color: var(--slide-bg);
+            max-width: 860px;
+            background: var(--slide-bg);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-            display: flex;
-            flex-direction: column;
-            padding: 40px;
+            padding: 32px;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
         }
 
-        .slide-header {
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 15px;
-            margin-bottom: 25px;
+            padding-bottom: 16px;
+            margin-bottom: 24px;
         }
 
-        .slide-header h2 {
+        .header h1 {
             margin: 0;
-            font-size: 1.3rem;
+            font-size: 1.35rem;
             color: #60a5fa;
         }
 
-        .duration-badge {
+        .badge {
             background: rgba(139, 92, 246, 0.15);
             color: #c084fc;
             padding: 4px 12px;
@@ -72,198 +67,511 @@
             border: 1px solid rgba(139, 92, 246, 0.3);
         }
 
-        .quiz-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            overflow-y: auto;
-            max-height: 480px;
-            padding-right: 10px;
+        .intro {
+            background: rgba(139, 92, 246, 0.12);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 10px;
+            padding: 16px 18px;
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+            margin-bottom: 28px;
         }
 
-        .question-box {
+        .intro strong { color: #c084fc; }
+
+        h3 {
+            color: #60a5fa;
+            font-size: 1.05rem;
+            margin: 28px 0 14px;
+        }
+
+        /* Sample Ratecon Card */
+        .ratecon-card {
             background: #1f2937;
             border: 1px solid var(--border-color);
-            padding: 18px;
-            border-radius: 10px;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 28px;
+            font-size: 0.88rem;
         }
 
-        .question-title {
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--text-main);
-            font-size: 0.95rem;
+        .ratecon-card h4 {
+            margin: 0 0 12px;
+            color: #f9fafb;
+            font-size: 1rem;
         }
 
-        .options-grid {
+        .ratecon-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 10px 24px;
         }
 
-        .option-label {
+        .ratecon-item {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .ratecon-item .label {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .ratecon-item .value {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .ratecon-item.trap .value {
+            color: #fca5a5;
+        }
+
+        .ratecon-item.missing .value {
+            color: #fcd34d;
+            font-style: italic;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* Checklist */
+        .checklist {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+
+        .check-item {
+            background: #1f2937;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 14px 16px;
             display: flex;
             align-items: flex-start;
-            gap: 8px;
-            background: #111827;
-            padding: 9px;
-            border-radius: 6px;
-            cursor: pointer;
-            border: 1px solid transparent;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            transition: all 0.2s;
+            gap: 12px;
+            transition: border-color 0.2s;
         }
 
-        .option-label:hover {
-            border-color: var(--primary);
+        .check-item.flagged {
+            border-color: var(--danger);
+            background: rgba(239, 68, 68, 0.08);
+        }
+
+        .check-item.ok {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.08);
+        }
+
+        .check-item label {
+            flex: 1;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .check-item input[type="checkbox"] {
+            margin-top: 3px;
+            accent-color: var(--primary);
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        .check-item .flag-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .check-item .flag-btn:hover {
+            border-color: var(--danger);
+            color: #fca5a5;
+        }
+
+        .check-item.flagged .flag-btn {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--danger);
+            color: #fca5a5;
+        }
+
+        /* Questions */
+        .question-block {
+            background: #1f2937;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 16px 18px;
+            margin-bottom: 14px;
+        }
+
+        .question-block h4 {
+            margin: 0 0 10px;
+            font-size: 0.95rem;
             color: var(--text-main);
         }
 
-        .option-label input {
-            accent-color: var(--primary);
-            margin-top: 3px;
+        .question-block textarea {
+            width: 100%;
+            min-height: 70px;
+            background: #111827;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-main);
+            padding: 10px 12px;
+            font-family: inherit;
+            font-size: 0.88rem;
+            resize: vertical;
         }
 
-        .quiz-feedback {
-            margin-top: 8px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: none;
+        .question-block textarea:focus {
+            outline: none;
+            border-color: var(--primary);
         }
 
-        .quiz-feedback.correct { color: #4ade80; }
-        .quiz-feedback.incorrect { color: #f87171; }
+        /* Actions */
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 24px;
+        }
 
-        .submit-module-btn {
-            background: var(--success);
+        .btn {
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 10px 24px;
+            padding: 12px 28px;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
-            transition: opacity 0.2s;
+            font-size: 0.95rem;
+            transition: background 0.2s;
         }
 
-        .submit-module-btn:hover {
-            opacity: 0.9;
+        .btn:hover { background: var(--primary-hover); }
+
+        .btn.secondary {
+            background: #374151;
         }
 
-        .module-score-display {
-            margin-left: 15px;
-            font-weight: 600;
-            font-size: 0.9rem;
+        .btn.secondary:hover { background: #4b5563; }
+
+        /* Results */
+        .results {
+            display: none;
+            margin-top: 28px;
+            background: linear-gradient(135deg, rgba(59,130,246,0.12), rgba(139,92,246,0.12));
+            border: 1px solid rgba(59,130,246,0.35);
+            border-radius: 12px;
+            padding: 24px;
         }
 
-        @media(max-width: 768px) {
-            .options-grid {
-                grid-template-columns: 1fr;
-            }
+        .results.show { display: block; animation: fadeIn 0.4s ease; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .score-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 18px;
+        }
+
+        .score-circle {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: conic-gradient(var(--primary) var(--pct), #1f2937 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .score-circle::before {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--slide-bg);
+        }
+
+        .score-circle span {
+            position: relative;
+            z-index: 1;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .answer-key {
+            background: #1f2937;
+            border-radius: 10px;
+            padding: 16px;
+            margin-top: 16px;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        .answer-key strong { color: #6ee7b7; }
+
+        .answer-key ul {
+            margin: 8px 0 0;
+            padding-left: 18px;
+        }
+
+        .answer-key li { margin-bottom: 6px; }
+
+        @media (max-width: 600px) {
+            .ratecon-grid { grid-template-columns: 1fr; }
+            .header { flex-direction: column; align-items: flex-start; gap: 10px; }
         }
     </style>
 </head>
 <body>
+<div class="wrapper">
+    <div class="header">
+        <h1>Ratecon Audit Challenge</h1>
+        <span class="badge">Practical Exercise</span>
+    </div>
 
-<div class="master-container">
-    <div class="deck-viewport">
-        <div class="slide-header">
-            <h2>Module 4: Loadboards Knowledge Check</h2>
-            <span class="duration-badge">Score & Verify Mastery</span>
+    <div class="intro">
+        <strong>Your Task:</strong> Review the sample Ratecon below. Use the checklist to flag every problem. Then answer the short questions. When finished, submit to reveal the answer key and your score.
+    </div>
+
+    <!-- SAMPLE RATECON -->
+    <h3>Sample Ratecon (contains multiple traps)</h3>
+    <div class="ratecon-card">
+        <h4>RATE CONFIRMATION #RC-88421</h4>
+        <div class="ratecon-grid">
+            <div class="ratecon-item">
+                <span class="label">Broker</span>
+                <span class="value">Apex Freight Solutions LLC — MC 987654</span>
+            </div>
+            <div class="ratecon-item">
+                <span class="label">Carrier</span>
+                <span class="value">Swift Haul LLC — MC 123456</span>
+            </div>
+            <div class="ratecon-item">
+                <span class="label">Pickup</span>
+                <span class="value">Mon 11/17 — Chicago, IL (0800–1600)</span>
+            </div>
+            <div class="ratecon-item trap">
+                <span class="label">Delivery</span>
+                <span class="value">Must deliver by Tue 11/18 06:00 Atlanta, GA</span>
+            </div>
+            <div class="ratecon-item">
+                <span class="label">Equipment</span>
+                <span class="value">53' Dry Van</span>
+            </div>
+            <div class="ratecon-item">
+                <span class="label">Weight</span>
+                <span class="value">42,000 lbs</span>
+            </div>
+            <div class="ratecon-item">
+                <span class="label">Commodity</span>
+                <span class="value">General Merchandise – FAKs</span>
+            </div>
+            <div class="ratecon-item">
+                <span class="label">Rate</span>
+                <span class="value">$2,450 all-in</span>
+            </div>
+            <div class="ratecon-item missing full-width">
+                <span class="label">Detention</span>
+                <span class="value">Not specified — see Master Agreement</span>
+            </div>
+            <div class="ratecon-item missing full-width">
+                <span class="label">TONU / Cancellation</span>
+                <span class="value">— blank —</span>
+            </div>
+            <div class="ratecon-item trap full-width">
+                <span class="label">Late Delivery Penalty</span>
+                <span class="value">$250 per hour after scheduled delivery time</span>
+            </div>
+            <div class="ratecon-item trap full-width">
+                <span class="label">Lumper / Unloading</span>
+                <span class="value">Carrier responsible for all lumper fees</span>
+            </div>
+            <div class="ratecon-item full-width">
+                <span class="label">Special Instructions</span>
+                <span class="value">Driver must call 1 hour prior to arrival. Appointment required at delivery.</span>
+            </div>
         </div>
-        <div class="quiz-container" id="quiz-deck-3">
-            <div class="question-box" data-q="1" data-ans="A">
-                <div class="question-title">1. What are DAT and Truckstop.com primarily used for in freight dispatching?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m3_q1" value="A"> A) Searching available loads and posting empty carrier trucks.</label>
-                    <label class="option-label"><input type="radio" name="m3_q1" value="B"> B) Filing federal income taxes.</label>
-                    <label class="option-label"><input type="radio" name="m3_q1" value="C"> C) Processing payroll for truck drivers.</label>
-                    <label class="option-label"><input type="radio" name="m3_q1" value="D"> D) Designing company logos.</label>
-                </div>
-                <div class="quiz-feedback" id="m3_f1"></div>
+    </div>
+
+    <!-- CHECKLIST -->
+    <h3>Audit Checklist — Flag every problem</h3>
+    <div class="checklist" id="checklist">
+        <div class="check-item" data-id="1">
+            <input type="checkbox" id="c1">
+            <label for="c1">Carrier name & MC# match authority documents</label>
+            <button type="button" class="flag-btn" onclick="toggleFlag(this)">Flag Issue</button>
+        </div>
+        <div class="check-item" data-id="2">
+            <input type="checkbox" id="c2">
+            <label for="c2">Broker has active authority + $75k bond (assume verified)</label>
+            <button type="button" class="flag-btn" onclick="toggleFlag(this)">Flag Issue</button>
+        </div>
+        <div class="check-item" data-id="3">
+            <input type="checkbox" id="c3">
+            <label for="c3">Pickup window is reasonable and matches verbal agreement</label>
+            <button type="button" class="flag-btn" onclick="toggleFlag(this)">Flag Issue</button>
+        </div>
+        <div class="check-item" data-id="4">
+            <input type="checkbox" id="c4">
+            <label for="c4">Delivery window is realistic (no “must deliver by” trap)</label>
+            <button type="button" class="flag-btn" onclick="toggleFlag(this)">Flag Issue</button>
+        </div>
+        <div class="check-item" data-id="5">
+            <input type="checkbox" id="c5">
+            <label for="c5">Equipment type is correct</label>
+            <button type="button" class="flag-btn" onclick="toggleFlag(this)">Flag Issue</button>
+        </div>
+        <div class="check-item" data-id="6">
+            <input type="checkbox" id="c6">
+            <label for="c6">Weight is within legal limits for the equipment</label>
+            <button type="button" class="flag-btn" onclick="toggleFlag(this)">Flag Issue</button>
+        </div>
+        <div class="check-item" data-id="7">
+            <input type="checkbox" id="c7">
+            <label for="c7">Detention terms are clearly stated with free time + rate</label>
+            <button type="button" class="flag-btn" onclick="toggleFlag(this)">Flag Issue</button>
+        </div>
+        <div class="check-item" data-id="8">
+            <input type="checkbox" id="c8">
+            <label for="c8">TONU / cancellation amount is listed</label>
+            <button type="button" class="flag-btn" onclick="toggleFlag(this)">Flag Issue</button>
+        </div>
+        <div class="check-item" data-id="9">
+            <input type="checkbox" id="c9">
+            <label for="c9">No hidden late-delivery penalties</label>
+            <button type="button" class="flag-btn" onclick="toggleFlag(this)">Flag Issue</button>
+        </div>
+        <div class="check-item" data-id="10">
+            <input type="checkbox" id="c10">
+            <label for="c10">Lumper / unloading responsibility is fair and clear</label>
+            <button type="button" class="flag-btn" onclick="toggleFlag(this)">Flag Issue</button>
+        </div>
+    </div>
+
+    <!-- QUESTIONS -->
+    <h3>Short Answer Questions</h3>
+
+    <div class="question-block">
+        <h4>1. List the major problems / red flags you found on this Ratecon.</h4>
+        <textarea id="q1" placeholder="Type your answer..."></textarea>
+    </div>
+    <div class="question-block">
+        <h4>2. What is the biggest financial risk if this Ratecon is signed as-is?</h4>
+        <textarea id="q2" placeholder="Type your answer..."></textarea>
+    </div>
+    <div class="question-block">
+        <h4>3. Would you sign this Ratecon right now? Why or why not?</h4>
+        <textarea id="q3" placeholder="Type your answer..."></textarea>
+    </div>
+    <div class="question-block">
+        <h4>4. What exact changes would you request from the broker before signing?</h4>
+        <textarea id="q4" placeholder="Type your answer..."></textarea>
+    </div>
+
+    <div class="actions">
+        <button class="btn" onclick="submitAudit()">Submit Audit</button>
+        <button class="btn secondary" onclick="resetAudit()" id="resetBtn" style="display:none;">Try Again</button>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="results" id="results">
+        <div class="score-row">
+            <div class="score-circle" id="scoreCircle" style="--pct: 0deg;">
+                <span id="scorePct">0%</span>
             </div>
-            <div class="question-box" data-q="2" data-ans="B">
-                <div class="question-title">2. What type of trailer is required to transport temperature-sensitive food and pharmaceuticals?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m3_q2" value="A"> A) Standard Dry Van.</label>
-                    <label class="option-label"><input type="radio" name="m3_q2" value="B"> B) Refrigerated trailer (Reefer).</label>
-                    <label class="option-label"><input type="radio" name="m3_q2" value="C"> C) Flatbed trailer.</label>
-                    <label class="option-label"><input type="radio" name="m3_q2" value="D"> D) Lowboy trailer.</label>
-                </div>
-                <div class="quiz-feedback" id="m3_f2"></div>
-            </div>
-            <div class="question-box" data-q="3" data-ans="B">
-                <div class="question-title">3. What does "deadhead miles" refer to in trucking operations?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m3_q3" value="A"> A) Miles driven while fully loaded with cargo.</label>
-                    <label class="option-label"><input type="radio" name="m3_q3" value="B"> B) Unloaded miles driven to reach a pickup location.</label>
-                    <label class="option-label"><input type="radio" name="m3_q3" value="C"> C) Miles driven during a vehicle breakdown.</label>
-                    <label class="option-label"><input type="radio" name="m3_q3" value="D"> D) Total annual vehicle mileage.</label>
-                </div>
-                <div class="quiz-feedback" id="m3_f3"></div>
-            </div>
-            <div class="question-box" data-q="4" data-ans="B">
-                <div class="question-title">4. Why is analyzing spot market lane data critical before booking a load?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m3_q4" value="A"> A) To predict tomorrow's weather forecast.</label>
-                    <label class="option-label"><input type="radio" name="m3_q4" value="B"> B) To ensure your carrier is getting top dollar and avoiding below-market rate traps.</label>
-                    <label class="option-label"><input type="radio" name="m3_q4" value="C"> C) To check broker credit scores.</label>
-                    <label class="option-label"><input type="radio" name="m3_q4" value="D"> D) To register new MC numbers.</label>
-                </div>
-                <div class="quiz-feedback" id="m3_f4"></div>
-            </div>
-            <div class="question-box" data-q="5" data-ans="B">
-                <div class="question-title">5. What is the standard length of a traditional semi-trailer (Dry Van or Reefer)?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m3_q5" value="A"> A) 20 feet.</label>
-                    <label class="option-label"><input type="radio" name="m3_q5" value="B"> B) 53 feet.</label>
-                    <label class="option-label"><input type="radio" name="m3_q5" value="C"> C) 100 feet.</label>
-                    <label class="option-label"><input type="radio" name="m3_q5" value="D"> D) 15 feet.</label>
-                </div>
-                <div class="quiz-feedback" id="m3_f5"></div>
+            <div>
+                <div style="font-size:1.1rem;font-weight:600;margin-bottom:4px;" id="scoreLabel">Your Audit Score</div>
+                <div style="color:var(--text-muted);font-size:0.9rem;" id="scoreDetail"></div>
             </div>
         </div>
-        <div style="margin-top: 20px; display: flex; align-items: center;">
-            <button class="submit-module-btn" onclick="gradeQuiz(3, 5)">Grade Knowledge Check</button>
-            <span class="module-score-display" id="score-display-3"></span>
+
+        <div class="answer-key">
+            <strong>Answer Key — Critical Issues on this Ratecon:</strong>
+            <ul>
+                <li><strong>Delivery window trap:</strong> “Must deliver by Tue 06:00” creates almost no recovery time and opens the door to late penalties.</li>
+                <li><strong>Detention missing:</strong> “See Master Agreement” is dangerous. If no Master Agreement exists with clear terms, detention defaults to $0.</li>
+                <li><strong>TONU blank:</strong> No cancellation protection. If the load is cancelled, the carrier gets nothing.</li>
+                <li><strong>Late delivery penalty:</strong> $250/hour after scheduled time is extreme and was likely never discussed.</li>
+                <li><strong>Lumper language:</strong> “Carrier responsible for all lumper fees” shifts cost that should be negotiated or reimbursed.</li>
+            </ul>
+            <p style="margin-top:14px;"><strong>Correct action:</strong> Do <em>not</em> sign. Reply to the broker requesting: (1) realistic delivery window, (2) written detention ($50–$100/hr after 2 free hours), (3) TONU of at least $150–$250, (4) removal or modification of the late penalty, and (5) clarification on lumper reimbursement.</p>
         </div>
     </div>
 </div>
 
 <script>
-    function gradeQuiz(modIdx, totalQ) {
-        let score = 0;
-        const container = document.getElementById(`quiz-deck-${modIdx}`);
-        
-        for (let i = 1; i <= totalQ; i++) {
-            const qBox = container.querySelector(`.question-box[data-q="${i}"]`);
-            const correctAns = qBox.getAttribute('data-ans');
-            const selected = qBox.querySelector(`input[name="m3_q${i}"]:checked`);
-            const feedbackEl = document.getElementById(`m3_f${i}`);
-            
-            feedbackEl.style.display = 'block';
-            if (selected && selected.value === correctAns) {
-                score++;
-                feedbackEl.innerText = "✓ Correct! Professional standard verified.";
-                feedbackEl.className = "quiz-feedback correct";
-            } else {
-                feedbackEl.innerText = `✕ Incorrect. The correct answer is option ${correctAns}.`;
-                feedbackEl.className = "quiz-feedback incorrect";
-            }
-        }
-
-        const scoreDisplay = document.getElementById(`score-display-${modIdx}`);
-        const percentage = Math.round((score / totalQ) * 100);
-        
-        if (score === totalQ) {
-            scoreDisplay.style.color = "var(--success)";
-            scoreDisplay.innerText = `Score: ${score}/${totalQ} (${percentage}%) - Mastered!`;
+    function toggleFlag(btn) {
+        const item = btn.closest('.check-item');
+        item.classList.toggle('flagged');
+        if (item.classList.contains('flagged')) {
+            btn.textContent = 'Flagged';
         } else {
-            scoreDisplay.style.color = "var(--error)";
-            scoreDisplay.innerText = `Score: ${score}/${totalQ} (${percentage}%) - Review material & retry.`;
+            btn.textContent = 'Flag Issue';
         }
     }
-</script>
 
+    // Correct flags (items that should be flagged)
+    const correctFlags = ['4', '7', '8', '9', '10'];
+
+    function submitAudit() {
+        let correct = 0;
+        const items = document.querySelectorAll('.check-item');
+
+        items.forEach(item => {
+            const id = item.dataset.id;
+            const isFlagged = item.classList.contains('flagged');
+            const shouldFlag = correctFlags.includes(id);
+
+            if (isFlagged === shouldFlag) {
+                correct++;
+                item.classList.add('ok');
+            } else {
+                item.classList.add('flagged');
+            }
+        });
+
+        const pct = Math.round((correct / items.length) * 100);
+        document.getElementById('scoreCircle').style.setProperty('--pct', (pct * 3.6) + 'deg');
+        document.getElementById('scorePct').textContent = pct + '%';
+        document.getElementById('scoreDetail').textContent = `${correct} of ${items.length} checklist items correctly identified`;
+        document.getElementById('results').classList.add('show');
+        document.getElementById('resetBtn').style.display = 'inline-block';
+        document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function resetAudit() {
+        document.querySelectorAll('.check-item').forEach(item => {
+            item.classList.remove('flagged', 'ok');
+            item.querySelector('.flag-btn').textContent = 'Flag Issue';
+            item.querySelector('input').checked = false;
+        });
+        document.querySelectorAll('textarea').forEach(t => t.value = '');
+        document.getElementById('results').classList.remove('show');
+        document.getElementById('resetBtn').style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
 </body>
 </html>

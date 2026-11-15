@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Knowledge Check | Crown Access</title>
+    <title>Carrier Onboarding Toolkit | Freight Dispatcher Training</title>
     <style>
         :root {
             --bg-color: #0b0f19;
@@ -13,56 +13,51 @@
             --text-muted: #9ca3af;
             --primary: #3b82f6;
             --primary-hover: #2563eb;
-            --success: #22c55e;
-            --error: #ef4444;
+            --accent: #8b5cf6;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
         }
+
+        * { box-sizing: border-box; }
 
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
             margin: 0;
-            padding: 20px;
+            padding: 30px 20px;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: center;
             min-height: 100vh;
         }
 
-        .master-container {
+        .wrapper {
             width: 100%;
-            max-width: 1050px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .deck-viewport {
-            background-color: var(--slide-bg);
+            max-width: 860px;
+            background: var(--slide-bg);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-            display: flex;
-            flex-direction: column;
-            padding: 40px;
+            padding: 32px;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
         }
 
-        .slide-header {
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 15px;
-            margin-bottom: 25px;
+            padding-bottom: 16px;
+            margin-bottom: 24px;
         }
 
-        .slide-header h2 {
+        .header h1 {
             margin: 0;
-            font-size: 1.3rem;
+            font-size: 1.35rem;
             color: #60a5fa;
         }
 
-        .duration-badge {
+        .badge {
             background: rgba(139, 92, 246, 0.15);
             color: #c084fc;
             padding: 4px 12px;
@@ -72,198 +67,361 @@
             border: 1px solid rgba(139, 92, 246, 0.3);
         }
 
-        .quiz-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            overflow-y: auto;
-            max-height: 480px;
-            padding-right: 10px;
+        .intro {
+            background: rgba(139, 92, 246, 0.12);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 10px;
+            padding: 16px 18px;
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+            margin-bottom: 28px;
         }
 
-        .question-box {
+        .intro strong { color: #c084fc; }
+
+        h3 {
+            color: #60a5fa;
+            font-size: 1.05rem;
+            margin: 28px 0 14px;
+        }
+
+        /* Folder Structure */
+        .folder-tree {
             background: #1f2937;
             border: 1px solid var(--border-color);
-            padding: 18px;
+            border-radius: 12px;
+            padding: 20px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 0.85rem;
+            line-height: 1.7;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            overflow-x: auto;
+        }
+
+        .folder-tree .folder { color: #60a5fa; }
+        .folder-tree .file { color: #9ca3af; }
+        .folder-tree .indent { padding-left: 20px; }
+
+        /* Checklist */
+        .checklist {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .check-item {
+            background: #1f2937;
+            border: 1px solid var(--border-color);
             border-radius: 10px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s;
+            cursor: pointer;
         }
 
-        .question-title {
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--text-main);
-            font-size: 0.95rem;
+        .check-item:hover {
+            border-color: var(--primary);
         }
 
-        .options-grid {
+        .check-item.done {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.08);
+        }
+
+        .check-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--success);
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .check-item label {
+            flex: 1;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            line-height: 1.4;
+        }
+
+        .check-item.done label {
+            color: #6ee7b7;
+        }
+
+        /* Template Cards */
+        .template-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 14px;
+            margin-bottom: 24px;
         }
 
-        .option-label {
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-            background: #111827;
-            padding: 9px;
-            border-radius: 6px;
-            cursor: pointer;
-            border: 1px solid transparent;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            transition: all 0.2s;
+        .template-card {
+            background: #1f2937;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 18px;
+            transition: border-color 0.2s;
         }
 
-        .option-label:hover {
+        .template-card:hover {
             border-color: var(--primary);
+        }
+
+        .template-card h4 {
+            margin: 0 0 8px;
+            font-size: 0.95rem;
             color: var(--text-main);
         }
 
-        .option-label input {
-            accent-color: var(--primary);
-            margin-top: 3px;
+        .template-card p {
+            margin: 0;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.45;
         }
 
-        .quiz-feedback {
-            margin-top: 8px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: none;
+        .template-card .tag {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 0.72rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
         }
 
-        .quiz-feedback.correct { color: #4ade80; }
-        .quiz-feedback.incorrect { color: #f87171; }
+        /* Progress */
+        .progress-bar {
+            height: 10px;
+            background: #1f2937;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
 
-        .submit-module-btn {
+        .progress-fill {
+            height: 100%;
             background: var(--success);
+            border-radius: 5px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .progress-text {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .btn {
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 10px 24px;
+            padding: 12px 28px;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
-            transition: opacity 0.2s;
+            font-size: 0.95rem;
+            transition: background 0.2s;
         }
 
-        .submit-module-btn:hover {
-            opacity: 0.9;
+        .btn:hover { background: var(--primary-hover); }
+
+        .btn.secondary {
+            background: #374151;
         }
 
-        .module-score-display {
-            margin-left: 15px;
-            font-weight: 600;
-            font-size: 0.9rem;
+        .btn.secondary:hover { background: #4b5563; }
+
+        .complete-msg {
+            display: none;
+            margin-top: 20px;
+            padding: 16px 18px;
+            border-radius: 10px;
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #6ee7b7;
+            font-size: 0.92rem;
         }
 
-        @media(max-width: 768px) {
-            .options-grid {
-                grid-template-columns: 1fr;
-            }
+        .complete-msg.show { display: block; }
+
+        @media (max-width: 600px) {
+            .template-grid { grid-template-columns: 1fr; }
+            .header { flex-direction: column; align-items: flex-start; gap: 10px; }
         }
     </style>
 </head>
 <body>
+<div class="wrapper">
+    <div class="header">
+        <h1>Carrier Onboarding Toolkit</h1>
+        <span class="badge">Templates + Checklist</span>
+    </div>
 
-<div class="master-container">
-    <div class="deck-viewport">
-        <div class="slide-header">
-            <h2>Module 6: Dispatching Knowledge Check</h2>
-            <span class="duration-badge">Score & Verify Mastery</span>
+    <div class="intro">
+        <strong>Use this toolkit</strong> every time you onboard a new carrier. Set up the folder structure, collect every required document, and check off each step. Nothing gets booked until the packet is complete.
+    </div>
+
+    <h3>Recommended Folder Structure</h3>
+    <div class="folder-tree">
+        <div class="folder">📁 Carrier Name – MC123456</div>
+        <div class="indent folder">📁 01 – Contracts</div>
+        <div class="indent indent file">📄 Dispatch Agreement (signed)</div>
+        <div class="indent indent file">📄 Limited Power of Attorney (signed)</div>
+        <div class="indent folder">📁 02 – Authority & Insurance</div>
+        <div class="indent indent file">📄 MC/DOT Certificate</div>
+        <div class="indent indent file">📄 Certificate of Insurance (COI)</div>
+        <div class="indent indent file">📄 W-9</div>
+        <div class="indent folder">📁 03 – Factoring</div>
+        <div class="indent indent file">📄 Notice of Assignment (NOA)</div>
+        <div class="indent indent file">📄 Factoring company contact</div>
+        <div class="indent folder">📁 04 – Ratecons</div>
+        <div class="indent folder">📁 05 – BOLs & PODs</div>
+        <div class="indent folder">📁 06 – Invoices (your dispatch invoices)</div>
+    </div>
+
+    <h3>Documents You Need in the Toolkit</h3>
+    <div class="template-grid">
+        <div class="template-card">
+            <h4>Dispatch Agreement</h4>
+            <p>Services, fee percentage, responsibilities, payment terms, and termination clause.</p>
+            <span class="tag">Required</span>
         </div>
-        <div class="quiz-container" id="quiz-deck-5">
-            <div class="question-box" data-q="1" data-ans="A">
-                <div class="question-title">1. What is the most important document to review carefully before signing and returning to a broker?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m5_q1" value="A"> A) The Rate Confirmation.</label>
-                    <label class="option-label"><input type="radio" name="m5_q1" value="B"> B) The broker's corporate holiday schedule.</label>
-                    <label class="option-label"><input type="radio" name="m5_q1" value="C"> C) The office lease agreement.</label>
-                    <label class="option-label"><input type="radio" name="m5_q1" value="D"> D) The shipping container patent filing.</label>
-                </div>
-                <div class="quiz-feedback" id="m5_f1"></div>
-            </div>
-            <div class="question-box" data-q="2" data-ans="B">
-                <div class="question-title">2. What information must be included on a professional dispatch sheet given to your driver?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m5_q2" value="A"> A) The broker's personal home address.</label>
-                    <label class="option-label"><input type="radio" name="m5_q2" value="B"> B) Pickup/delivery addresses, appointment times, reference IDs, and broker contact info.</label>
-                    <label class="option-label"><input type="radio" name="m5_q2" value="C"> C) Your company's quarterly tax projections.</label>
-                    <label class="option-label"><input type="radio" name="m5_q2" value="D"> D) Local weather forecasts for next month.</label>
-                </div>
-                <div class="quiz-feedback" id="m5_f2"></div>
-            </div>
-            <div class="question-box" data-q="3" data-ans="B">
-                <div class="question-title">3. Why are check-calls important during a load's transit?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m5_q3" value="A"> A) To test telephone battery levels.</label>
-                    <label class="option-label"><input type="radio" name="m5_q3" value="B"> B) To provide brokers with visibility, satisfy tracking requirements, and prevent panic.</label>
-                    <label class="option-label"><input type="radio" name="m5_q3" value="C"> C) To re-negotiate the freight rate upward mid-trip.</label>
-                    <label class="option-label"><input type="radio" name="m5_q3" value="D"> D) To book a second load simultaneously.</label>
-                </div>
-                <div class="quiz-feedback" id="m5_f3"></div>
-            </div>
-            <div class="question-box" data-q="4" data-ans="B">
-                <div class="question-title">4. What is required to successfully claim detention pay from a broker when a shipper delays a driver?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m5_q4" value="A"> A) A signed letter from local law enforcement.</label>
-                    <label class="option-label"><input type="radio" name="m5_q4" value="B"> B) Time-stamped check-in and check-out documentation signed on the Bill of Lading (BOL).</label>
-                    <label class="option-label"><input type="radio" name="m5_q4" value="C"> C) Verbal agreement over casual conversation.</label>
-                    <label class="option-label"><input type="radio" name="m5_q4" value="D"> D) A receipt for driver meals.</label>
-                </div>
-                <div class="quiz-feedback" id="m5_f4"></div>
-            </div>
-            <div class="question-box" data-q="5" data-ans="B">
-                <div class="question-title">5. What should you do immediately if your driver experiences a major traffic delay threatening an on-time delivery?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m5_q5" value="A"> A) Turn off your phone and ignore it.</label>
-                    <label class="option-label"><input type="radio" name="m5_q5" value="B"> B) Proactively notify the broker immediately before the delivery appointment lapses.</label>
-                    <label class="option-label"><input type="radio" name="m5_q5" value="C"> C) Wait until the next day to mention it.</label>
-                    <label class="option-label"><input type="radio" name="m5_q5" value="D"> D) File a lawsuit against the highway department.</label>
-                </div>
-                <div class="quiz-feedback" id="m5_f5"></div>
-            </div>
+        <div class="template-card">
+            <h4>Limited Power of Attorney</h4>
+            <p>Authorizes you to book loads and sign Ratecons only — no ownership transfer.</p>
+            <span class="tag">Required</span>
         </div>
-        <div style="margin-top: 20px; display: flex; align-items: center;">
-            <button class="submit-module-btn" onclick="gradeQuiz(5, 5)">Grade Knowledge Check</button>
-            <span class="module-score-display" id="score-display-5"></span>
+        <div class="template-card">
+            <h4>COI Requirements Sheet</h4>
+            <p>$1M Auto Liability + minimum $100k Cargo. Always verify limits before high-value freight.</p>
+            <span class="tag">Reference</span>
         </div>
+        <div class="template-card">
+            <h4>Welcome Email Template</h4>
+            <p>Sent after the packet is signed. Confirms next steps and sets expectations.</p>
+            <span class="tag">Template</span>
+        </div>
+        <div class="template-card">
+            <h4>W-9</h4>
+            <p>Correct legal name and EIN. Required for your records and tax reporting.</p>
+            <span class="tag">Required</span>
+        </div>
+        <div class="template-card">
+            <h4>Factoring NOA</h4>
+            <p>Notice of Assignment if the carrier factors. Critical for correct payment routing.</p>
+            <span class="tag">If Applicable</span>
+        </div>
+    </div>
+
+    <h3>Onboarding Checklist — Check off as you complete</h3>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-text" id="progressText">0 of 9 complete</div>
+
+    <div class="checklist" id="checklist">
+        <div class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" id="c1">
+            <label for="c1">Dispatch Agreement signed by carrier</label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" id="c2">
+            <label for="c2">Limited Power of Attorney signed</label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" id="c3">
+            <label for="c3">Active MC/DOT verified on SAFER + MOTUS (same day)</label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" id="c4">
+            <label for="c4">Current Certificate of Insurance received & limits confirmed</label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" id="c5">
+            <label for="c5">W-9 received with correct legal name and EIN</label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" id="c6">
+            <label for="c6">Factoring NOA received (if carrier factors)</label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" id="c7">
+            <label for="c7">Carrier folder created in Drive / Dropbox</label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" id="c8">
+            <label for="c8">Carrier added to your tracking / CRM system</label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+            <input type="checkbox" id="c9">
+            <label for="c9">Welcome email sent + first load search started</label>
+        </div>
+    </div>
+
+    <div class="actions">
+        <button class="btn secondary" onclick="resetChecklist()">Reset Checklist</button>
+    </div>
+
+    <div class="complete-msg" id="completeMsg">
+        <strong>Packet complete.</strong> This carrier is cleared for booking. Keep the folder updated with every Ratecon, BOL, and POD going forward.
     </div>
 </div>
 
 <script>
-    function gradeQuiz(modIdx, totalQ) {
-        let score = 0;
-        const container = document.getElementById(`quiz-deck-${modIdx}`);
-        
-        for (let i = 1; i <= totalQ; i++) {
-            const qBox = container.querySelector(`.question-box[data-q="${i}"]`);
-            const correctAns = qBox.getAttribute('data-ans');
-            const selected = qBox.querySelector(`input[name="m5_q${i}"]:checked`);
-            const feedbackEl = document.getElementById(`m5_f${i}`);
-            
-            feedbackEl.style.display = 'block';
-            if (selected && selected.value === correctAns) {
-                score++;
-                feedbackEl.innerText = "✓ Correct! Professional standard verified.";
-                feedbackEl.className = "quiz-feedback correct";
-            } else {
-                feedbackEl.innerText = `✕ Incorrect. The correct answer is option ${correctAns}.`;
-                feedbackEl.className = "quiz-feedback incorrect";
-            }
+    function toggleCheck(item) {
+        const checkbox = item.querySelector('input[type="checkbox"]');
+        // Prevent double-toggle when clicking the checkbox itself
+        if (event.target !== checkbox) {
+            checkbox.checked = !checkbox.checked;
         }
+        item.classList.toggle('done', checkbox.checked);
+        updateProgress();
+    }
 
-        const scoreDisplay = document.getElementById(`score-display-${modIdx}`);
-        const percentage = Math.round((score / totalQ) * 100);
-        
-        if (score === totalQ) {
-            scoreDisplay.style.color = "var(--success)";
-            scoreDisplay.innerText = `Score: ${score}/${totalQ} (${percentage}%) - Mastered!`;
+    // Also handle direct checkbox clicks
+    document.querySelectorAll('.check-item input').forEach(cb => {
+        cb.addEventListener('click', function(e) {
+            e.stopPropagation();
+            this.closest('.check-item').classList.toggle('done', this.checked);
+            updateProgress();
+        });
+    });
+
+    function updateProgress() {
+        const items = document.querySelectorAll('.check-item');
+        const done = document.querySelectorAll('.check-item.done').length;
+        const pct = Math.round((done / items.length) * 100);
+        document.getElementById('progressFill').style.width = pct + '%';
+        document.getElementById('progressText').textContent = `${done} of ${items.length} complete`;
+
+        const msg = document.getElementById('completeMsg');
+        if (done === items.length) {
+            msg.classList.add('show');
         } else {
-            scoreDisplay.style.color = "var(--error)";
-            scoreDisplay.innerText = `Score: ${score}/${totalQ} (${percentage}%) - Review material & retry.`;
+            msg.classList.remove('show');
         }
     }
-</script>
 
+    function resetChecklist() {
+        document.querySelectorAll('.check-item').forEach(item => {
+            item.classList.remove('done');
+            item.querySelector('input').checked = false;
+        });
+        updateProgress();
+    }
+</script>
 </body>
 </html>

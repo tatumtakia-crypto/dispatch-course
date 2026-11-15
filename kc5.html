@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Knowledge Check | Crown Access</title>
+    <title>Objection Handling Practice | Freight Dispatcher Training</title>
     <style>
         :root {
             --bg-color: #0b0f19;
@@ -13,56 +13,51 @@
             --text-muted: #9ca3af;
             --primary: #3b82f6;
             --primary-hover: #2563eb;
-            --success: #22c55e;
-            --error: #ef4444;
+            --accent: #8b5cf6;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
         }
+
+        * { box-sizing: border-box; }
 
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
             margin: 0;
-            padding: 20px;
+            padding: 30px 20px;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: center;
             min-height: 100vh;
         }
 
-        .master-container {
+        .wrapper {
             width: 100%;
-            max-width: 1050px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .deck-viewport {
-            background-color: var(--slide-bg);
+            max-width: 860px;
+            background: var(--slide-bg);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-            display: flex;
-            flex-direction: column;
-            padding: 40px;
+            padding: 32px;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
         }
 
-        .slide-header {
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 15px;
-            margin-bottom: 25px;
+            padding-bottom: 16px;
+            margin-bottom: 24px;
         }
 
-        .slide-header h2 {
+        .header h1 {
             margin: 0;
-            font-size: 1.3rem;
+            font-size: 1.35rem;
             color: #60a5fa;
         }
 
-        .duration-badge {
+        .badge {
             background: rgba(139, 92, 246, 0.15);
             color: #c084fc;
             padding: 4px 12px;
@@ -72,198 +67,395 @@
             border: 1px solid rgba(139, 92, 246, 0.3);
         }
 
-        .quiz-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            overflow-y: auto;
-            max-height: 480px;
-            padding-right: 10px;
+        .intro {
+            background: rgba(139, 92, 246, 0.12);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 10px;
+            padding: 16px 18px;
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+            margin-bottom: 28px;
         }
 
-        .question-box {
+        .intro strong { color: #c084fc; }
+
+        h3 {
+            color: #60a5fa;
+            font-size: 1.05rem;
+            margin: 28px 0 14px;
+        }
+
+        .script-box {
             background: #1f2937;
             border: 1px solid var(--border-color);
-            padding: 18px;
-            border-radius: 10px;
-        }
-
-        .question-title {
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--text-main);
-            font-size: 0.95rem;
-        }
-
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        .option-label {
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-            background: #111827;
-            padding: 9px;
-            border-radius: 6px;
-            cursor: pointer;
-            border: 1px solid transparent;
-            font-size: 0.85rem;
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-bottom: 24px;
+            font-size: 0.9rem;
+            line-height: 1.55;
             color: var(--text-muted);
-            transition: all 0.2s;
         }
 
-        .option-label:hover {
-            border-color: var(--primary);
+        .script-box ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .script-box li {
+            margin-bottom: 10px;
+        }
+
+        .script-box strong {
             color: var(--text-main);
         }
 
-        .option-label input {
-            accent-color: var(--primary);
-            margin-top: 3px;
+        /* Objection Cards */
+        .objection-card {
+            background: #1f2937;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-bottom: 16px;
+            transition: border-color 0.2s;
         }
 
-        .quiz-feedback {
-            margin-top: 8px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: none;
+        .objection-card h4 {
+            margin: 0 0 8px;
+            font-size: 0.95rem;
+            color: #fca5a5;
         }
 
-        .quiz-feedback.correct { color: #4ade80; }
-        .quiz-feedback.incorrect { color: #f87171; }
+        .objection-card .rebuttal {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 12px;
+            padding: 10px 12px;
+            background: rgba(16, 185, 129, 0.08);
+            border-left: 3px solid var(--success);
+            border-radius: 0 6px 6px 0;
+        }
 
-        .submit-module-btn {
-            background: var(--success);
-            color: white;
-            border: none;
-            padding: 10px 24px;
+        .objection-card .rebuttal strong {
+            color: #6ee7b7;
+        }
+
+        .rating-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .rating-row span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-right: 6px;
+        }
+
+        .star-btn {
+            background: #111827;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            width: 36px;
+            height: 36px;
             border-radius: 8px;
-            font-weight: 600;
             cursor: pointer;
-            transition: opacity 0.2s;
-        }
-
-        .submit-module-btn:hover {
-            opacity: 0.9;
-        }
-
-        .module-score-display {
-            margin-left: 15px;
+            font-size: 0.9rem;
             font-weight: 600;
+            transition: all 0.15s;
+        }
+
+        .star-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .star-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        /* Scorecard */
+        .scorecard {
+            background: #1f2937;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 28px;
+        }
+
+        .scorecard h3 {
+            margin-top: 0;
+        }
+
+        .score-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
             font-size: 0.9rem;
         }
 
-        @media(max-width: 768px) {
-            .options-grid {
-                grid-template-columns: 1fr;
-            }
+        .score-item:last-of-type {
+            border-bottom: none;
+        }
+
+        .score-item .label {
+            color: var(--text-muted);
+        }
+
+        .score-item .value {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .total-row {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 2px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 24px;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: background 0.2s;
+        }
+
+        .btn:hover { background: var(--primary-hover); }
+
+        .btn.secondary {
+            background: #374151;
+        }
+
+        .btn.secondary:hover { background: #4b5563; }
+
+        .result-msg {
+            display: none;
+            margin-top: 20px;
+            padding: 16px 18px;
+            border-radius: 10px;
+            font-size: 0.92rem;
+            line-height: 1.5;
+        }
+
+        .result-msg.show { display: block; }
+
+        .result-msg.pass {
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #6ee7b7;
+        }
+
+        .result-msg.fail {
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: #fcd34d;
+        }
+
+        @media (max-width: 600px) {
+            .header { flex-direction: column; align-items: flex-start; gap: 10px; }
         }
     </style>
 </head>
 <body>
+<div class="wrapper">
+    <div class="header">
+        <h1>Objection Handling Practice</h1>
+        <span class="badge">Scripts + Self-Score</span>
+    </div>
 
-<div class="master-container">
-    <div class="deck-viewport">
-        <div class="slide-header">
-            <h2>Module 5: Negotiation Knowledge Check</h2>
-            <span class="duration-badge">Score & Verify Mastery</span>
+    <div class="intro">
+        <strong>How to use this pack:</strong> Read the core script, then practice each objection out loud (or record yourself). Rate your delivery from 1–5 for every objection. Aim for an average of 4+ before taking real calls.
+    </div>
+
+    <h3>Core Cold-Call Flow</h3>
+    <div class="script-box">
+        <ol>
+            <li><strong>Intro</strong> — “Hi [Name], this is [Your Name] with [Your Company]. I help [equipment type] carriers keep their trucks loaded at better rates without the daily load-board grind.”</li>
+            <li><strong>Pain-point hook</strong> — “How much time are you spending every day just trying to find the next load?”</li>
+            <li><strong>Value + Rate pitch</strong> — “Most of my carriers are running higher per mile on the same lanes because I negotiate every load and filter the bad brokers.”</li>
+            <li><strong>Clear CTA</strong> — “I can send over a short packet so you can see exactly how it works. What’s the best email for that?”</li>
+        </ol>
+    </div>
+
+    <h3>Top 6 Objections — Practice & Rate Yourself</h3>
+
+    <div class="objection-card" data-id="1">
+        <h4>1. “I already dispatch myself.”</h4>
+        <div class="rebuttal">
+            <strong>Response:</strong> “That’s great — a lot of my best clients started that way. The difference is I free up 2–3 hours a day and usually raise their average rate. Would it be worth a quick look at the numbers?”
         </div>
-        <div class="quiz-container" id="quiz-deck-4">
-            <div class="question-box" data-q="1" data-ans="A">
-                <div class="question-title">1. What is the purpose of checking a broker's credit score before booking a load?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m4_q1" value="A"> A) To ensure the broker pays their invoices on time and avoids bankruptcy risk.</label>
-                    <label class="option-label"><input type="radio" name="m4_q1" value="B"> B) To determine the broker's personal credit card limit.</label>
-                    <label class="option-label"><input type="radio" name="m4_q1" value="C"> C) To check if the broker owns semi-trucks.</label>
-                    <label class="option-label"><input type="radio" name="m4_q1" value="D"> D) To verify their office building square footage.</label>
-                </div>
-                <div class="quiz-feedback" id="m4_f1"></div>
-            </div>
-            <div class="question-box" data-q="2" data-ans="B">
-                <div class="question-title">2. What does TONU stand for in freight negotiations?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m4_q2" value="A"> A) Total Operating Net Unit.</label>
-                    <label class="option-label"><input type="radio" name="m4_q2" value="B"> B) Truck Ordered Not Used.</label>
-                    <label class="option-label"><input type="radio" name="m4_q2" value="C"> C) Transit Order Notice Unit.</label>
-                    <label class="option-label"><input type="radio" name="m4_q2" value="D"> D) Tariffs on National Units.</label>
-                </div>
-                <div class="quiz-feedback" id="m4_f2"></div>
-            </div>
-            <div class="question-box" data-q="3" data-ans="B">
-                <div class="question-title">3. When should detention pay be requested from a broker?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m4_q3" value="A"> A) As soon as the truck leaves home.</label>
-                    <label class="option-label"><input type="radio" name="m4_q3" value="B"> B) When a shipper or receiver delays loading/unloading beyond the agreed free time (e.g., 2 hours).</label>
-                    <label class="option-label"><input type="radio" name="m4_q3" value="C"> C) When the truck breaks down on the highway.</label>
-                    <label class="option-label"><input type="radio" name="m4_q3" value="D"> D) At the end of every calendar year.</label>
-                </div>
-                <div class="quiz-feedback" id="m4_f3"></div>
-            </div>
-            <div class="question-box" data-q="4" data-ans="B">
-                <div class="question-title">4. How can you effectively justify a higher rate during broker negotiations?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m4_q4" value="A"> A) By making personal threats.</label>
-                    <label class="option-label"><input type="radio" name="m4_q4" value="B"> B) By highlighting your carrier's superior safety record, clean equipment, and tight market capacity.</label>
-                    <label class="option-label"><input type="radio" name="m4_q4" value="C"> C) By hiding information from the broker.</label>
-                    <label class="option-label"><input type="radio" name="m4_q4" value="D"> D) By accepting whatever price is posted first.</label>
-                </div>
-                <div class="quiz-feedback" id="m4_f4"></div>
-            </div>
-            <div class="question-box" data-q="5" data-ans="B">
-                <div class="question-title">5. What is the function of a factoring company in the trucking industry?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m4_q5" value="A"> A) They drive freight trucks across state lines.</label>
-                    <label class="option-label"><input type="radio" name="m4_q5" value="B"> B) They purchase freight bills and advance cash to carriers immediately before the broker pays.</label>
-                    <label class="option-label"><input type="radio" name="m4_q5" value="C"> C) They manufacture tires and engine parts.</label>
-                    <label class="option-label"><input type="radio" name="m4_q5" value="D"> D) They issue driver commercial driver licenses (CDLs).</label>
-                </div>
-                <div class="quiz-feedback" id="m4_f5"></div>
-            </div>
-        </div>
-        <div style="margin-top: 20px; display: flex; align-items: center;">
-            <button class="submit-module-btn" onclick="gradeQuiz(4, 5)">Grade Knowledge Check</button>
-            <span class="module-score-display" id="score-display-4"></span>
+        <div class="rating-row">
+            <span>Your delivery:</span>
+            <button class="star-btn" onclick="rate(this,1,1)">1</button>
+            <button class="star-btn" onclick="rate(this,1,2)">2</button>
+            <button class="star-btn" onclick="rate(this,1,3)">3</button>
+            <button class="star-btn" onclick="rate(this,1,4)">4</button>
+            <button class="star-btn" onclick="rate(this,1,5)">5</button>
         </div>
     </div>
+
+    <div class="objection-card" data-id="2">
+        <h4>2. “Your fee is too high.”</h4>
+        <div class="rebuttal">
+            <strong>Response:</strong> “I completely understand. Most carriers only pay me when I put money in their pocket. If I can’t beat what you’re currently averaging, you simply don’t use me. Fair?”
+        </div>
+        <div class="rating-row">
+            <span>Your delivery:</span>
+            <button class="star-btn" onclick="rate(this,2,1)">1</button>
+            <button class="star-btn" onclick="rate(this,2,2)">2</button>
+            <button class="star-btn" onclick="rate(this,2,3)">3</button>
+            <button class="star-btn" onclick="rate(this,2,4)">4</button>
+            <button class="star-btn" onclick="rate(this,2,5)">5</button>
+        </div>
+    </div>
+
+    <div class="objection-card" data-id="3">
+        <h4>3. “I’m already working with another dispatcher.”</h4>
+        <div class="rebuttal">
+            <strong>Response:</strong> “No problem at all. A lot of carriers keep a backup. I’m happy to be second string — sometimes the primary goes quiet and you still need loads. Can I send the packet just in case?”
+        </div>
+        <div class="rating-row">
+            <span>Your delivery:</span>
+            <button class="star-btn" onclick="rate(this,3,1)">1</button>
+            <button class="star-btn" onclick="rate(this,3,2)">2</button>
+            <button class="star-btn" onclick="rate(this,3,3)">3</button>
+            <button class="star-btn" onclick="rate(this,3,4)">4</button>
+            <button class="star-btn" onclick="rate(this,3,5)">5</button>
+        </div>
+    </div>
+
+    <div class="objection-card" data-id="4">
+        <h4>4. “I don’t trust dispatchers.”</h4>
+        <div class="rebuttal">
+            <strong>Response:</strong> “I hear that a lot. That’s why everything is in writing — Limited POA, clear fee, and you keep full control of your authority and money. The packet shows exactly how the relationship works.”
+        </div>
+        <div class="rating-row">
+            <span>Your delivery:</span>
+            <button class="star-btn" onclick="rate(this,4,1)">1</button>
+            <button class="star-btn" onclick="rate(this,4,2)">2</button>
+            <button class="star-btn" onclick="rate(this,4,3)">3</button>
+            <button class="star-btn" onclick="rate(this,4,4)">4</button>
+            <button class="star-btn" onclick="rate(this,4,5)">5</button>
+        </div>
+    </div>
+
+    <div class="objection-card" data-id="5">
+        <h4>5. “Send me info and I’ll look later.”</h4>
+        <div class="rebuttal">
+            <strong>Response:</strong> “Absolutely. I’ll send it right now. What email should I use, and is there a good time tomorrow for a 5-minute follow-up so I can answer any questions?”
+        </div>
+        <div class="rating-row">
+            <span>Your delivery:</span>
+            <button class="star-btn" onclick="rate(this,5,1)">1</button>
+            <button class="star-btn" onclick="rate(this,5,2)">2</button>
+            <button class="star-btn" onclick="rate(this,5,3)">3</button>
+            <button class="star-btn" onclick="rate(this,5,4)">4</button>
+            <button class="star-btn" onclick="rate(this,5,5)">5</button>
+        </div>
+    </div>
+
+    <div class="objection-card" data-id="6">
+        <h4>6. “I’m not interested.”</h4>
+        <div class="rebuttal">
+            <strong>Response:</strong> “No worries at all. If anything changes or you ever want a second set of eyes on rates, I’m here. Have a safe week on the road.”
+        </div>
+        <div class="rating-row">
+            <span>Your delivery:</span>
+            <button class="star-btn" onclick="rate(this,6,1)">1</button>
+            <button class="star-btn" onclick="rate(this,6,2)">2</button>
+            <button class="star-btn" onclick="rate(this,6,3)">3</button>
+            <button class="star-btn" onclick="rate(this,6,4)">4</button>
+            <button class="star-btn" onclick="rate(this,6,5)">5</button>
+        </div>
+    </div>
+
+    <!-- SCORECARD -->
+    <div class="scorecard">
+        <h3>Self-Scoring Scorecard</h3>
+        <div class="score-item"><span class="label">1. “I already dispatch myself”</span><span class="value" id="s1">—</span></div>
+        <div class="score-item"><span class="label">2. “Your fee is too high”</span><span class="value" id="s2">—</span></div>
+        <div class="score-item"><span class="label">3. “I’m already working with another dispatcher”</span><span class="value" id="s3">—</span></div>
+        <div class="score-item"><span class="label">4. “I don’t trust dispatchers”</span><span class="value" id="s4">—</span></div>
+        <div class="score-item"><span class="label">5. “Send me info and I’ll look later”</span><span class="value" id="s5">—</span></div>
+        <div class="score-item"><span class="label">6. “I’m not interested”</span><span class="value" id="s6">—</span></div>
+        <div class="total-row">
+            <span>Average Score</span>
+            <span id="avgScore">—</span>
+        </div>
+    </div>
+
+    <div class="actions">
+        <button class="btn" onclick="calculateScore()">Calculate Average</button>
+        <button class="btn secondary" onclick="resetScores()">Reset Ratings</button>
+    </div>
+
+    <div class="result-msg" id="resultMsg"></div>
 </div>
 
 <script>
-    function gradeQuiz(modIdx, totalQ) {
-        let score = 0;
-        const container = document.getElementById(`quiz-deck-${modIdx}`);
-        
-        for (let i = 1; i <= totalQ; i++) {
-            const qBox = container.querySelector(`.question-box[data-q="${i}"]`);
-            const correctAns = qBox.getAttribute('data-ans');
-            const selected = qBox.querySelector(`input[name="m4_q${i}"]:checked`);
-            const feedbackEl = document.getElementById(`m4_f${i}`);
-            
-            feedbackEl.style.display = 'block';
-            if (selected && selected.value === correctAns) {
-                score++;
-                feedbackEl.innerText = "✓ Correct! Professional standard verified.";
-                feedbackEl.className = "quiz-feedback correct";
-            } else {
-                feedbackEl.innerText = `✕ Incorrect. The correct answer is option ${correctAns}.`;
-                feedbackEl.className = "quiz-feedback incorrect";
-            }
-        }
+    const scores = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
 
-        const scoreDisplay = document.getElementById(`score-display-${modIdx}`);
-        const percentage = Math.round((score / totalQ) * 100);
-        
-        if (score === totalQ) {
-            scoreDisplay.style.color = "var(--success)";
-            scoreDisplay.innerText = `Score: ${score}/${totalQ} (${percentage}%) - Mastered!`;
+    function rate(btn, id, value) {
+        const card = btn.closest('.objection-card');
+        card.querySelectorAll('.star-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        scores[id] = value;
+        document.getElementById('s' + id).textContent = value + ' / 5';
+    }
+
+    function calculateScore() {
+        const values = Object.values(scores);
+        const filled = values.filter(v => v > 0);
+        if (filled.length < 6) {
+            alert('Please rate all 6 objections before calculating.');
+            return;
+        }
+        const avg = (filled.reduce((a, b) => a + b, 0) / filled.length).toFixed(1);
+        document.getElementById('avgScore').textContent = avg + ' / 5';
+
+        const msg = document.getElementById('resultMsg');
+        msg.classList.add('show');
+        if (avg >= 4) {
+            msg.className = 'result-msg show pass';
+            msg.innerHTML = `<strong>Ready for live calls.</strong> Your average of ${avg} shows solid delivery. Keep practicing the weaker ones and start outreach.`;
         } else {
-            scoreDisplay.style.color = "var(--error)";
-            scoreDisplay.innerText = `Score: ${score}/${totalQ} (${percentage}%) - Review material & retry.`;
+            msg.className = 'result-msg show fail';
+            msg.innerHTML = `<strong>Keep practicing.</strong> Your average is ${avg}. Aim for 4.0 or higher. Re-record the lower-scoring objections until they feel natural.`;
         }
     }
-</script>
 
+    function resetScores() {
+        Object.keys(scores).forEach(k => {
+            scores[k] = 0;
+            document.getElementById('s' + k).textContent = '—';
+        });
+        document.querySelectorAll('.star-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('avgScore').textContent = '—';
+        document.getElementById('resultMsg').classList.remove('show');
+    }
+</script>
 </body>
 </html>

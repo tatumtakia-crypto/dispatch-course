@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Knowledge Check | Crown Access</title>
+    <title>Launch Readiness Capstone | Freight Dispatcher Training</title>
     <style>
         :root {
             --bg-color: #0b0f19;
@@ -13,56 +13,51 @@
             --text-muted: #9ca3af;
             --primary: #3b82f6;
             --primary-hover: #2563eb;
-            --success: #22c55e;
-            --error: #ef4444;
+            --accent: #8b5cf6;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
         }
+
+        * { box-sizing: border-box; }
 
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
             margin: 0;
-            padding: 20px;
+            padding: 30px 20px;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: center;
             min-height: 100vh;
         }
 
-        .master-container {
+        .wrapper {
             width: 100%;
-            max-width: 1050px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .deck-viewport {
-            background-color: var(--slide-bg);
+            max-width: 860px;
+            background: var(--slide-bg);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-            display: flex;
-            flex-direction: column;
-            padding: 40px;
+            padding: 32px;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
         }
 
-        .slide-header {
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 15px;
-            margin-bottom: 25px;
+            padding-bottom: 16px;
+            margin-bottom: 24px;
         }
 
-        .slide-header h2 {
+        .header h1 {
             margin: 0;
-            font-size: 1.3rem;
+            font-size: 1.35rem;
             color: #60a5fa;
         }
 
-        .duration-badge {
+        .badge {
             background: rgba(139, 92, 246, 0.15);
             color: #c084fc;
             padding: 4px 12px;
@@ -72,198 +67,433 @@
             border: 1px solid rgba(139, 92, 246, 0.3);
         }
 
-        .quiz-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            overflow-y: auto;
-            max-height: 480px;
-            padding-right: 10px;
+        .intro {
+            background: rgba(139, 92, 246, 0.12);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 10px;
+            padding: 16px 18px;
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+            margin-bottom: 28px;
         }
 
-        .question-box {
+        .intro strong { color: #c084fc; }
+
+        h3 {
+            color: #60a5fa;
+            font-size: 1.05rem;
+            margin: 28px 0 14px;
+        }
+
+        .section-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #c084fc;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        /* Checklist groups */
+        .check-group {
             background: #1f2937;
             border: 1px solid var(--border-color);
-            padding: 18px;
-            border-radius: 10px;
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-bottom: 16px;
         }
 
-        .question-title {
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--text-main);
+        .check-group h4 {
+            margin: 0 0 12px;
             font-size: 0.95rem;
+            color: var(--text-main);
         }
 
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        .option-label {
+        .check-item {
             display: flex;
-            align-items: flex-start;
-            gap: 8px;
-            background: #111827;
-            padding: 9px;
-            border-radius: 6px;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
             cursor: pointer;
-            border: 1px solid transparent;
+        }
+
+        .check-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--success);
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .check-item label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            line-height: 1.4;
+        }
+
+        .check-item.done label {
+            color: #6ee7b7;
+        }
+
+        /* Progress */
+        .progress-bar {
+            height: 12px;
+            background: #1f2937;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--success));
+            border-radius: 6px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .progress-text {
             font-size: 0.85rem;
             color: var(--text-muted);
-            transition: all 0.2s;
+            margin-bottom: 24px;
         }
 
-        .option-label:hover {
-            border-color: var(--primary);
-            color: var(--text-main);
+        /* Action Plan */
+        .plan-grid {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 10px;
+            margin-bottom: 24px;
         }
 
-        .option-label input {
-            accent-color: var(--primary);
-            margin-top: 3px;
-        }
-
-        .quiz-feedback {
-            margin-top: 8px;
-            font-size: 0.85rem;
+        .plan-day {
+            background: #1f2937;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
             font-weight: 600;
-            display: none;
+            font-size: 0.85rem;
+            color: #60a5fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .quiz-feedback.correct { color: #4ade80; }
-        .quiz-feedback.incorrect { color: #f87171; }
+        .plan-input {
+            background: #1f2937;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px 12px;
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 0.88rem;
+            width: 100%;
+            resize: none;
+            min-height: 42px;
+        }
 
-        .submit-module-btn {
-            background: var(--success);
+        .plan-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Commitment */
+        .commitment-box {
+            background: #1f2937;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .commitment-box p {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+            margin: 0 0 16px;
+            font-style: italic;
+        }
+
+        .commitment-box input[type="text"] {
+            width: 100%;
+            background: #111827;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px 12px;
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .commitment-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .btn {
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 10px 24px;
+            padding: 12px 28px;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
-            transition: opacity 0.2s;
+            font-size: 0.95rem;
+            transition: background 0.2s;
         }
 
-        .submit-module-btn:hover {
-            opacity: 0.9;
+        .btn:hover { background: var(--primary-hover); }
+
+        .btn.secondary {
+            background: #374151;
         }
 
-        .module-score-display {
-            margin-left: 15px;
-            font-weight: 600;
+        .btn.secondary:hover { background: #4b5563; }
+
+        .btn:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        .result-panel {
+            display: none;
+            margin-top: 28px;
+            background: linear-gradient(135deg, rgba(16,185,129,0.12), rgba(59,130,246,0.12));
+            border: 1px solid rgba(16,185,129,0.35);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .result-panel.show {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-panel h2 {
+            margin: 0 0 8px;
+            color: #6ee7b7;
+            font-size: 1.4rem;
+        }
+
+        .result-panel p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin: 0 0 16px;
+        }
+
+        .result-panel .stamp {
+            display: inline-block;
+            padding: 8px 20px;
+            border: 2px solid #6ee7b7;
+            border-radius: 8px;
+            color: #6ee7b7;
+            font-weight: 700;
             font-size: 0.9rem;
+            letter-spacing: 0.05em;
         }
 
-        @media(max-width: 768px) {
-            .options-grid {
-                grid-template-columns: 1fr;
-            }
+        @media (max-width: 600px) {
+            .header { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .plan-grid { grid-template-columns: 60px 1fr; }
         }
     </style>
 </head>
 <body>
+<div class="wrapper">
+    <div class="header">
+        <h1>Launch Readiness Capstone</h1>
+        <span class="badge">Final Graduation Gate</span>
+    </div>
 
-<div class="master-container">
-    <div class="deck-viewport">
-        <div class="slide-header">
-            <h2>Module 7: Master Certification Exam</h2>
-            <span class="duration-badge">Final Assessment</span>
+    <div class="intro">
+        <strong>This is your final checkpoint.</strong> Complete every item on the launch checklist, fill in your 7-day action plan, and sign the commitment statement. When everything is done, you will unlock your “Ready to Launch” confirmation.
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-text" id="progressText">0 of 16 checklist items complete</div>
+
+    <!-- PART A: CHECKLIST -->
+    <h3>Part A — Launch Checklist</h3>
+
+    <div class="check-group">
+        <h4>Legal & Admin</h4>
+        <div class="check-item" onclick="toggle(this)">
+            <input type="checkbox" id="a1"><label for="a1">LLC formed</label>
         </div>
-        <div class="quiz-container" id="quiz-deck-6">
-            <div class="question-box" data-q="1" data-ans="B">
-                <div class="question-title">1. What document serves as legal proof of load delivery and is required to get paid?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m6_q1" value="A"> A) A billboard advertisement.</label>
-                    <label class="option-label"><input type="radio" name="m6_q1" value="B"> B) The signed Bill of Lading (BOL).</label>
-                    <label class="option-label"><input type="radio" name="m6_q1" value="C"> C) A real estate deed.</label>
-                    <label class="option-label"><input type="radio" name="m6_q1" value="D"> D) A vehicle registration card.</label>
-                </div>
-                <div class="quiz-feedback" id="m6_f1"></div>
-            </div>
-            <div class="question-box" data-q="2" data-ans="A">
-                <div class="question-title">2. Why is tracking accounts receivable important for an independent dispatcher?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m6_q2" value="A"> A) To ensure completed loads are invoiced and your dispatch commissions are paid on time.</label>
-                    <label class="option-label"><input type="radio" name="m6_q2" value="B"> B) To calculate truck tire pressure.</label>
-                    <label class="option-label"><input type="radio" name="m6_q2" value="C"> C) To design marketing flyers.</label>
-                    <label class="option-label"><input type="radio" name="m6_q2" value="D"> D) To register new LLC entities.</label>
-                </div>
-                <div class="quiz-feedback" id="m6_f2"></div>
-            </div>
-            <div class="question-box" data-q="3" data-ans="B">
-                <div class="question-title">3. What is a key milestone when scaling from a solo dispatcher to an agency?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m6_q3" value="A"> A) Stopping all communication with carriers.</label>
-                    <label class="option-label"><input type="radio" name="m6_q3" value="B"> B) Hiring and training associate dispatchers to manage expanding carrier rosters.</label>
-                    <label class="option-label"><input type="radio" name="m6_q3" value="C"> C) Driving semi-trucks across the country yourself.</label>
-                    <label class="option-label"><input type="radio" name="m6_q3" value="D"> D) Eliminating all computer software.</label>
-                </div>
-                <div class="quiz-feedback" id="m6_f3"></div>
-            </div>
-            <div class="question-box" data-q="4" data-ans="B">
-                <div class="question-title">4. What activities should anchor a dispatcher's daily morning routine?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m6_q4" value="A"> A) Sleeping until noon.</label>
-                    <label class="option-label"><input type="radio" name="m6_q4" value="B"> B) Scanning loadboards, checking carrier truck locations, and pitching new prospects.</label>
-                    <label class="option-label"><input type="radio" name="m6_q4" value="C"> C) Closing the business permanently.</label>
-                    <label class="option-label"><input type="radio" name="m6_q4" value="D"> D) Auditing highway rest stops.</label>
-                </div>
-                <div class="quiz-feedback" id="m6_f4"></div>
-            </div>
-            <div class="question-box" data-q="5" data-ans="A">
-                <div class="question-title">5. What does earning certification as a Certified Freight Dispatcher Professional signify?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m6_q5" value="A"> A) Mastery of dispatching fundamentals, loadboard navigation, rate negotiation, and agency operations.</label>
-                    <label class="option-label"><input type="radio" name="m6_q5" value="B"> B) Authorization to fly commercial airplanes.</label>
-                    <label class="option-label"><input type="radio" name="m6_q5" value="C"> C) Completion of real estate brokerage exams.</label>
-                    <label class="option-label"><input type="radio" name="m6_q5" value="D"> D) Ownership of a freight brokerage bond.</label>
-                </div>
-                <div class="quiz-feedback" id="m6_f5"></div>
-            </div>
+        <div class="check-item" onclick="toggle(this)">
+            <input type="checkbox" id="a2"><label for="a2">EIN obtained</label>
         </div>
-        <div style="margin-top: 20px; display: flex; align-items: center;">
-            <button class="submit-module-btn" onclick="gradeQuiz(6, 5)">Complete Master Exam & Certify</button>
-            <span class="module-score-display" id="score-display-6"></span>
+        <div class="check-item" onclick="toggle(this)">
+            <input type="checkbox" id="a3"><label for="a3">Business bank account opened</label>
         </div>
+        <div class="check-item" onclick="toggle(this)">
+            <input type="checkbox" id="a4"><label for="a4">Professional email + domain live</label>
+        </div>
+    </div>
+
+    <div class="check-group">
+        <h4>Brand & Materials</h4>
+        <div class="check-item" onclick="toggle(this)">
+            <input type="checkbox" id="b1"><label for="b1">Business cards / digital card ready</label>
+        </div>
+        <div class="check-item" onclick="toggle(this)">
+            <input type="checkbox" id="b2"><label for="b2">Simple one-page service sheet or website</label>
+        </div>
+        <div class="check-item" onclick="toggle(this)">
+            <input type="checkbox" id="b3"><label for="b3">Carrier packet (Agreement + POA) finalized</label>
+        </div>
+    </div>
+
+    <div class="check-group">
+        <h4>Systems</h4>
+        <div class="check-item" onclick="toggle(this)">
+            <input type="checkbox" id="c1"><label for="c1">Google Drive / Dropbox structure created</label>
+        </div>
+        <div class="check-item" onclick="toggle(this)">
+            <input type="checkbox" id="c2"><label for="c2">VoIP number active</label>
+        </div>
+        <div class="check-item" onclick="toggle(this)">
+            <input type="checkbox" id="c3"><label for="c3">E-signature tool set up</label>
+        </div>
+        <div class="check-item" onclick="toggle(this)">
+            <input type="checkbox" id="c4"><label for="c4">Load board access plan ready</label>
+        </div>
+    </div>
+
+    <div class="check-group">
+        <h4>First Clients</h4>
+        <div class="check-item" onclick="toggle(this)">
+            <input type="checkbox" id="d1"><label for="d1">Target niche chosen (equipment + geography)</label>
+        </div>
+        <div class="check-item" onclick="toggle(this)">
+            <input type="checkbox" id="d2"><label for="d2">List of at least 10 target carriers prepared</label>
+        </div>
+        <div class="check-item" onclick="toggle(this)">
+            <input type="checkbox" id="d3"><label for="d3">Cold-call / outreach script practiced</label>
+        </div>
+        <div class="check-item" onclick="toggle(this)">
+            <input type="checkbox" id="d4"><label for="d4">Objection handling practiced (score 4+ average)</label>
+        </div>
+        <div class="check-item" onclick="toggle(this)">
+            <input type="checkbox" id="d5"><label for="d5">Ratecon audit skills confirmed</label>
+        </div>
+    </div>
+
+    <!-- PART B: 7-DAY PLAN -->
+    <h3>Part B — 7-Day Launch Action Plan</h3>
+    <p style="color:var(--text-muted);font-size:0.88rem;margin:-6px 0 14px;">Write the specific actions you will take each day after you complete this capstone.</p>
+
+    <div class="plan-grid">
+        <div class="plan-day">Day 1</div>
+        <textarea class="plan-input" id="day1" placeholder="e.g. Finalize LLC docs, open bank account..."></textarea>
+        <div class="plan-day">Day 2</div>
+        <textarea class="plan-input" id="day2" placeholder="e.g. Set up domain + email, create Drive structure..."></textarea>
+        <div class="plan-day">Day 3</div>
+        <textarea class="plan-input" id="day3" placeholder="e.g. Finalize carrier packet, practice scripts..."></textarea>
+        <div class="plan-day">Day 4</div>
+        <textarea class="plan-input" id="day4" placeholder="e.g. Build list of 10 target carriers..."></textarea>
+        <div class="plan-day">Day 5</div>
+        <textarea class="plan-input" id="day5" placeholder="e.g. Begin outreach / cold calls..."></textarea>
+        <div class="plan-day">Day 6</div>
+        <textarea class="plan-input" id="day6" placeholder="e.g. Follow up, send packets..."></textarea>
+        <div class="plan-day">Day 7</div>
+        <textarea class="plan-input" id="day7" placeholder="e.g. Review results, book first load..."></textarea>
+    </div>
+
+    <!-- PART C: COMMITMENT -->
+    <h3>Part C — Commitment Statement</h3>
+    <div class="commitment-box">
+        <p>“I have completed the 3-day training, practiced the core skills, and prepared the systems above. I am ready to begin outreach and take on my first carriers under the processes taught in this course.”</p>
+        <input type="text" id="signName" placeholder="Type your full name">
+        <input type="text" id="signDate" placeholder="Date (e.g. November 15, 2026)">
+    </div>
+
+    <div class="actions">
+        <button class="btn" id="submitBtn" onclick="submitCapstone()" disabled>Submit Capstone</button>
+        <button class="btn secondary" onclick="resetAll()">Reset All</button>
+    </div>
+
+    <div class="result-panel" id="resultPanel">
+        <h2>Ready to Launch</h2>
+        <p>You have completed every requirement of the Launch Readiness Capstone. You now have the full operating system to run a professional independent dispatch agency.</p>
+        <div class="stamp">GRADUATED • READY TO LAUNCH</div>
     </div>
 </div>
 
 <script>
-    function gradeQuiz(modIdx, totalQ) {
-        let score = 0;
-        const container = document.getElementById(`quiz-deck-${modIdx}`);
-        
-        for (let i = 1; i <= totalQ; i++) {
-            const qBox = container.querySelector(`.question-box[data-q="${i}"]`);
-            const correctAns = qBox.getAttribute('data-ans');
-            const selected = qBox.querySelector(`input[name="m6_q${i}"]:checked`);
-            const feedbackEl = document.getElementById(`m6_f${i}`);
-            
-            feedbackEl.style.display = 'block';
-            if (selected && selected.value === correctAns) {
-                score++;
-                feedbackEl.innerText = "✓ Correct! Professional standard verified.";
-                feedbackEl.className = "quiz-feedback correct";
-            } else {
-                feedbackEl.innerText = `✕ Incorrect. The correct answer is option ${correctAns}.`;
-                feedbackEl.className = "quiz-feedback incorrect";
-            }
-        }
+    const totalItems = 16;
 
-        const scoreDisplay = document.getElementById(`score-display-${modIdx}`);
-        const percentage = Math.round((score / totalQ) * 100);
-        
-        if (score === totalQ) {
-            scoreDisplay.style.color = "var(--success)";
-            scoreDisplay.innerText = `Score: ${score}/${totalQ} (${percentage}%) - Mastered!`;
-        } else {
-            scoreDisplay.style.color = "var(--error)";
-            scoreDisplay.innerText = `Score: ${score}/${totalQ} (${percentage}%) - Review material & retry.`;
+    function toggle(item) {
+        const checkbox = item.querySelector('input[type="checkbox"]');
+        if (event.target !== checkbox) {
+            checkbox.checked = !checkbox.checked;
         }
+        item.classList.toggle('done', checkbox.checked);
+        updateProgress();
+    }
+
+    document.querySelectorAll('.check-item input').forEach(cb => {
+        cb.addEventListener('click', function(e) {
+            e.stopPropagation();
+            this.closest('.check-item').classList.toggle('done', this.checked);
+            updateProgress();
+        });
+    });
+
+    function updateProgress() {
+        const done = document.querySelectorAll('.check-item.done').length;
+        const pct = Math.round((done / totalItems) * 100);
+        document.getElementById('progressFill').style.width = pct + '%';
+        document.getElementById('progressText').textContent = `${done} of ${totalItems} checklist items complete`;
+
+        // Enable submit only when all checked + name filled
+        const name = document.getElementById('signName').value.trim();
+        document.getElementById('submitBtn').disabled = !(done === totalItems && name.length > 1);
+    }
+
+    document.getElementById('signName').addEventListener('input', updateProgress);
+
+    function submitCapstone() {
+        const done = document.querySelectorAll('.check-item.done').length;
+        const name = document.getElementById('signName').value.trim();
+        if (done < totalItems || !name) {
+            alert('Please complete every checklist item and type your name before submitting.');
+            return;
+        }
+        document.getElementById('resultPanel').classList.add('show');
+        document.getElementById('resultPanel').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function resetAll() {
+        document.querySelectorAll('.check-item').forEach(item => {
+            item.classList.remove('done');
+            item.querySelector('input').checked = false;
+        });
+        document.querySelectorAll('.plan-input').forEach(t => t.value = '');
+        document.getElementById('signName').value = '';
+        document.getElementById('signDate').value = '';
+        document.getElementById('resultPanel').classList.remove('show');
+        updateProgress();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 </script>
-
 </body>
 </html>
