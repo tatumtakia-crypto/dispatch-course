@@ -15,12 +15,8 @@
             --primary-hover: #2563eb;
             --accent: #8b5cf6;
             --success: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
         }
-
         * { box-sizing: border-box; }
-
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: var(--bg-color);
@@ -31,7 +27,6 @@
             justify-content: center;
             min-height: 100vh;
         }
-
         .wrapper {
             width: 100%;
             max-width: 860px;
@@ -41,7 +36,6 @@
             padding: 32px;
             box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
         }
-
         .header {
             display: flex;
             justify-content: space-between;
@@ -50,13 +44,7 @@
             padding-bottom: 16px;
             margin-bottom: 24px;
         }
-
-        .header h1 {
-            margin: 0;
-            font-size: 1.35rem;
-            color: #60a5fa;
-        }
-
+        .header h1 { margin: 0; font-size: 1.35rem; color: #60a5fa; }
         .badge {
             background: rgba(139, 92, 246, 0.15);
             color: #c084fc;
@@ -66,7 +54,6 @@
             font-weight: 600;
             border: 1px solid rgba(139, 92, 246, 0.3);
         }
-
         .intro {
             background: rgba(139, 92, 246, 0.12);
             border: 1px solid rgba(139, 92, 246, 0.3);
@@ -77,16 +64,8 @@
             line-height: 1.55;
             margin-bottom: 28px;
         }
-
         .intro strong { color: #c084fc; }
-
-        h3 {
-            color: #60a5fa;
-            font-size: 1.05rem;
-            margin: 28px 0 14px;
-        }
-
-        /* Folder Structure */
+        h3 { color: #60a5fa; font-size: 1.05rem; margin: 28px 0 14px; }
         .folder-tree {
             background: #1f2937;
             border: 1px solid var(--border-color);
@@ -99,19 +78,10 @@
             margin-bottom: 24px;
             overflow-x: auto;
         }
-
         .folder-tree .folder { color: #60a5fa; }
         .folder-tree .file { color: #9ca3af; }
         .folder-tree .indent { padding-left: 20px; }
-
-        /* Checklist */
-        .checklist {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 24px;
-        }
-
+        .checklist { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
         .check-item {
             background: #1f2937;
             border: 1px solid var(--border-color);
@@ -123,142 +93,75 @@
             transition: all 0.2s;
             cursor: pointer;
         }
-
-        .check-item:hover {
-            border-color: var(--primary);
-        }
-
-        .check-item.done {
-            border-color: var(--success);
-            background: rgba(16, 185, 129, 0.08);
-        }
-
+        .check-item:hover { border-color: var(--primary); }
+        .check-item.done { border-color: var(--success); background: rgba(16, 185, 129, 0.08); }
         .check-item input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            accent-color: var(--success);
-            flex-shrink: 0;
-            cursor: pointer;
+            width: 20px; height: 20px; accent-color: var(--success); flex-shrink: 0; cursor: pointer;
         }
-
-        .check-item label {
-            flex: 1;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            cursor: pointer;
-            line-height: 1.4;
-        }
-
-        .check-item.done label {
-            color: #6ee7b7;
-        }
-
-        /* Template Cards */
+        .check-item label { flex: 1; font-size: 0.9rem; color: var(--text-muted); cursor: pointer; line-height: 1.4; }
+        .check-item.done label { color: #6ee7b7; }
         .template-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 14px;
             margin-bottom: 24px;
         }
-
         .template-card {
             background: #1f2937;
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 18px;
             transition: border-color 0.2s;
-        }
-
-        .template-card:hover {
-            border-color: var(--primary);
-        }
-
-        .template-card h4 {
-            margin: 0 0 8px;
-            font-size: 0.95rem;
-            color: var(--text-main);
-        }
-
-        .template-card p {
-            margin: 0;
-            font-size: 0.82rem;
-            color: var(--text-muted);
-            line-height: 1.45;
-        }
-
-        .template-card .tag {
-            display: inline-block;
-            margin-top: 10px;
-            font-size: 0.72rem;
-            padding: 3px 8px;
-            border-radius: 4px;
-            background: rgba(59, 130, 246, 0.15);
-            color: #60a5fa;
-        }
-
-        /* Progress */
-        .progress-bar {
-            height: 10px;
-            background: #1f2937;
-            border-radius: 5px;
-            overflow: hidden;
-            margin-bottom: 8px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: var(--success);
-            border-radius: 5px;
-            transition: width 0.3s ease;
-            width: 0%;
-        }
-
-        .progress-text {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-        }
-
-        .actions {
             display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-top: 20px;
+            flex-direction: column;
         }
-
+        .template-card:hover { border-color: var(--primary); }
+        .template-card h4 { margin: 0 0 8px; font-size: 0.95rem; color: var(--text-main); }
+        .template-card p { margin: 0 0 12px; font-size: 0.82rem; color: var(--text-muted); line-height: 1.45; flex: 1; }
+        .template-card .card-footer {
+            display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto;
+        }
+        .template-card .tag {
+            display: inline-block; font-size: 0.72rem; padding: 3px 8px; border-radius: 4px;
+            background: rgba(59, 130, 246, 0.15); color: #60a5fa;
+        }
+        .template-card .tag.official { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; }
+        .download-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: var(--primary); color: white; text-decoration: none;
+            padding: 7px 12px; border-radius: 6px; font-size: 0.78rem; font-weight: 600;
+            transition: background 0.2s; white-space: nowrap;
+        }
+        .download-btn:hover { background: var(--primary-hover); }
+        .progress-bar { height: 10px; background: #1f2937; border-radius: 5px; overflow: hidden; margin-bottom: 8px; }
+        .progress-fill { height: 100%; background: var(--success); border-radius: 5px; transition: width 0.3s ease; width: 0%; }
+        .progress-text { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; }
+        .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
         .btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 0.95rem;
-            transition: background 0.2s;
+            background: var(--primary); color: white; border: none; padding: 12px 28px;
+            border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.95rem; transition: background 0.2s;
         }
-
         .btn:hover { background: var(--primary-hover); }
-
-        .btn.secondary {
-            background: #374151;
-        }
-
+        .btn.secondary { background: #374151; }
         .btn.secondary:hover { background: #4b5563; }
-
         .complete-msg {
-            display: none;
-            margin-top: 20px;
-            padding: 16px 18px;
-            border-radius: 10px;
-            background: rgba(16, 185, 129, 0.12);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            color: #6ee7b7;
-            font-size: 0.92rem;
+            display: none; margin-top: 20px; padding: 16px 18px; border-radius: 10px;
+            background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #6ee7b7; font-size: 0.92rem;
         }
-
         .complete-msg.show { display: block; }
-
+        .all-downloads {
+            background: #1f2937; border: 1px solid var(--border-color);
+            border-radius: 12px; padding: 16px 18px; margin-bottom: 24px;
+        }
+        .all-downloads h4 { margin: 0 0 10px; font-size: 0.9rem; color: var(--text-main); }
+        .all-downloads .links { display: flex; flex-wrap: wrap; gap: 8px; }
+        .all-downloads a {
+            font-size: 0.78rem; color: #60a5fa; text-decoration: none;
+            padding: 4px 10px; background: rgba(59, 130, 246, 0.1);
+            border-radius: 4px; border: 1px solid rgba(59, 130, 246, 0.25);
+        }
+        .all-downloads a:hover { background: rgba(59, 130, 246, 0.2); }
         @media (max-width: 600px) {
             .template-grid { grid-template-columns: 1fr; }
             .header { flex-direction: column; align-items: flex-start; gap: 10px; }
@@ -273,7 +176,20 @@
     </div>
 
     <div class="intro">
-        <strong>Use this toolkit</strong> every time you onboard a new carrier. Set up the folder structure, collect every required document, and check off each step. Nothing gets booked until the packet is complete.
+        <strong>Use this toolkit</strong> every time you onboard a new carrier. Download the PDF templates, set up the folder structure, collect every required document, and check off each step. Nothing gets booked until the packet is complete.
+    </div>
+
+    <div class="all-downloads">
+        <h4>All PDF Downloads</h4>
+        <div class="links">
+            <a href="Dispatch-Agreement-Template.pdf" download>Dispatch Agreement</a>
+            <a href="Limited-Power-of-Attorney-Template.pdf" download>Limited POA</a>
+            <a href="Form-W9-IRS.pdf" download>IRS Form W-9</a>
+            <a href="COI-Requirements-Cheat-Sheet.pdf" download>COI Cheat Sheet</a>
+            <a href="Factoring-NOA-Guide.pdf" download>Factoring NOA Guide</a>
+            <a href="Welcome-Email-Template.pdf" download>Welcome Email</a>
+            <a href="Carrier-Onboarding-Checklist.pdf" download>Onboarding Checklist</a>
+        </div>
     </div>
 
     <h3>Recommended Folder Structure</h3>
@@ -294,41 +210,67 @@
         <div class="indent folder">📁 06 – Invoices (your dispatch invoices)</div>
     </div>
 
-    <h3>Documents You Need in the Toolkit</h3>
+    <h3>Documents &amp; Templates — Download Each</h3>
     <div class="template-grid">
         <div class="template-card">
             <h4>Dispatch Agreement</h4>
-            <p>Services, fee percentage, responsibilities, payment terms, and termination clause.</p>
-            <span class="tag">Required</span>
+            <p>Services, fee percentage, responsibilities, payment terms, and termination clause. Customize with legal counsel before use.</p>
+            <div class="card-footer">
+                <span class="tag">Required</span>
+                <a class="download-btn" href="Dispatch-Agreement-Template.pdf" download>⬇ Download PDF</a>
+            </div>
         </div>
         <div class="template-card">
             <h4>Limited Power of Attorney</h4>
-            <p>Authorizes you to book loads and sign Ratecons only — no ownership transfer.</p>
-            <span class="tag">Required</span>
+            <p>Authorizes you to book loads and sign Ratecons only — no ownership transfer. Keep scope strictly limited.</p>
+            <div class="card-footer">
+                <span class="tag">Required</span>
+                <a class="download-btn" href="Limited-Power-of-Attorney-Template.pdf" download>⬇ Download PDF</a>
+            </div>
+        </div>
+        <div class="template-card">
+            <h4>IRS Form W-9</h4>
+            <p>Official IRS Request for Taxpayer Identification Number and Certification (Rev. March 2024). Carrier must complete and return.</p>
+            <div class="card-footer">
+                <span class="tag official">Official IRS</span>
+                <a class="download-btn" href="Form-W9-IRS.pdf" download>⬇ Download PDF</a>
+            </div>
         </div>
         <div class="template-card">
             <h4>COI Requirements Sheet</h4>
-            <p>$1M Auto Liability + minimum $100k Cargo. Always verify limits before high-value freight.</p>
-            <span class="tag">Reference</span>
+            <p>$1M Auto Liability + minimum $100k Cargo. Always verify limits before high-value freight. Includes the $100k cargo trap warning.</p>
+            <div class="card-footer">
+                <span class="tag">Reference</span>
+                <a class="download-btn" href="COI-Requirements-Cheat-Sheet.pdf" download>⬇ Download PDF</a>
+            </div>
+        </div>
+        <div class="template-card">
+            <h4>Factoring NOA Guide</h4>
+            <p>What a Notice of Assignment is, why you must collect it, and how to handle carriers that factor their invoices.</p>
+            <div class="card-footer">
+                <span class="tag">If Applicable</span>
+                <a class="download-btn" href="Factoring-NOA-Guide.pdf" download>⬇ Download PDF</a>
+            </div>
         </div>
         <div class="template-card">
             <h4>Welcome Email Template</h4>
-            <p>Sent after the packet is signed. Confirms next steps and sets expectations.</p>
-            <span class="tag">Template</span>
+            <p>Sent after the packet is signed. Confirms next steps, sets expectations, and starts the relationship on the right foot.</p>
+            <div class="card-footer">
+                <span class="tag">Template</span>
+                <a class="download-btn" href="Welcome-Email-Template.pdf" download>⬇ Download PDF</a>
+            </div>
         </div>
         <div class="template-card">
-            <h4>W-9</h4>
-            <p>Correct legal name and EIN. Required for your records and tax reporting.</p>
-            <span class="tag">Required</span>
-        </div>
-        <div class="template-card">
-            <h4>Factoring NOA</h4>
-            <p>Notice of Assignment if the carrier factors. Critical for correct payment routing.</p>
-            <span class="tag">If Applicable</span>
+            <h4>Onboarding Checklist</h4>
+            <p>Printable one-page checklist. Complete every item before booking the first load for a new carrier.</p>
+            <div class="card-footer">
+                <span class="tag">Printable</span>
+                <a class="download-btn" href="Carrier-Onboarding-Checklist.pdf" download>⬇ Download PDF</a>
+            </div>
         </div>
     </div>
 
-    <h3>Onboarding Checklist — Check off as you complete</h3>
+    <h3>Interactive Onboarding Checklist — Check off as you complete</h3>
     <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
     <div class="progress-text" id="progressText">0 of 9 complete</div>
 
@@ -383,15 +325,10 @@
 <script>
     function toggleCheck(item) {
         const checkbox = item.querySelector('input[type="checkbox"]');
-        // Prevent double-toggle when clicking the checkbox itself
-        if (event.target !== checkbox) {
-            checkbox.checked = !checkbox.checked;
-        }
+        if (event.target !== checkbox) checkbox.checked = !checkbox.checked;
         item.classList.toggle('done', checkbox.checked);
         updateProgress();
     }
-
-    // Also handle direct checkbox clicks
     document.querySelectorAll('.check-item input').forEach(cb => {
         cb.addEventListener('click', function(e) {
             e.stopPropagation();
@@ -399,22 +336,16 @@
             updateProgress();
         });
     });
-
     function updateProgress() {
         const items = document.querySelectorAll('.check-item');
         const done = document.querySelectorAll('.check-item.done').length;
         const pct = Math.round((done / items.length) * 100);
         document.getElementById('progressFill').style.width = pct + '%';
-        document.getElementById('progressText').textContent = `${done} of ${items.length} complete`;
-
+        document.getElementById('progressText').textContent = done + ' of ' + items.length + ' complete';
         const msg = document.getElementById('completeMsg');
-        if (done === items.length) {
-            msg.classList.add('show');
-        } else {
-            msg.classList.remove('show');
-        }
+        if (done === items.length) msg.classList.add('show');
+        else msg.classList.remove('show');
     }
-
     function resetChecklist() {
         document.querySelectorAll('.check-item').forEach(item => {
             item.classList.remove('done');
