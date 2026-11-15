@@ -1,497 +1,3 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crown Access | The Black Label Dispatch Academy</title>
-    <meta name="description" content="Master truck dispatching with Crown Access – Live and self-led programs, carrier acquisition, and full business setup.">
-    <meta name="theme-color" content="#080808">
-
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brandDark: '#080808',
-                        brandCard: '#121212',
-                        brandBorder: '#222222',
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        html { scroll-padding-top: 6rem; }
-
-        .metallic-gold-text {
-            background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.8));
-        }
-        .metallic-blue-text {
-            background: linear-gradient(135deg, #1d4ed8 0%, #93c5fd 35%, #2563eb 60%, #eff6ff 80%, #1e40af 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.8));
-        }
-
-        /* Improved Cards */
-        .metallic-card-gold {
-            background: linear-gradient(145deg, #161616 0%, #0d0d0d 100%);
-            border: 1px solid rgba(212, 175, 55, 0.25);
-            box-shadow: 0 10px 30px -10px rgba(212, 175, 55, 0.12);
-            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .metallic-card-gold:hover {
-            transform: translateY(-6px);
-            border-color: rgba(212, 175, 55, 0.55);
-            box-shadow: 0 20px 40px -12px rgba(212, 175, 55, 0.25);
-        }
-
-        .metallic-card-blue {
-            background: linear-gradient(145deg, #161616 0%, #0d0d0d 100%);
-            border: 1px solid rgba(37, 99, 235, 0.25);
-            box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.12);
-            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .metallic-card-blue:hover {
-            transform: translateY(-6px);
-            border-color: rgba(37, 99, 235, 0.55);
-            box-shadow: 0 20px 40px -12px rgba(37, 99, 235, 0.25);
-        }
-
-        /* Buttons */
-        .shine-button-gold {
-            background: linear-gradient(135deg, #bf953f 0%, #e6ca65 50%, #aa771c 100%);
-            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
-            transition: all 0.3s ease;
-        }
-        .shine-button-gold:hover {
-            background: linear-gradient(135deg, #fcf6ba 0%, #bf953f 50%, #d4af37 100%);
-            box-shadow: 0 6px 25px rgba(212, 175, 55, 0.5);
-            transform: translateY(-2px);
-        }
-        .shine-button-gold:active {
-            transform: translateY(0);
-        }
-
-        .shine-button-blue {
-            background: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 50%, #1e40af 100%);
-            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
-            transition: all 0.3s ease;
-        }
-        .shine-button-blue:hover {
-            background: linear-gradient(135deg, #60a5fa 0%, #1d4ed8 50%, #2563eb 100%);
-            box-shadow: 0 6px 25px rgba(37, 99, 235, 0.5);
-            transform: translateY(-2px);
-        }
-        .shine-button-blue:active {
-            transform: translateY(0);
-        }
-
-        /* Toast Notification */
-        #toast {
-            position: fixed;
-            bottom: 28px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: linear-gradient(135deg, #1a1a1a, #0f0f0f);
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            color: #fcd34d;
-            padding: 14px 24px;
-            border-radius: 14px;
-            font-weight: 600;
-            font-size: 14px;
-            z-index: 100;
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            pointer-events: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        #toast.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
-
-        /* Service cards hover */
-        .service-card {
-            transition: all 0.3s ease;
-        }
-        .service-card:hover {
-            border-color: rgba(212, 175, 55, 0.4);
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px -8px rgba(212, 175, 55, 0.15);
-        }
-    </style>
-</head>
-<body class="bg-brandDark text-gray-100 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-yellow-500 selection:text-black">
-
-    <!-- Toast Notification -->
-    <div id="toast">
-        <svg class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-        </svg>
-        <span id="toast-message">Added to cart</span>
-    </div>
-
-    <!-- Header / Navigation -->
-    <header class="border-b border-gray-800/80 bg-brandDark/95 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 sm:h-24 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="w-11 h-11 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-600 via-gray-900 to-yellow-600 rounded-xl p-[2px] shadow-lg shadow-blue-900/30 flex items-center justify-center shrink-0">
-                    <div class="w-full h-full bg-brandDark rounded-[10px] flex items-center justify-center font-black text-xl tracking-tighter">
-                        <span class="metallic-blue-text font-serif italic text-xl sm:text-2xl">C</span><span class="metallic-gold-text font-serif italic text-xl sm:text-2xl">A</span>
-                    </div>
-                </div>
-                <div>
-                    <span class="block text-[10px] sm:text-xs uppercase tracking-widest metallic-gold-text font-bold">Crown Access</span>
-                    <span class="text-sm sm:text-xl md:text-2xl font-black tracking-tight text-white drop-shadow">The Black Label Academy</span>
-                </div>
-            </div>
-
-            <!-- Desktop Nav -->
-            <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold text-gray-300">
-                <a href="#programs" class="hover:text-yellow-400 transition">Programs</a>
-                <a href="#setup" class="hover:text-yellow-400 transition">Full Business Setup</a>
-                <a href="#contact" class="hover:text-yellow-400 transition">Contact</a>
-                <button type="button" id="cart-toggle-btn" class="relative shine-button-gold text-black px-5 py-2.5 rounded-lg font-bold transition flex items-center space-x-2 cursor-pointer z-20">
-                    <span>Cart</span>
-                    <span id="cart-badge" class="bg-black text-yellow-400 text-xs px-2 py-0.5 rounded-full font-black">0</span>
-                </button>
-                <a href="login.html" class="border border-yellow-500/40 text-yellow-400 px-5 py-2.5 rounded-lg font-bold transition hover:bg-yellow-500/10">Student Portal</a>
-            </nav>
-
-            <!-- Mobile Buttons -->
-            <div class="flex md:hidden items-center space-x-2">
-                <button type="button" id="mobile-cart-btn" class="relative shine-button-gold text-black px-3 py-1.5 rounded-lg font-bold text-xs transition flex items-center space-x-1 cursor-pointer">
-                    <span>Cart</span>
-                    <span id="mobile-cart-badge" class="bg-black text-yellow-400 text-[10px] px-1.5 py-0.2 rounded-full font-black">0</span>
-                </button>
-                <button type="button" id="mobile-menu-btn" class="border border-gray-700 bg-brandCard text-gray-200 p-2 rounded-lg focus:outline-none cursor-pointer" aria-label="Toggle Menu">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-brandCard border-b border-gray-800 px-6 py-5 space-y-4 shadow-xl">
-            <a href="#programs" class="mobile-nav-link block text-sm font-semibold text-gray-300 hover:text-yellow-400 transition py-1">Programs</a>
-            <a href="#setup" class="mobile-nav-link block text-sm font-semibold text-gray-300 hover:text-yellow-400 transition py-1">Full Business Setup</a>
-            <a href="#contact" class="mobile-nav-link block text-sm font-semibold text-gray-300 hover:text-yellow-400 transition py-1">Contact</a>
-            <div class="pt-2 border-t border-gray-800 flex flex-col space-y-3">
-                <a href="login.html" class="text-center border border-yellow-500/40 text-yellow-400 py-2.5 rounded-lg font-bold text-xs transition hover:bg-yellow-500/10">Student Portal / Login</a>
-            </div>
-        </div>
-    </header>
-
-    <!-- Cart Overlay & Drawer -->
-    <div id="cart-overlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden transition-opacity opacity-0 pointer-events-none"></div>
-    <div id="cart-drawer" 
-         class="fixed inset-y-0 right-0 max-w-md w-full bg-brandCard border-l border-gray-800 z-50 shadow-2xl flex flex-col justify-between transform translate-x-full transition-transform duration-300"
-         role="dialog" aria-modal="true" aria-labelledby="cart-title" aria-hidden="true">
-        
-        <div class="p-6 border-b border-gray-800 flex items-center justify-between">
-            <h3 id="cart-title" class="text-xl font-black text-white">Your Dispatch Cart</h3>
-            <button type="button" id="cart-close-btn" class="text-gray-400 hover:text-white font-bold text-2xl leading-none cursor-pointer" aria-label="Close cart">&times;</button>
-        </div>
-
-        <div id="cart-items-container" class="p-6 flex-1 overflow-y-auto space-y-4">
-            <div id="empty-cart-msg" class="text-center py-16">
-                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-800/80 flex items-center justify-center">
-                    <svg class="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                    </svg>
-                </div>
-                <p class="text-gray-500 text-sm">Your cart is currently empty.</p>
-            </div>
-        </div>
-
-        <div class="p-6 border-t border-gray-800 bg-black/50 space-y-4">
-            <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-3">
-                <p class="text-[11px] text-yellow-300/90 leading-relaxed font-medium">
-                    📌 <strong>Disclaimer:</strong> Login credentials and booking links will be sent via email after secure checkout.
-                </p>
-            </div>
-            <div class="flex justify-between items-center">
-                <span class="text-gray-400 font-medium">Total:</span>
-                <span id="cart-total" class="text-2xl font-black metallic-gold-text">$0.00</span>
-            </div>
-            
-            <button type="button" id="checkout-btn" disabled 
-                    class="w-full shine-button-gold text-black font-extrabold py-4 rounded-xl transition text-sm tracking-wide disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
-                Proceed to Secure Checkout
-            </button>
-            
-            <!-- Trust Line -->
-            <p class="text-center text-[11px] text-gray-500 flex items-center justify-center gap-1.5">
-                <svg class="w-3.5 h-3.5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
-                </svg>
-                Secure checkout powered by Square
-            </p>
-        </div>
-    </div>
-
-    <!-- Hero Section -->
-    <section class="relative py-20 sm:py-28 px-6 overflow-hidden">
-        <div class="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[500px] h-[300px] bg-blue-600/10 blur-[130px] rounded-full pointer-events-none"></div>
-        <div class="absolute top-1/3 right-1/3 translate-x-1/4 -translate-y-1/2 w-[300px] sm:w-[500px] h-[300px] bg-yellow-600/10 blur-[130px] rounded-full pointer-events-none"></div>
-
-        <div class="max-w-4xl mx-auto text-center relative z-10">
-            <span class="inline-block py-1.5 px-5 rounded-full bg-yellow-500/10 border border-yellow-500/30 metallic-gold-text text-xs font-bold tracking-widest uppercase mb-6 shadow-inner">
-                Crown Access • The Black Label Elite
-            </span>
-            <h1 class="text-3xl sm:text-5xl md:text-7xl font-black tracking-tight mb-6 text-white leading-tight">
-                Master the Art of <br class="hidden sm:inline"><span class="metallic-gold-text">Truck Dispatching</span>
-            </h1>
-            <p class="text-base sm:text-xl text-gray-300 mb-10 max-w-2xl mx-auto font-medium leading-relaxed">
-                Learn proven strategies to <strong class="text-white">attract and secure carriers</strong>, master operations through our live masterclasses or self-led tracks, and option for full business turn-key setup.
-            </p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#programs" class="shine-button-gold text-black font-extrabold px-8 py-4 rounded-xl transition text-base text-center">
-                    Explore Programs & Pricing
-                </a>
-                <a href="#setup" class="border border-blue-500/40 hover:border-blue-400 text-white font-semibold px-8 py-4 rounded-xl transition bg-blue-950/20 backdrop-blur text-center">
-                    Full Business Setup
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Programs Section -->
-    <section id="programs" class="py-20 sm:py-24 px-6 bg-black/60 border-t border-b border-gray-800/80 relative">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <span class="text-xs uppercase tracking-widest metallic-blue-text font-bold mb-3 block">Comprehensive Curriculum & Pricing</span>
-                <h2 class="text-3xl md:text-5xl font-black tracking-tight mb-4 text-white">Academy Programs & Tuition</h2>
-                <p class="text-gray-400 max-w-xl mx-auto text-sm sm:text-base">Engineered to give you absolute command over freight dispatching operations, carrier acquisition, and agency scaling.</p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto items-stretch">
-
-                <!-- Saturday Group Session (11/21) -->
-                <div class="metallic-card-gold rounded-3xl p-6 sm:p-10 flex flex-col justify-between relative md:col-span-2">
-                    <div>
-                        <div class="flex justify-between items-center mb-6">
-                            <span class="bg-yellow-500/10 text-yellow-400 border border-yellow-500/30 text-xs font-bold px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full uppercase tracking-wider">Live Group Session • Saturday 11/21</span>
-                            <span class="text-2xl font-black metallic-gold-text">$60</span>
-                        </div>
-                        <h3 class="text-2xl md:text-3xl font-black mb-3 text-white">Saturday Group Session (11/21)</h3>
-                        <p class="text-gray-300 text-sm mb-8 leading-relaxed">
-                            Join our focused live Saturday group training session on November 21st. Walk through carrier sourcing, load board strategies, rate confirmation audits, and live Q&A alongside fellow dispatchers.
-                        </p>
-                        
-                        <div class="space-y-4 mb-8">
-                            <h4 class="text-xs font-bold uppercase tracking-widest metallic-gold-text">Included Core Features:</h4>
-                            <ul class="space-y-3.5 text-sm text-gray-200">
-                                <li class="flex items-start">
-                                    <span class="metallic-gold-text font-bold mr-3 text-lg leading-none">✓</span>
-                                    <span><strong>Live Group Workshop (Sat, 11/21):</strong> Interactive group coaching covering carrier acquisition, rate negotiation, and dispatch workflows.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="metallic-gold-text font-bold mr-3 text-lg leading-none">✓</span>
-                                    <span><strong>Real-Time Q&A & Deal Breakdowns:</strong> Get your questions answered live and review real Ratecons, BOLs, and outreach scripts.</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="border-t border-gray-800 pt-6 mb-6 flex items-center justify-between">
-                            <span class="text-xs text-gray-400">Date: Saturday, Nov 21 • 3pm CST – 4:30 CST</span>
-                            <span class="text-xs font-bold metallic-gold-text uppercase tracking-wider">Limited Group Seats</span>
-                        </div>
-                        <div class="space-y-3">
-                            <button type="button" class="add-to-cart-btn w-full shine-button-gold text-black font-extrabold py-4 rounded-xl transition text-base tracking-wide cursor-pointer relative z-10" data-name="Saturday Group Session (11/21)" data-price="6000">
-                                Reserve Seat ($60)
-                            </button>
-                            <a href="https://square.link/u/C0YXgoHQ" target="_blank" rel="noopener noreferrer" class="block text-center border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 font-bold py-3 rounded-xl transition text-xs uppercase tracking-wider">
-                                After Pay
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Live Dispatcher Course -->
-                <div class="metallic-card-blue rounded-3xl p-6 sm:p-10 flex flex-col justify-between relative">
-                    <div>
-                        <div class="flex justify-between items-center mb-6">
-                            <span class="bg-blue-600/20 text-blue-400 border border-blue-500/30 text-xs font-bold px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full uppercase tracking-wider">3-Day Live Intensive</span>
-                            <span class="text-2xl font-black text-blue-400">$70</span>
-                        </div>
-                        <h3 class="text-2xl md:text-3xl font-black mb-3 text-white">Live Dispatcher Course</h3>
-                        <p class="text-gray-300 text-sm mb-8 leading-relaxed">
-                            An intensive 3-day live boot camp focused heavily on teaching you how to proactively attract carriers, build long-term relationships, and close lucrative dispatch deals under direct instructor oversight.
-                        </p>
-                        
-                        <div class="space-y-4 mb-8">
-                            <h4 class="text-xs font-bold uppercase tracking-widest text-blue-400">Included Core Features:</h4>
-                            <ul class="space-y-3.5 text-sm text-gray-200">
-                                <li class="flex items-start">
-                                    <span class="metallic-blue-text font-bold mr-3 text-lg leading-none">✓</span>
-                                    <span><strong>Carrier Attraction Masterclass:</strong> Step-by-step methods to find, target, and attract independent truck drivers.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="metallic-blue-text font-bold mr-3 text-lg leading-none">✓</span>
-                                    <span><strong>3 Days of Direct Live Instruction:</strong> Immersive day-by-day training, real-time Q&A, and booking workflows.</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="border-t border-gray-800 pt-6 mb-6 flex items-center justify-between">
-                            <span class="text-xs text-gray-400">Duration: 3 Full Days</span>
-                            <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">Cohort Access</span>
-                        </div>
-                        <div class="space-y-3">
-                            <button type="button" class="add-to-cart-btn w-full shine-button-blue text-white font-extrabold py-4 rounded-xl transition text-base tracking-wide cursor-pointer relative z-10" data-name="Live Dispatcher Course" data-price="7000">
-                                Pay Full Tuition ($70)
-                            </button>
-                            <a href="https://square.link/u/jSyA2scQ" target="_blank" rel="noopener noreferrer" class="block text-center border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 font-bold py-3 rounded-xl transition text-xs uppercase tracking-wider">
-                                After Pay
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Self-Led Dispatcher Course -->
-                <div class="metallic-card-gold rounded-3xl p-6 sm:p-10 flex flex-col justify-between relative">
-                    <div>
-                        <div class="flex justify-between items-center mb-6">
-                            <span class="bg-yellow-500/10 text-yellow-400 border border-yellow-500/30 text-xs font-bold px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full uppercase tracking-wider">Self-Led Mastery</span>
-                            <span class="text-2xl font-black metallic-gold-text">$50</span>
-                        </div>
-                        <h3 class="text-2xl md:text-3xl font-black mb-3 text-white">Self-Led Dispatcher Course</h3>
-                        <p class="text-gray-300 text-sm mb-8 leading-relaxed">
-                            A complete, modularized video curriculum allowing you to learn at your own rhythm while mastering carrier acquisition channels, legal toolkits, and agency agreements.
-                        </p>
-                        
-                        <div class="space-y-4 mb-8">
-                            <h4 class="text-xs font-bold uppercase tracking-widest metallic-gold-text">Included Core Features:</h4>
-                            <ul class="space-y-3.5 text-sm text-gray-200">
-                                <li class="flex items-start">
-                                    <span class="metallic-gold-text font-bold mr-3 text-lg leading-none">✓</span>
-                                    <span><strong>Carrier Attraction Blueprint:</strong> Digital modules dedicated entirely to outreach and cold-calling scripts.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="metallic-gold-text font-bold mr-3 text-lg leading-none">✓</span>
-                                    <span><strong>HD Video Lesson Library:</strong> Step-by-step training covering load boards and back-office management.</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="border-t border-gray-800 pt-6 mb-6 flex items-center justify-between">
-                            <span class="text-xs text-gray-400">Format: 24/7 Digital Portal</span>
-                            <span class="text-xs font-bold metallic-gold-text uppercase tracking-wider">Instant Access</span>
-                        </div>
-                        <div class="space-y-3">
-                            <button type="button" class="add-to-cart-btn w-full shine-button-gold text-black font-extrabold py-4 rounded-xl transition text-base tracking-wide cursor-pointer relative z-10" data-name="Self-Led Dispatcher Course" data-price="5000">
-                                Pay Full Tuition ($50)
-                            </button>
-                            <a href="https://square.link/u/gOVARTyy" target="_blank" rel="noopener noreferrer" class="block text-center border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 font-bold py-3 rounded-xl transition text-xs uppercase tracking-wider">
-                                After Pay
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Live Carrier Acquisition -->
-                <div class="metallic-card-blue rounded-3xl p-6 sm:p-10 flex flex-col justify-between relative">
-                    <div>
-                        <div class="flex justify-between items-center mb-6">
-                            <span class="bg-blue-600/20 text-blue-400 border border-blue-500/30 text-xs font-bold px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full uppercase tracking-wider">Acquisition Masterclass</span>
-                            <span class="text-2xl font-black text-blue-400">$70</span>
-                        </div>
-                        <h3 class="text-2xl md:text-3xl font-black mb-3 text-white">Live Carrier Acquisition</h3>
-                        <p class="text-gray-300 text-sm mb-8 leading-relaxed">
-                            An interactive live curriculum to build a scalable inbound machine and learn to close high-value carriers. <em>(Note: Active carriers are not guaranteed immediately upon completion).</em>
-                        </p>
-                        
-                        <div class="space-y-4 mb-8">
-                            <h4 class="text-xs font-bold uppercase tracking-widest text-blue-400">Included Core Features:</h4>
-                            <ul class="space-y-3.5 text-sm text-gray-200">
-                                <li class="flex items-start">
-                                    <span class="metallic-blue-text font-bold mr-3 text-lg leading-none">✓</span>
-                                    <span><strong>Interactive Live Instruction:</strong> 3-day immersive training focused exclusively on client acquisition workflows.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="metallic-blue-text font-bold mr-3 text-lg leading-none">✓</span>
-                                    <span><strong>Real-Time Strategies:</strong> Live guidance on relationship building, pitching, and negotiating.</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="border-t border-gray-800 pt-6 mb-6 flex items-center justify-between">
-                            <span class="text-xs text-gray-400">Duration: 3 Live Days</span>
-                            <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">Cohort Access</span>
-                        </div>
-                        <div class="space-y-3">
-                            <button type="button" class="add-to-cart-btn w-full shine-button-blue text-white font-extrabold py-4 rounded-xl transition text-base tracking-wide cursor-pointer relative z-10" data-name="Live Carrier Acquisition" data-price="7000">
-                                Add to Cart ($70)
-                            </button>
-                            <a href="https://square.link/u/hHgrPzWQ" target="_blank" rel="noopener noreferrer" class="block text-center border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 font-bold py-3 rounded-xl transition text-xs uppercase tracking-wider">
-                                After Pay
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Self-Led Carrier Acquisition -->
-                <div class="metallic-card-gold rounded-3xl p-6 sm:p-10 flex flex-col justify-between relative">
-                    <div>
-                        <div class="flex justify-between items-center mb-6">
-                            <span class="bg-yellow-500/10 text-yellow-400 border border-yellow-500/30 text-xs font-bold px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full uppercase tracking-wider">Digital Masterclass</span>
-                            <span class="text-2xl font-black metallic-gold-text">$50</span>
-                        </div>
-                        <h3 class="text-2xl md:text-3xl font-black mb-3 text-white">Self-Led Carrier Acquisition</h3>
-                        <p class="text-gray-300 text-sm mb-8 leading-relaxed">
-                            Access our exclusive digital acquisition modules at your own pace. Master outreach and negotiation frameworks independently. <em>(Note: Active carriers are not guaranteed immediately upon completion).</em>
-                        </p>
-                        
-                        <div class="space-y-4 mb-8">
-                            <h4 class="text-xs font-bold uppercase tracking-widest metallic-gold-text">Included Core Features:</h4>
-                            <ul class="space-y-3.5 text-sm text-gray-200">
-                                <li class="flex items-start">
-                                    <span class="metallic-gold-text font-bold mr-3 text-lg leading-none">✓</span>
-                                    <span><strong>Self-Paced Portal:</strong> Immediate access to digital modules for carrier outreach and scripts.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="metallic-gold-text font-bold mr-3 text-lg leading-none">✓</span>
-                                    <span><strong>Foundational Frameworks:</strong> Learn inbound attraction techniques and pipeline management.</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="border-t border-gray-800 pt-6 mb-6 flex items-center justify-between">
-                            <span class="text-xs text-gray-400">Format: 24/7 Digital Portal</span>
-                            <span class="text-xs font-bold metallic-gold-text uppercase tracking-wider">Instant Access</span>
-                        </div>
-                        <div class="space-y-3">
-                            <button type="button" class="add-to-cart-btn w-full shine-button-gold text-black font-extrabold py-4 rounded-xl transition text-base tracking-wide cursor-pointer relative z-10" data-name="Self-Led Carrier Acquisition" data-price="5000">
-                                Add to Cart ($50)
-                            </button>
-                            <a href="https://square.link/u/BVstdkoN" target="_blank" rel="noopener noreferrer" class="block text-center border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 font-bold py-3 rounded-xl transition text-xs uppercase tracking-wider">
-                                After Pay
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
     <!-- Business Setup Section -->
     <section id="setup" class="py-20 sm:py-24 px-6 bg-brandDark relative">
         <div class="max-w-6xl mx-auto bg-gradient-to-br from-brandCard to-black border border-yellow-500/30 rounded-3xl p-6 sm:p-14 shadow-2xl relative overflow-hidden">
@@ -505,6 +11,9 @@
                 <p class="text-gray-300 text-sm md:text-base">
                     Skip the tech hurdles. Choose our professional turn-key components to launch your dispatch enterprise.
                 </p>
+                <p class="text-yellow-400/90 text-xs mt-3 font-medium">
+                    All services require a 50% deposit to begin. Final invoice for the remaining balance is sent after all work and revisions are completed.
+                </p>
             </div>
 
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -516,8 +25,9 @@
                             <span class="text-xl font-black metallic-gold-text">$175</span>
                         </div>
                         <p class="text-xs text-gray-400 leading-relaxed mb-4">Professional, mobile-responsive website tailored to establish your online presence.</p>
+                        <p class="text-[11px] text-yellow-400/80 mb-3">50% Deposit: $87.50</p>
                     </div>
-                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer" data-name="3-Page Website" data-price="17500">Add to Cart ($175)</button>
+                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer" data-name="3-Page Website (50% Deposit)" data-price="8750">Pay 50% Deposit ($87.50)</button>
                 </div>
 
                 <div class="service-card bg-black/50 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
@@ -527,8 +37,9 @@
                             <span class="text-xl font-black metallic-gold-text">$350</span>
                         </div>
                         <p class="text-xs text-gray-400 leading-relaxed mb-4">Expanded multi-page layout optimized for growing logistics operations.</p>
+                        <p class="text-[11px] text-yellow-400/80 mb-3">50% Deposit: $175</p>
                     </div>
-                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer" data-name="5-Page Website" data-price="35000">Add to Cart ($350)</button>
+                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer" data-name="5-Page Website (50% Deposit)" data-price="17500">Pay 50% Deposit ($175)</button>
                 </div>
 
                 <div class="service-card bg-black/50 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
@@ -538,8 +49,9 @@
                             <span class="text-xl font-black metallic-gold-text">$500</span>
                         </div>
                         <p class="text-xs text-gray-400 leading-relaxed mb-4">Comprehensive enterprise-grade website design with custom branding.</p>
+                        <p class="text-[11px] text-yellow-400/80 mb-3">50% Deposit: $250</p>
                     </div>
-                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer" data-name="7-Page Website" data-price="50000">Add to Cart ($500)</button>
+                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer" data-name="7-Page Website (50% Deposit)" data-price="25000">Pay 50% Deposit ($250)</button>
                 </div>
 
                 <div class="service-card bg-black/50 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
@@ -549,8 +61,9 @@
                             <span class="text-xl font-black metallic-gold-text">$75</span>
                         </div>
                         <p class="text-xs text-gray-400 leading-relaxed mb-4">Custom professional logo design and visual branding kit for your dispatch agency.</p>
+                        <p class="text-[11px] text-yellow-400/80 mb-3">50% Deposit: $37.50</p>
                     </div>
-                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer" data-name="Logo & Brand Identity" data-price="7500">Add to Cart ($75)</button>
+                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer" data-name="Logo & Brand Identity (50% Deposit)" data-price="3750">Pay 50% Deposit ($37.50)</button>
                 </div>
 
                 <div class="service-card bg-black/50 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
@@ -560,8 +73,9 @@
                             <span class="text-xl font-black metallic-gold-text">$50</span>
                         </div>
                         <p class="text-xs text-gray-400 leading-relaxed mb-4">Domain registration assistance and secure business email box provisioning (via IONOS).</p>
+                        <p class="text-[11px] text-yellow-400/80 mb-3">50% Deposit: $25</p>
                     </div>
-                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer" data-name="Business Email & Domain" data-price="5000">Add to Cart ($50)</button>
+                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer" data-name="Business Email & Domain (50% Deposit)" data-price="2500">Pay 50% Deposit ($25)</button>
                 </div>
 
                 <div class="service-card bg-black/50 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
@@ -571,8 +85,9 @@
                             <span class="text-xl font-black metallic-gold-text">$75</span>
                         </div>
                         <p class="text-xs text-gray-400 leading-relaxed mb-4">Complete GBP setup and local map optimization to establish operational presence.</p>
+                        <p class="text-[11px] text-yellow-400/80 mb-3">50% Deposit: $37.50</p>
                     </div>
-                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer" data-name="Google Business Profile" data-price="7500">Add to Cart ($75)</button>
+                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer" data-name="Google Business Profile (50% Deposit)" data-price="3750">Pay 50% Deposit ($37.50)</button>
                 </div>
 
                 <div class="service-card bg-black/50 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
@@ -582,8 +97,9 @@
                             <span class="text-xl font-black metallic-gold-text">$150</span>
                         </div>
                         <p class="text-xs text-gray-400 leading-relaxed mb-4">Integration of cloud storage, CRM tracking, e-sign workflows, and digital invoicing tools.</p>
+                        <p class="text-[11px] text-yellow-400/80 mb-3">50% Deposit: $75</p>
                     </div>
-                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer" data-name="TMS & System Setup" data-price="15000">Add to Cart ($150)</button>
+                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer" data-name="TMS & System Setup (50% Deposit)" data-price="7500">Pay 50% Deposit ($75)</button>
                 </div>
 
                 <div class="service-card bg-black/50 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
@@ -593,8 +109,9 @@
                             <span class="text-xl font-black metallic-gold-text">$100</span>
                         </div>
                         <p class="text-xs text-gray-400 leading-relaxed mb-4">Custom Dispatch Agreements, Limited POAs, W-9 templates, and professional fee schedules.</p>
+                        <p class="text-[11px] text-yellow-400/80 mb-3">50% Deposit: $50</p>
                     </div>
-                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer" data-name="Complete Carrier Packet Kit" data-price="10000">Add to Cart ($100)</button>
+                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer" data-name="Complete Carrier Packet Kit (50% Deposit)" data-price="5000">Pay 50% Deposit ($50)</button>
                 </div>
 
                 <div class="service-card bg-black/50 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
@@ -604,18 +121,10 @@
                             <span class="text-xl font-black metallic-gold-text">$1,250</span>
                         </div>
                         <p class="text-xs text-gray-400 leading-relaxed mb-4">The ultimate all-inclusive launch package: website, CRM, domain, branding, & training.</p>
+                        <p class="text-[11px] text-yellow-400/80 mb-3">50% Deposit: $625</p>
                     </div>
-                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer" data-name="Full Turn-Key Agency Setup" data-price="125000">Add to Cart ($1,250)</button>
+                    <button type="button" class="add-to-cart-btn w-full mt-2 border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 text-xs font-bold py-2.5 rounded-lg transition cursor-pointer" data-name="Full Turn-Key Agency Setup (50% Deposit)" data-price="62500">Pay 50% Deposit ($625)</button>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Footer / Contact -->
-    <footer id="contact" class="bg-black border-t border-gray-800 py-12 px-6 text-center text-gray-500 text-xs">
-        <p class="mb-2">&copy; 2026 Crown Access • Mastermind Matrix : The Black Label. All rights reserved.</p>
-        <p>Operational Support & Inquiries: <a href="mailto:support@mmblacklabel.com" class="text-yellow-400 hover:underline">support@mmblacklabel.com</a></p>
-    </footer>
-
-</body>
-</html>
