@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Knowledge Check | Crown Access</title>
+    <title>Day 2 Knowledge Check – Freight Dispatcher Training</title>
     <style>
         :root {
             --bg-color: #0b0f19;
@@ -13,8 +13,10 @@
             --text-muted: #9ca3af;
             --primary: #3b82f6;
             --primary-hover: #2563eb;
-            --success: #22c55e;
-            --error: #ef4444;
+            --accent: #8b5cf6;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
         }
 
         body {
@@ -22,41 +24,32 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             margin: 0;
-            padding: 20px;
+            padding: 30px 20px;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: center;
             min-height: 100vh;
         }
 
-        .master-container {
+        .quiz-wrapper {
             width: 100%;
-            max-width: 1050px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .deck-viewport {
-            background-color: var(--slide-bg);
+            max-width: 780px;
+            background: var(--slide-bg);
             border: 1px solid var(--border-color);
             border-radius: 16px;
+            padding: 32px;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-            display: flex;
-            flex-direction: column;
-            padding: 40px;
         }
 
-        .slide-header {
+        .quiz-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 15px;
-            margin-bottom: 25px;
+            padding-bottom: 16px;
+            margin-bottom: 24px;
         }
 
-        .slide-header h2 {
+        .quiz-header h2 {
             margin: 0;
             font-size: 1.3rem;
             color: #60a5fa;
@@ -75,195 +68,497 @@
         .quiz-container {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            overflow-y: auto;
-            max-height: 480px;
-            padding-right: 10px;
+            gap: 20px;
+            width: 100%;
         }
 
-        .question-box {
+        .quiz-intro {
+            background: rgba(139, 92, 246, 0.12);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 10px;
+            padding: 14px 18px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .quiz-intro strong {
+            color: #c084fc;
+        }
+
+        .quiz-question {
             background: #1f2937;
             border: 1px solid var(--border-color);
-            padding: 18px;
             border-radius: 10px;
+            padding: 16px 18px;
+            transition: border-color 0.2s;
         }
 
-        .question-title {
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--text-main);
+        .quiz-question.correct {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.08);
+        }
+
+        .quiz-question.incorrect {
+            border-color: var(--danger);
+            background: rgba(239, 68, 68, 0.08);
+        }
+
+        .quiz-question h4 {
+            margin: 0 0 12px 0;
             font-size: 0.95rem;
+            color: var(--text-main);
+            line-height: 1.4;
         }
 
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
-        .option-label {
+        .quiz-option {
             display: flex;
             align-items: flex-start;
-            gap: 8px;
+            gap: 10px;
+            padding: 10px 12px;
             background: #111827;
-            padding: 9px;
-            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
             cursor: pointer;
-            border: 1px solid transparent;
-            font-size: 0.85rem;
+            transition: all 0.15s;
+            font-size: 0.88rem;
             color: var(--text-muted);
-            transition: all 0.2s;
         }
 
-        .option-label:hover {
+        .quiz-option:hover:not(.disabled) {
             border-color: var(--primary);
+            background: rgba(59, 130, 246, 0.08);
+        }
+
+        .quiz-option.selected {
+            border-color: var(--primary);
+            background: rgba(59, 130, 246, 0.15);
             color: var(--text-main);
         }
 
-        .option-label input {
-            accent-color: var(--primary);
+        .quiz-option.correct-answer {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.15);
+            color: #6ee7b7;
+        }
+
+        .quiz-option.wrong-selected {
+            border-color: var(--danger);
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
+        }
+
+        .quiz-option.disabled {
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .quiz-option input[type="radio"] {
             margin-top: 3px;
+            accent-color: var(--primary);
+            flex-shrink: 0;
         }
 
         .quiz-feedback {
             margin-top: 8px;
-            font-size: 0.85rem;
-            font-weight: 600;
+            font-size: 0.82rem;
+            padding: 8px 12px;
+            border-radius: 6px;
             display: none;
         }
 
-        .quiz-feedback.correct { color: #4ade80; }
-        .quiz-feedback.incorrect { color: #f87171; }
+        .quiz-feedback.show {
+            display: block;
+        }
 
-        .submit-module-btn {
-            background: var(--success);
+        .quiz-feedback.correct-fb {
+            background: rgba(16, 185, 129, 0.15);
+            color: #6ee7b7;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .quiz-feedback.incorrect-fb {
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .quiz-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .quiz-btn {
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 10px 24px;
+            padding: 12px 28px;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
-            transition: opacity 0.2s;
+            font-size: 0.95rem;
+            transition: background 0.2s;
         }
 
-        .submit-module-btn:hover {
-            opacity: 0.9;
+        .quiz-btn:hover {
+            background: var(--primary-hover);
         }
 
-        .module-score-display {
-            margin-left: 15px;
+        .quiz-btn.secondary {
+            background: #374151;
+        }
+
+        .quiz-btn.secondary:hover {
+            background: #4b5563;
+        }
+
+        .score-panel {
+            display: none;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.15));
+            border: 1px solid rgba(59, 130, 246, 0.35);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .score-panel.show {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .score-circle {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: conic-gradient(var(--primary) var(--score-pct), #1f2937 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            position: relative;
+        }
+
+        .score-circle::before {
+            content: '';
+            position: absolute;
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            background: var(--slide-bg);
+        }
+
+        .score-value {
+            position: relative;
+            z-index: 1;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .score-label {
+            font-size: 1.1rem;
             font-weight: 600;
-            font-size: 0.9rem;
+            margin-bottom: 6px;
         }
 
-        @media(max-width: 768px) {
-            .options-grid {
-                grid-template-columns: 1fr;
-            }
+        .score-detail {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .score-message {
+            font-size: 0.95rem;
+            padding: 10px 16px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .score-message.pass {
+            background: rgba(16, 185, 129, 0.15);
+            color: #6ee7b7;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .score-message.fail {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fcd34d;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .attempt-info {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 8px;
         }
     </style>
 </head>
 <body>
 
-<div class="master-container">
-    <div class="deck-viewport">
-        <div class="slide-header">
-            <h2>Module 2: Marketing Knowledge Check</h2>
-            <span class="duration-badge">Score & Verify Mastery</span>
+<div class="quiz-wrapper">
+    <div class="quiz-header">
+        <h2>Day 2 Knowledge Check</h2>
+        <span class="duration-badge">Day 2 • Quiz • 8 Questions</span>
+    </div>
+
+    <div class="quiz-container" id="quiz-day2">
+        <div class="quiz-intro">
+            <strong>Knowledge Check — Day 2 Acquisition & Closing</strong><br>
+            Answer all 8 questions. Unlimited attempts. Aim for 75%+ before Day 3.
         </div>
-        <div class="quiz-container" id="quiz-deck-1">
-            <div class="question-box" data-q="1" data-ans="A">
-                <div class="question-title">1. What size carrier fleet is typically the best target market for an independent freight dispatcher?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m1_q1" value="A"> A) Small fleets (1 to 5 trucks) or owner-operators without internal dispatchers.</label>
-                    <label class="option-label"><input type="radio" name="m1_q1" value="B"> B) Mega-carriers with over 1,000 corporate trucks.</label>
-                    <label class="option-label"><input type="radio" name="m1_q1" value="C"> C) Freight brokerage corporations.</label>
-                    <label class="option-label"><input type="radio" name="m1_q1" value="D"> D) Private delivery van couriers.</label>
-                </div>
-                <div class="quiz-feedback" id="m1_f1"></div>
+
+        <div class="quiz-question" data-qid="d2q1">
+            <h4>1. What is the recommended cold-call flow structure?</h4>
+            <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="d2q1" value="a"> Pitch rate first → Ask for MC number → Hang up</label>
+                <label class="quiz-option"><input type="radio" name="d2q1" value="b"> Intro → Pain-point hook → Rate-per-mile pitch → Clear call to action</label>
+                <label class="quiz-option"><input type="radio" name="d2q1" value="c"> Ask for their insurance first → Offer free trial → Close</label>
+                <label class="quiz-option"><input type="radio" name="d2q1" value="d"> Read a long script without pausing for answers</label>
             </div>
-            <div class="question-box" data-q="2" data-ans="B">
-                <div class="question-title">2. Where can you find newly authorized motor carriers to pitch your dispatching services?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m1_q2" value="A"> A) Grocery store bulletin boards.</label>
-                    <label class="option-label"><input type="radio" name="m1_q2" value="B"> B) FMCSA safety and authority registry databases and industry directories.</label>
-                    <label class="option-label"><input type="radio" name="m1_q2" value="C"> C) Local real estate listings.</label>
-                    <label class="option-label"><input type="radio" name="m1_q2" value="D"> D) Public library book catalogs.</label>
-                </div>
-                <div class="quiz-feedback" id="m1_f2"></div>
-            </div>
-            <div class="question-box" data-q="3" data-ans="B">
-                <div class="question-title">3. How should you handle fee pushback from a prospective carrier during your sales pitch?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m1_q3" value="A"> A) Lower your fee to zero immediately.</label>
-                    <label class="option-label"><input type="radio" name="m1_q3" value="B"> B) Demonstrate how your negotiation skills generate higher RPM that easily covers your fee.</label>
-                    <label class="option-label"><input type="radio" name="m1_q3" value="C"> C) Hang up the phone immediately.</label>
-                    <label class="option-label"><input type="radio" name="m1_q3" value="D"> D) Pay the carrier out of your own pocket.</label>
-                </div>
-                <div class="quiz-feedback" id="m1_f3"></div>
-            </div>
-            <div class="question-box" data-q="4" data-ans="B">
-                <div class="question-title">4. What is a vital step before booking any loads for a newly onboarded carrier?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m1_q4" value="A"> A) Buying them a new semi-truck.</label>
-                    <label class="option-label"><input type="radio" name="m1_q4" value="B"> B) Having them sign your Master Dispatcher-Carrier Agreement and collecting compliance documents.</label>
-                    <label class="option-label"><input type="radio" name="m1_q4" value="C"> C) Painting their trailer with your agency logo.</label>
-                    <label class="option-label"><input type="radio" name="m1_q4" value="D"> D) Depositing their quarterly taxes.</label>
-                </div>
-                <div class="quiz-feedback" id="m1_f4"></div>
-            </div>
-            <div class="question-box" data-q="5" data-ans="B">
-                <div class="question-title">5. What is the primary benefit of utilizing social proof in your marketing?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m1_q5" value="A"> A) It lowers your electric bill.</label>
-                    <label class="option-label"><input type="radio" name="m1_q5" value="B"> B) It builds instant trust and credibility by showing real results achieved for other carriers.</label>
-                    <label class="option-label"><input type="radio" name="m1_q5" value="C"> C) It secures commercial real estate leases.</label>
-                    <label class="option-label"><input type="radio" name="m1_q5" value="D"> D) It qualifies you for government grants.</label>
-                </div>
-                <div class="quiz-feedback" id="m1_f5"></div>
-            </div>
+            <div class="quiz-feedback" data-fb="d2q1"></div>
         </div>
-        <div style="margin-top: 20px; display: flex; align-items: center;">
-            <button class="submit-module-btn" onclick="gradeQuiz(1, 5)">Grade Knowledge Check</button>
-            <span class="module-score-display" id="score-display-1"></span>
+
+        <div class="quiz-question" data-qid="d2q2">
+            <h4>2. Which documents are typically required in a complete carrier onboarding packet?</h4>
+            <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="d2q2" value="a"> Only a verbal agreement and a phone number</label>
+                <label class="quiz-option"><input type="radio" name="d2q2" value="b"> Dispatch Agreement, Limited POA, Active MC/DOT Certificate, W-9, COI ($1M Auto / $100k Cargo), Factoring NOA</label>
+                <label class="quiz-option"><input type="radio" name="d2q2" value="c"> Just a business card and a CDL photo</label>
+                <label class="quiz-option"><input type="radio" name="d2q2" value="d"> Only the carrier’s bank account details</label>
+            </div>
+            <div class="quiz-feedback" data-fb="d2q2"></div>
+        </div>
+
+        <div class="quiz-question" data-qid="d2q3">
+            <h4>3. Why must you check the carrier’s cargo insurance limit before booking high-value freight?</h4>
+            <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="d2q3" value="a"> Because brokers require it for tax purposes</label>
+                <label class="quiz-option"><input type="radio" name="d2q3" value="b"> To avoid the $100k cargo insurance trap — the load value on the Ratecon must not exceed the carrier’s cargo coverage</label>
+                <label class="quiz-option"><input type="radio" name="d2q3" value="c"> Cargo insurance is never required</label>
+                <label class="quiz-option"><input type="radio" name="d2q3" value="d"> Only the broker’s insurance matters</label>
+            </div>
+            <div class="quiz-feedback" data-fb="d2q3"></div>
+        </div>
+
+        <div class="quiz-question" data-qid="d2q4">
+            <h4>4. What is the “Sub-Account Rule” for paid load boards like DAT or Truckstop?</h4>
+            <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="d2q4" value="a"> Anyone can create an account for free</label>
+                <label class="quiz-option"><input type="radio" name="d2q4" value="b"> Paid boards require an MC/DOT — drivers must add you as an authorized sub-user</label>
+                <label class="quiz-option"><input type="radio" name="d2q4" value="c"> Dispatchers automatically get full access once they form an LLC</label>
+                <label class="quiz-option"><input type="radio" name="d2q4" value="d"> Only brokers can use paid load boards</label>
+            </div>
+            <div class="quiz-feedback" data-fb="d2q4"></div>
+        </div>
+
+        <div class="quiz-question" data-qid="d2q5">
+            <h4>5. Under federal HOS rules, what is the maximum driving time allowed in a single shift?</h4>
+            <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="d2q5" value="a"> 8 hours</label>
+                <label class="quiz-option"><input type="radio" name="d2q5" value="b"> 11 hours</label>
+                <label class="quiz-option"><input type="radio" name="d2q5" value="c"> 14 hours of pure driving</label>
+                <label class="quiz-option"><input type="radio" name="d2q5" value="d"> 24 hours with no limit</label>
+            </div>
+            <div class="quiz-feedback" data-fb="d2q5"></div>
+        </div>
+
+        <div class="quiz-question" data-qid="d2q6">
+            <h4>6. When auditing a Ratecon, which items should you always verify?</h4>
+            <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="d2q6" value="a"> Only the total rate amount</label>
+                <label class="quiz-option"><input type="radio" name="d2q6" value="b"> Pickup/drop windows, weight, rates, accessorial clauses, hidden penalties, commodity description, and appointment times</label>
+                <label class="quiz-option"><input type="radio" name="d2q6" value="c"> Just the broker’s phone number</label>
+                <label class="quiz-option"><input type="radio" name="d2q6" value="d"> The color of the paper it is printed on</label>
+            </div>
+            <div class="quiz-feedback" data-fb="d2q6"></div>
+        </div>
+
+        <div class="quiz-question" data-qid="d2q7">
+            <h4>7. What is a key fraud-prevention step when dealing with brokers?</h4>
+            <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="d2q7" value="a"> Never check credit scores or bond status</label>
+                <label class="quiz-option"><input type="radio" name="d2q7" value="b"> Verify credit scores, confirm the $75k surety bond, and match FMCSA email domains</label>
+                <label class="quiz-option"><input type="radio" name="d2q7" value="c"> Accept any load posted on free boards without verification</label>
+                <label class="quiz-option"><input type="radio" name="d2q7" value="d"> Only work with brokers who call you first</label>
+            </div>
+            <div class="quiz-feedback" data-fb="d2q7"></div>
+        </div>
+
+        <div class="quiz-question" data-qid="d2q8">
+            <h4>8. What should you do if a Ratecon’s fine print contains late fees or detention language that was never discussed?</h4>
+            <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="d2q8" value="a"> Sign it anyway to secure the load quickly</label>
+                <label class="quiz-option"><input type="radio" name="d2q8" value="b"> Never sign until every field has been verified against the verbal agreement and the carrier’s equipment/weight limits</label>
+                <label class="quiz-option"><input type="radio" name="d2q8" value="c"> Ignore the fine print — only the rate matters</label>
+                <label class="quiz-option"><input type="radio" name="d2q8" value="d"> Ask the driver to sign it instead</label>
+            </div>
+            <div class="quiz-feedback" data-fb="d2q8"></div>
+        </div>
+
+        <div class="quiz-actions">
+            <button class="quiz-btn" id="submit-day2" onclick="submitQuiz()">Submit Answers</button>
+            <button class="quiz-btn secondary" id="retry-day2" onclick="resetQuiz()" style="display:none;">Retry Quiz</button>
+        </div>
+
+        <div class="score-panel" id="score-day2">
+            <div class="score-circle" id="circle-day2" style="--score-pct: 0deg;">
+                <span class="score-value" id="pct-day2">0%</span>
+            </div>
+            <div class="score-label">Your Score</div>
+            <div class="score-detail" id="detail-day2"></div>
+            <div class="score-message" id="msg-day2"></div>
+            <div class="attempt-info" id="attempt-day2"></div>
         </div>
     </div>
 </div>
 
 <script>
-    function gradeQuiz(modIdx, totalQ) {
-        let score = 0;
-        const container = document.getElementById(`quiz-deck-${modIdx}`);
-        
-        for (let i = 1; i <= totalQ; i++) {
-            const qBox = container.querySelector(`.question-box[data-q="${i}"]`);
-            const correctAns = qBox.getAttribute('data-ans');
-            const selected = qBox.querySelector(`input[name="m${modIdx}_q${i}"]:checked`);
-            const feedbackEl = document.getElementById(`m${modIdx}_f${i}`);
-            
-            feedbackEl.style.display = 'block';
-            if (selected && selected.value === correctAns) {
-                score++;
-                feedbackEl.innerText = "✓ Correct! Professional standard verified.";
-                feedbackEl.className = "quiz-feedback correct";
+    const answerKey = {
+        d2q1: 'b', d2q2: 'b', d2q3: 'b', d2q4: 'b',
+        d2q5: 'b', d2q6: 'b', d2q7: 'b', d2q8: 'b'
+    };
+
+    const feedbackText = {
+        d2q1: {
+            correct: "Correct! Intro → Pain-point → Rate pitch → Clear CTA is the proven flow.",
+            incorrect: "Incorrect. The recommended flow is Intro → Pain-point hook → Rate-per-mile pitch → Clear call to action."
+        },
+        d2q2: {
+            correct: "Correct! Full packet includes Agreement, POA, MC/DOT, W-9, COI, and NOA.",
+            incorrect: "Incorrect. Required docs include Dispatch Agreement, Limited POA, MC/DOT, W-9, COI, and Factoring NOA."
+        },
+        d2q3: {
+            correct: "Correct! Always compare load value to the carrier’s cargo limit to avoid under-insurance.",
+            incorrect: "Incorrect. You must ensure the load value does not exceed the carrier’s cargo coverage ($100k trap)."
+        },
+        d2q4: {
+            correct: "Correct! Drivers must add you as an authorized sub-user on paid boards.",
+            incorrect: "Incorrect. Paid boards require the carrier’s MC/DOT; you need to be added as a sub-user."
+        },
+        d2q5: {
+            correct: "Correct! Federal HOS allows a maximum of 11 hours of driving within a 14-hour window.",
+            incorrect: "Incorrect. The maximum driving time is 11 hours."
+        },
+        d2q6: {
+            correct: "Correct! Always audit every critical field before signing.",
+            incorrect: "Incorrect. Verify pickup/drop, weight, rates, accessorials, penalties, commodity, and appointments."
+        },
+        d2q7: {
+            correct: "Correct! Credit scores, bond verification, and email domain matching reduce fraud risk.",
+            incorrect: "Incorrect. Key steps include checking credit, confirming the $75k bond, and matching FMCSA domains."
+        },
+        d2q8: {
+            correct: "Correct! Never sign until the Ratecon matches the verbal agreement and carrier limits.",
+            incorrect: "Incorrect. Never sign until every field is verified against the verbal agreement."
+        }
+    };
+
+    let attempts = 0;
+
+    function submitQuiz() {
+        let correctCount = 0;
+        const total = Object.keys(answerKey).length;
+
+        Object.keys(answerKey).forEach(qid => {
+            const selected = document.querySelector(`input[name="${qid}"]:checked`);
+            const questionEl = document.querySelector(`[data-qid="${qid}"]`);
+            const fbEl = document.querySelector(`[data-fb="${qid}"]`);
+            const options = questionEl.querySelectorAll('.quiz-option');
+
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+                const input = opt.querySelector('input');
+                if (input.value === answerKey[qid]) {
+                    opt.classList.add('correct-answer');
+                }
+            });
+
+            if (selected) {
+                const selectedOpt = selected.closest('.quiz-option');
+                if (selected.value === answerKey[qid]) {
+                    correctCount++;
+                    questionEl.classList.add('correct');
+                    selectedOpt.classList.add('selected');
+                    fbEl.textContent = feedbackText[qid].correct;
+                    fbEl.className = 'quiz-feedback show correct-fb';
+                } else {
+                    questionEl.classList.add('incorrect');
+                    selectedOpt.classList.add('wrong-selected');
+                    fbEl.textContent = feedbackText[qid].incorrect;
+                    fbEl.className = 'quiz-feedback show incorrect-fb';
+                }
             } else {
-                feedbackEl.innerText = `✕ Incorrect. The correct answer is option ${correctAns}.`;
-                feedbackEl.className = "quiz-feedback incorrect";
+                questionEl.classList.add('incorrect');
+                fbEl.textContent = "No answer selected. " + feedbackText[qid].incorrect;
+                fbEl.className = 'quiz-feedback show incorrect-fb';
             }
-        }
+        });
 
-        const scoreDisplay = document.getElementById(`score-display-${modIdx}`);
-        const percentage = Math.round((score / totalQ) * 100);
-        
-        if (score === totalQ) {
-            scoreDisplay.style.color = "var(--success)";
-            scoreDisplay.innerText = `Score: ${score}/${totalQ} (${percentage}%) - Mastered!`;
+        const pct = Math.round((correctCount / total) * 100);
+        attempts++;
+
+        document.getElementById('circle-day2').style.setProperty('--score-pct', (pct * 3.6) + 'deg');
+        document.getElementById('pct-day2').textContent = pct + '%';
+        document.getElementById('detail-day2').textContent = `${correctCount} out of ${total} correct`;
+
+        const msg = document.getElementById('msg-day2');
+        if (pct >= 75) {
+            msg.textContent = pct === 100 ? "Perfect score! Excellent mastery." : "Great job! You passed this knowledge check.";
+            msg.className = 'score-message pass';
         } else {
-            scoreDisplay.style.color = "var(--error)";
-            scoreDisplay.innerText = `Score: ${score}/${totalQ} (${percentage}%) - Review material & retry.`;
+            msg.textContent = "Keep reviewing the material and try again. You can retake this quiz unlimited times.";
+            msg.className = 'score-message fail';
         }
-    }
-</script>
 
+        document.getElementById('attempt-day2').textContent = `Attempt #${attempts}`;
+        document.getElementById('score-day2').classList.add('show');
+        document.getElementById('retry-day2').style.display = 'inline-block';
+        document.getElementById('submit-day2').style.display = 'none';
+        document.getElementById('score-day2').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function resetQuiz() {
+        Object.keys(answerKey).forEach(qid => {
+            const questionEl = document.querySelector(`[data-qid="${qid}"]`);
+            const fbEl = document.querySelector(`[data-fb="${qid}"]`);
+            const options = questionEl.querySelectorAll('.quiz-option');
+            const inputs = questionEl.querySelectorAll('input[type="radio"]');
+
+            questionEl.classList.remove('correct', 'incorrect');
+            options.forEach(opt => opt.classList.remove('disabled', 'selected', 'correct-answer', 'wrong-selected'));
+            inputs.forEach(inp => { inp.checked = false; });
+            fbEl.className = 'quiz-feedback';
+            fbEl.textContent = '';
+        });
+
+        document.getElementById('score-day2').classList.remove('show');
+        document.getElementById('retry-day2').style.display = 'none';
+        document.getElementById('submit-day2').style.display = 'inline-block';
+        document.getElementById('quiz-day2').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    document.addEventListener('change', function(e) {
+        if (e.target.type === 'radio') {
+            document.querySelectorAll(`input[name="${e.target.name}"]`).forEach(inp => {
+                inp.closest('.quiz-option').classList.toggle('selected', inp.checked);
+            });
+        }
+    });
+</script>
 </body>
 </html>
