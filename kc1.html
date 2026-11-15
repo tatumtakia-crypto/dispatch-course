@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Knowledge Check | Crown Access</title>
+    <title>Day 1 Knowledge Check – Freight Dispatcher Training</title>
     <style>
         :root {
             --bg-color: #0b0f19;
@@ -13,8 +13,10 @@
             --text-muted: #9ca3af;
             --primary: #3b82f6;
             --primary-hover: #2563eb;
-            --success: #22c55e;
-            --error: #ef4444;
+            --accent: #8b5cf6;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
         }
 
         body {
@@ -22,41 +24,32 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             margin: 0;
-            padding: 20px;
+            padding: 30px 20px;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: center;
             min-height: 100vh;
         }
 
-        .master-container {
+        .quiz-wrapper {
             width: 100%;
-            max-width: 1050px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .deck-viewport {
-            background-color: var(--slide-bg);
+            max-width: 780px;
+            background: var(--slide-bg);
             border: 1px solid var(--border-color);
             border-radius: 16px;
+            padding: 32px;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-            display: flex;
-            flex-direction: column;
-            padding: 40px;
         }
 
-        .slide-header {
+        .quiz-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 15px;
-            margin-bottom: 25px;
+            padding-bottom: 16px;
+            margin-bottom: 24px;
         }
 
-        .slide-header h2 {
+        .quiz-header h2 {
             margin: 0;
             font-size: 1.3rem;
             color: #60a5fa;
@@ -72,197 +65,541 @@
             border: 1px solid rgba(139, 92, 246, 0.3);
         }
 
+        /* ===== QUIZ STYLES ===== */
         .quiz-container {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            overflow-y: auto;
-            max-height: 480px;
-            padding-right: 10px;
+            gap: 20px;
+            width: 100%;
         }
 
-        .question-box {
+        .quiz-intro {
+            background: rgba(139, 92, 246, 0.12);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 10px;
+            padding: 14px 18px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .quiz-intro strong {
+            color: #c084fc;
+        }
+
+        .quiz-question {
             background: #1f2937;
             border: 1px solid var(--border-color);
-            padding: 18px;
             border-radius: 10px;
+            padding: 16px 18px;
+            transition: border-color 0.2s;
         }
 
-        .question-title {
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--text-main);
+        .quiz-question.correct {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.08);
+        }
+
+        .quiz-question.incorrect {
+            border-color: var(--danger);
+            background: rgba(239, 68, 68, 0.08);
+        }
+
+        .quiz-question h4 {
+            margin: 0 0 12px 0;
             font-size: 0.95rem;
+            color: var(--text-main);
+            line-height: 1.4;
         }
 
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
-        .option-label {
+        .quiz-option {
             display: flex;
             align-items: flex-start;
-            gap: 8px;
+            gap: 10px;
+            padding: 10px 12px;
             background: #111827;
-            padding: 9px;
-            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
             cursor: pointer;
-            border: 1px solid transparent;
-            font-size: 0.85rem;
+            transition: all 0.15s;
+            font-size: 0.88rem;
             color: var(--text-muted);
-            transition: all 0.2s;
         }
 
-        .option-label:hover {
+        .quiz-option:hover:not(.disabled) {
             border-color: var(--primary);
+            background: rgba(59, 130, 246, 0.08);
+        }
+
+        .quiz-option.selected {
+            border-color: var(--primary);
+            background: rgba(59, 130, 246, 0.15);
             color: var(--text-main);
         }
 
-        .option-label input {
-            accent-color: var(--primary);
+        .quiz-option.correct-answer {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.15);
+            color: #6ee7b7;
+        }
+
+        .quiz-option.wrong-selected {
+            border-color: var(--danger);
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
+        }
+
+        .quiz-option.disabled {
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .quiz-option input[type="radio"] {
             margin-top: 3px;
+            accent-color: var(--primary);
+            flex-shrink: 0;
         }
 
         .quiz-feedback {
             margin-top: 8px;
-            font-size: 0.85rem;
-            font-weight: 600;
+            font-size: 0.82rem;
+            padding: 8px 12px;
+            border-radius: 6px;
             display: none;
         }
 
-        .quiz-feedback.correct { color: #4ade80; }
-        .quiz-feedback.incorrect { color: #f87171; }
+        .quiz-feedback.show {
+            display: block;
+        }
 
-        .submit-module-btn {
-            background: var(--success);
+        .quiz-feedback.correct-fb {
+            background: rgba(16, 185, 129, 0.15);
+            color: #6ee7b7;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .quiz-feedback.incorrect-fb {
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .quiz-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .quiz-btn {
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 10px 24px;
+            padding: 12px 28px;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
-            transition: opacity 0.2s;
+            font-size: 0.95rem;
+            transition: background 0.2s;
         }
 
-        .submit-module-btn:hover {
-            opacity: 0.9;
+        .quiz-btn:hover {
+            background: var(--primary-hover);
         }
 
-        .module-score-display {
-            margin-left: 15px;
+        .quiz-btn.secondary {
+            background: #374151;
+        }
+
+        .quiz-btn.secondary:hover {
+            background: #4b5563;
+        }
+
+        .quiz-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .score-panel {
+            display: none;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.15));
+            border: 1px solid rgba(59, 130, 246, 0.35);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .score-panel.show {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .score-circle {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: conic-gradient(var(--primary) var(--score-pct), #1f2937 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            position: relative;
+        }
+
+        .score-circle::before {
+            content: '';
+            position: absolute;
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            background: var(--slide-bg);
+        }
+
+        .score-value {
+            position: relative;
+            z-index: 1;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .score-label {
+            font-size: 1.1rem;
             font-weight: 600;
-            font-size: 0.9rem;
+            margin-bottom: 6px;
         }
 
-        @media(max-width: 768px) {
-            .options-grid {
-                grid-template-columns: 1fr;
-            }
+        .score-detail {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .score-message {
+            font-size: 0.95rem;
+            padding: 10px 16px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .score-message.pass {
+            background: rgba(16, 185, 129, 0.15);
+            color: #6ee7b7;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .score-message.fail {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fcd34d;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .attempt-info {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 8px;
         }
     </style>
 </head>
 <body>
 
-<div class="master-container">
-    <div class="deck-viewport">
-        <div class="slide-header">
-            <h2>Module 1: Foundations Knowledge Check</h2>
-            <span class="duration-badge">Score & Verify Mastery</span>
+<div class="quiz-wrapper">
+    <div class="quiz-header">
+        <h2>Day 1 Knowledge Check</h2>
+        <span class="duration-badge">Day 1 • Quiz • 8 Questions</span>
+    </div>
+
+    <div class="quiz-container" id="quiz-day1">
+        <div class="quiz-intro">
+            <strong>Knowledge Check — Day 1 Foundations</strong><br>
+            Answer all 8 questions. You can retry as many times as you like. A score of 75% or higher is recommended before moving to Day 2.
         </div>
-        <div class="quiz-container" id="quiz-deck-0">
-            <div class="question-box" data-q="1" data-ans="A">
-                <div class="question-title">1. What is the primary operational difference between a freight dispatcher and a freight broker?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m0_q1" value="A"> A) Dispatchers represent and book loads for carriers; brokers mediate between shippers and carriers.</label>
-                    <label class="option-label"><input type="radio" name="m0_q1" value="B"> B) Dispatchers require a $75,000 surety bond.</label>
-                    <label class="option-label"><input type="radio" name="m0_q1" value="C"> C) Brokers drive semi-trucks.</label>
-                    <label class="option-label"><input type="radio" name="m0_q1" value="D"> D) There is no difference.</label>
-                </div>
-                <div class="quiz-feedback" id="m0_f1"></div>
+
+        <!-- Q1 -->
+        <div class="quiz-question" data-qid="d1q1">
+            <h4>1. What does FMCSA stand for?</h4>
+            <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="d1q1" value="a"> Federal Motor Carrier Safety Administration</label>
+                <label class="quiz-option"><input type="radio" name="d1q1" value="b"> Federal Motor Commerce Safety Agency</label>
+                <label class="quiz-option"><input type="radio" name="d1q1" value="c"> Freight Motor Carrier Standards Authority</label>
+                <label class="quiz-option"><input type="radio" name="d1q1" value="d"> Federal Maritime Carrier Safety Association</label>
             </div>
-            <div class="question-box" data-q="2" data-ans="B">
-                <div class="question-title">2. Why is forming an LLC and obtaining an EIN important for your dispatch business?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m0_q2" value="A"> A) It automatically grants you broker authority.</label>
-                    <label class="option-label"><input type="radio" name="m0_q2" value="B"> B) It provides legal liability protection and enables professional business banking.</label>
-                    <label class="option-label"><input type="radio" name="m0_q2" value="C"> C) It waives all federal taxes.</label>
-                    <label class="option-label"><input type="radio" name="m0_q2" value="D"> D) It allows you to drive commercial trucks.</label>
-                </div>
-                <div class="quiz-feedback" id="m0_f2"></div>
-            </div>
-            <div class="question-box" data-q="3" data-ans="B">
-                <div class="question-title">3. Do independent freight dispatchers need a $75,000 broker bond?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m0_q3" value="A"> A) Yes, exactly $75,000.</label>
-                    <label class="option-label"><input type="radio" name="m0_q3" value="B"> B) No, because dispatchers represent carriers rather than taking financial custody of freight.</label>
-                    <label class="option-label"><input type="radio" name="m0_q3" value="C"> C) Yes, $100,000.</label>
-                    <label class="option-label"><input type="radio" name="m0_q3" value="D"> D) Only if operating in Alabama.</label>
-                </div>
-                <div class="quiz-feedback" id="m0_f3"></div>
-            </div>
-            <div class="question-box" data-q="4" data-ans="B">
-                <div class="question-title">4. What is the standard compensation model for an independent freight dispatcher?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m0_q4" value="A"> A) A flat annual salary paid by brokers.</label>
-                    <label class="option-label"><input type="radio" name="m0_q4" value="B"> B) A weekly percentage (e.g., 5% to 10%) of gross load revenue.</label>
-                    <label class="option-label"><input type="radio" name="m0_q4" value="C"> C) Hourly wages paid by shippers.</label>
-                    <label class="option-label"><input type="radio" name="m0_q4" value="D"> D) Commission paid directly by the government.</label>
-                </div>
-                <div class="quiz-feedback" id="m0_f4"></div>
-            </div>
-            <div class="question-box" data-q="5" data-ans="B">
-                <div class="question-title">5. What does MC and DOT stand for in motor carrier compliance?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m0_q5" value="A"> A) Motor Carrier and Department of Training.</label>
-                    <label class="option-label"><input type="radio" name="m0_q5" value="B"> B) Motor Carrier and Department of Transportation.</label>
-                    <label class="option-label"><input type="radio" name="m0_q5" value="C"> C) Master Control and Delivery Order.</label>
-                    <label class="option-label"><input type="radio" name="m0_q5" value="D"> D) Management Corporation and Direct Operation.</label>
-                </div>
-                <div class="quiz-feedback" id="m0_f5"></div>
-            </div>
+            <div class="quiz-feedback" data-fb="d1q1"></div>
         </div>
-        <div style="margin-top: 20px; display: flex; align-items: center;">
-            <button class="submit-module-btn" onclick="gradeQuiz(0, 5)">Grade Knowledge Check</button>
-            <span class="module-score-display" id="score-display-0"></span>
+
+        <!-- Q2 -->
+        <div class="quiz-question" data-qid="d1q2">
+            <h4>2. What is the key legal difference between a Freight Dispatcher and a Freight Broker?</h4>
+            <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="d1q2" value="a"> Dispatchers own the trucks; brokers do not</label>
+                <label class="quiz-option"><input type="radio" name="d1q2" value="b"> Dispatchers work exclusively for the carrier under a written agreement and never handle load money; brokers arrange transportation between shippers and carriers and must hold a $75k surety bond</label>
+                <label class="quiz-option"><input type="radio" name="d1q2" value="c"> There is no legal difference</label>
+                <label class="quiz-option"><input type="radio" name="d1q2" value="d"> Brokers only work with dry vans; dispatchers work with all equipment</label>
+            </div>
+            <div class="quiz-feedback" data-fb="d1q2"></div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="quiz-question" data-qid="d1q3">
+            <h4>3. What is “deadhead”?</h4>
+            <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="d1q3" value="a"> Miles driven with an empty trailer (no paying load)</label>
+                <label class="quiz-option"><input type="radio" name="d1q3" value="b"> A high-paying premium load</label>
+                <label class="quiz-option"><input type="radio" name="d1q3" value="c"> The return trip after a delivery</label>
+                <label class="quiz-option"><input type="radio" name="d1q3" value="d"> Extra hours a driver sits waiting for a load</label>
+            </div>
+            <div class="quiz-feedback" data-fb="d1q3"></div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="quiz-question" data-qid="d1q4">
+            <h4>4. Why form an LLC when starting a dispatch business?</h4>
+            <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="d1q4" value="a"> It is required by the FMCSA to dispatch</label>
+                <label class="quiz-option"><input type="radio" name="d1q4" value="b"> It protects your personal assets from business debts and lawsuits</label>
+                <label class="quiz-option"><input type="radio" name="d1q4" value="c"> It automatically gives you broker authority</label>
+                <label class="quiz-option"><input type="radio" name="d1q4" value="d"> It eliminates the need for a business bank account</label>
+            </div>
+            <div class="quiz-feedback" data-fb="d1q4"></div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="quiz-question" data-qid="d1q5">
+            <h4>5. What is a Limited Power of Attorney (POA) used for in dispatching?</h4>
+            <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="d1q5" value="a"> To transfer ownership of the carrier’s trucks to the dispatcher</label>
+                <label class="quiz-option"><input type="radio" name="d1q5" value="b"> To allow the dispatcher to book loads and sign Ratecons on the carrier’s behalf without owning the company</label>
+                <label class="quiz-option"><input type="radio" name="d1q5" value="c"> To collect payment directly from shippers</label>
+                <label class="quiz-option"><input type="radio" name="d1q5" value="d"> To obtain the carrier’s MC number permanently</label>
+            </div>
+            <div class="quiz-feedback" data-fb="d1q5"></div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="quiz-question" data-qid="d1q6">
+            <h4>6. Which of the following is an example of a profitable equipment niche for a new dispatcher?</h4>
+            <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="d1q6" value="a"> Trying to dispatch every equipment type at once</label>
+                <label class="quiz-option"><input type="radio" name="d1q6" value="b"> Focusing on Box Trucks, Dry Vans, Reefers, Flatbeds, specific lanes, or new-authority carriers</label>
+                <label class="quiz-option"><input type="radio" name="d1q6" value="c"> Only handling international ocean freight</label>
+                <label class="quiz-option"><input type="radio" name="d1q6" value="d"> Avoiding any specialization so you can take any load</label>
+            </div>
+            <div class="quiz-feedback" data-fb="d1q6"></div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="quiz-question" data-qid="d1q7">
+            <h4>7. What is Carrier IQ primarily used for?</h4>
+            <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="d1q7" value="a"> Booking loads on DAT</label>
+                <label class="quiz-option"><input type="radio" name="d1q7" value="b"> A data platform that lists active motor carriers, their equipment, and contact information to help find potential clients</label>
+                <label class="quiz-option"><input type="radio" name="d1q7" value="c"> Checking driver Hours of Service</label>
+                <label class="quiz-option"><input type="radio" name="d1q7" value="d"> Filing IFTA tax reports</label>
+            </div>
+            <div class="quiz-feedback" data-fb="d1q7"></div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="quiz-question" data-qid="d1q8">
+            <h4>8. What must a Freight Broker hold that a pure Dispatcher does not need?</h4>
+            <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="d1q8" value="a"> A commercial driver’s license (CDL)</label>
+                <label class="quiz-option"><input type="radio" name="d1q8" value="b"> A $75,000 surety bond and FMCSA broker authority</label>
+                <label class="quiz-option"><input type="radio" name="d1q8" value="c"> An MC number issued to the dispatcher personally</label>
+                <label class="quiz-option"><input type="radio" name="d1q8" value="d"> Ownership of at least five trucks</label>
+            </div>
+            <div class="quiz-feedback" data-fb="d1q8"></div>
+        </div>
+
+        <div class="quiz-actions">
+            <button class="quiz-btn" id="submit-day1" onclick="submitQuiz()">Submit Answers</button>
+            <button class="quiz-btn secondary" id="retry-day1" onclick="resetQuiz()" style="display:none;">Retry Quiz</button>
+        </div>
+
+        <div class="score-panel" id="score-day1">
+            <div class="score-circle" id="circle-day1" style="--score-pct: 0deg;">
+                <span class="score-value" id="pct-day1">0%</span>
+            </div>
+            <div class="score-label" id="label-day1">Your Score</div>
+            <div class="score-detail" id="detail-day1"></div>
+            <div class="score-message" id="msg-day1"></div>
+            <div class="attempt-info" id="attempt-day1"></div>
         </div>
     </div>
 </div>
 
 <script>
-    function gradeQuiz(modIdx, totalQ) {
-        let score = 0;
-        const container = document.getElementById(`quiz-deck-${modIdx}`);
-        
-        for (let i = 1; i <= totalQ; i++) {
-            const qBox = container.querySelector(`.question-box[data-q="${i}"]`);
-            const correctAns = qBox.getAttribute('data-ans');
-            const selected = qBox.querySelector(`input[name="m${modIdx}_q${i}"]:checked`);
-            const feedbackEl = document.getElementById(`m${modIdx}_f${i}`);
-            
-            feedbackEl.style.display = 'block';
-            if (selected && selected.value === correctAns) {
-                score++;
-                feedbackEl.innerText = "✓ Correct! Professional standard verified.";
-                feedbackEl.className = "quiz-feedback correct";
+    // Correct answers
+    const answerKey = {
+        d1q1: 'a',
+        d1q2: 'b',
+        d1q3: 'a',
+        d1q4: 'b',
+        d1q5: 'b',
+        d1q6: 'b',
+        d1q7: 'b',
+        d1q8: 'b'
+    };
+
+    // Feedback explanations
+    const feedbackText = {
+        d1q1: {
+            correct: "Correct! FMCSA = Federal Motor Carrier Safety Administration.",
+            incorrect: "Incorrect. FMCSA stands for Federal Motor Carrier Safety Administration."
+        },
+        d1q2: {
+            correct: "Correct! Dispatchers work only for the carrier and never handle load money.",
+            incorrect: "Incorrect. Dispatchers work exclusively for the carrier under written agreement and never take possession of freight money."
+        },
+        d1q3: {
+            correct: "Correct! Deadhead = empty miles with no paying load.",
+            incorrect: "Incorrect. Deadhead means miles driven with an empty trailer."
+        },
+        d1q4: {
+            correct: "Correct! An LLC protects personal assets from business liabilities.",
+            incorrect: "Incorrect. The main reason is personal asset protection from business debts and lawsuits."
+        },
+        d1q5: {
+            correct: "Correct! Limited POA lets you book and sign on the carrier’s behalf without ownership.",
+            incorrect: "Incorrect. A Limited POA authorizes you to book loads and sign Ratecons without owning the company."
+        },
+        d1q6: {
+            correct: "Correct! Specializing in a niche helps you stand out and win better rates.",
+            incorrect: "Incorrect. Focused niches (Box Trucks, Reefers, specific lanes, new-authority, etc.) are recommended."
+        },
+        d1q7: {
+            correct: "Correct! Carrier IQ is a lead-generation data platform for finding carriers.",
+            incorrect: "Incorrect. Carrier IQ lists active motor carriers, equipment, and contact info."
+        },
+        d1q8: {
+            correct: "Correct! Brokers must hold a $75k surety bond and FMCSA broker authority.",
+            incorrect: "Incorrect. Brokers need a $75,000 surety bond and FMCSA broker authority; pure dispatchers do not."
+        }
+    };
+
+    let attempts = 0;
+
+    function submitQuiz() {
+        let correctCount = 0;
+        const total = Object.keys(answerKey).length;
+
+        Object.keys(answerKey).forEach(qid => {
+            const selected = document.querySelector(`input[name="${qid}"]:checked`);
+            const questionEl = document.querySelector(`[data-qid="${qid}"]`);
+            const fbEl = document.querySelector(`[data-fb="${qid}"]`);
+            const options = questionEl.querySelectorAll('.quiz-option');
+
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+                const input = opt.querySelector('input');
+                if (input.value === answerKey[qid]) {
+                    opt.classList.add('correct-answer');
+                }
+            });
+
+            if (selected) {
+                const selectedOpt = selected.closest('.quiz-option');
+                if (selected.value === answerKey[qid]) {
+                    correctCount++;
+                    questionEl.classList.add('correct');
+                    selectedOpt.classList.add('selected');
+                    fbEl.textContent = feedbackText[qid].correct;
+                    fbEl.className = 'quiz-feedback show correct-fb';
+                } else {
+                    questionEl.classList.add('incorrect');
+                    selectedOpt.classList.add('wrong-selected');
+                    fbEl.textContent = feedbackText[qid].incorrect;
+                    fbEl.className = 'quiz-feedback show incorrect-fb';
+                }
             } else {
-                feedbackEl.innerText = `✕ Incorrect. The correct answer is option ${correctAns}.`;
-                feedbackEl.className = "quiz-feedback incorrect";
+                questionEl.classList.add('incorrect');
+                fbEl.textContent = "No answer selected. " + feedbackText[qid].incorrect;
+                fbEl.className = 'quiz-feedback show incorrect-fb';
             }
+        });
+
+        // Score calculation
+        const pct = Math.round((correctCount / total) * 100);
+        attempts++;
+
+        const circle = document.getElementById('circle-day1');
+        const pctEl = document.getElementById('pct-day1');
+        const detail = document.getElementById('detail-day1');
+        const msg = document.getElementById('msg-day1');
+        const attemptEl = document.getElementById('attempt-day1');
+        const panel = document.getElementById('score-day1');
+        const retryBtn = document.getElementById('retry-day1');
+        const submitBtn = document.getElementById('submit-day1');
+
+        circle.style.setProperty('--score-pct', (pct * 3.6) + 'deg');
+        pctEl.textContent = pct + '%';
+        detail.textContent = `${correctCount} out of ${total} correct`;
+
+        if (pct >= 75) {
+            msg.textContent = pct === 100
+                ? "Perfect score! Excellent mastery."
+                : "Great job! You passed this knowledge check.";
+            msg.className = 'score-message pass';
+        } else {
+            msg.textContent = "Keep reviewing the material and try again. You can retake this quiz unlimited times.";
+            msg.className = 'score-message fail';
         }
 
-        const scoreDisplay = document.getElementById(`score-display-${modIdx}`);
-        const percentage = Math.round((score / totalQ) * 100);
-        
-        if (score === totalQ) {
-            scoreDisplay.style.color = "var(--success)";
-            scoreDisplay.innerText = `Score: ${score}/${totalQ} (${percentage}%) - Mastered!`;
-        } else {
-            scoreDisplay.style.color = "var(--error)";
-            scoreDisplay.innerText = `Score: ${score}/${totalQ} (${percentage}%) - Review material & retry.`;
-        }
+        attemptEl.textContent = `Attempt #${attempts}`;
+        panel.classList.add('show');
+        retryBtn.style.display = 'inline-block';
+        submitBtn.style.display = 'none';
+
+        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
+
+    function resetQuiz() {
+        Object.keys(answerKey).forEach(qid => {
+            const questionEl = document.querySelector(`[data-qid="${qid}"]`);
+            const fbEl = document.querySelector(`[data-fb="${qid}"]`);
+            const options = questionEl.querySelectorAll('.quiz-option');
+            const inputs = questionEl.querySelectorAll('input[type="radio"]');
+
+            questionEl.classList.remove('correct', 'incorrect');
+            options.forEach(opt => {
+                opt.classList.remove('disabled', 'selected', 'correct-answer', 'wrong-selected');
+            });
+            inputs.forEach(inp => { inp.checked = false; });
+            fbEl.className = 'quiz-feedback';
+            fbEl.textContent = '';
+        });
+
+        document.getElementById('score-day1').classList.remove('show');
+        document.getElementById('retry-day1').style.display = 'none';
+        document.getElementById('submit-day1').style.display = 'inline-block';
+
+        document.getElementById('quiz-day1').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Highlight selected option
+    document.addEventListener('change', function(e) {
+        if (e.target.type === 'radio') {
+            const name = e.target.name;
+            const options = document.querySelectorAll(`input[name="${name}"]`);
+            options.forEach(inp => {
+                const opt = inp.closest('.quiz-option');
+                opt.classList.toggle('selected', inp.checked);
+            });
+        }
+    });
 </script>
 
 </body>
