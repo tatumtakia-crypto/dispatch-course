@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Knowledge Check | Crown Access</title>
+    <title>Day 3 Knowledge Check – Freight Dispatcher Training</title>
     <style>
         :root {
             --bg-color: #0b0f19;
@@ -13,8 +13,10 @@
             --text-muted: #9ca3af;
             --primary: #3b82f6;
             --primary-hover: #2563eb;
-            --success: #22c55e;
-            --error: #ef4444;
+            --accent: #8b5cf6;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
         }
 
         body {
@@ -22,41 +24,32 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             margin: 0;
-            padding: 20px;
+            padding: 30px 20px;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: center;
             min-height: 100vh;
         }
 
-        .master-container {
+        .quiz-wrapper {
             width: 100%;
-            max-width: 1050px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .deck-viewport {
-            background-color: var(--slide-bg);
+            max-width: 780px;
+            background: var(--slide-bg);
             border: 1px solid var(--border-color);
             border-radius: 16px;
+            padding: 32px;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-            display: flex;
-            flex-direction: column;
-            padding: 40px;
         }
 
-        .slide-header {
+        .quiz-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 15px;
-            margin-bottom: 25px;
+            padding-bottom: 16px;
+            margin-bottom: 24px;
         }
 
-        .slide-header h2 {
+        .quiz-header h2 {
             margin: 0;
             font-size: 1.3rem;
             color: #60a5fa;
@@ -75,195 +68,497 @@
         .quiz-container {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            overflow-y: auto;
-            max-height: 480px;
-            padding-right: 10px;
+            gap: 20px;
+            width: 100%;
         }
 
-        .question-box {
+        .quiz-intro {
+            background: rgba(139, 92, 246, 0.12);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 10px;
+            padding: 14px 18px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .quiz-intro strong {
+            color: #c084fc;
+        }
+
+        .quiz-question {
             background: #1f2937;
             border: 1px solid var(--border-color);
-            padding: 18px;
             border-radius: 10px;
+            padding: 16px 18px;
+            transition: border-color 0.2s;
         }
 
-        .question-title {
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--text-main);
+        .quiz-question.correct {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.08);
+        }
+
+        .quiz-question.incorrect {
+            border-color: var(--danger);
+            background: rgba(239, 68, 68, 0.08);
+        }
+
+        .quiz-question h4 {
+            margin: 0 0 12px 0;
             font-size: 0.95rem;
+            color: var(--text-main);
+            line-height: 1.4;
         }
 
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
-        .option-label {
+        .quiz-option {
             display: flex;
             align-items: flex-start;
-            gap: 8px;
+            gap: 10px;
+            padding: 10px 12px;
             background: #111827;
-            padding: 9px;
-            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
             cursor: pointer;
-            border: 1px solid transparent;
-            font-size: 0.85rem;
+            transition: all 0.15s;
+            font-size: 0.88rem;
             color: var(--text-muted);
-            transition: all 0.2s;
         }
 
-        .option-label:hover {
+        .quiz-option:hover:not(.disabled) {
             border-color: var(--primary);
+            background: rgba(59, 130, 246, 0.08);
+        }
+
+        .quiz-option.selected {
+            border-color: var(--primary);
+            background: rgba(59, 130, 246, 0.15);
             color: var(--text-main);
         }
 
-        .option-label input {
-            accent-color: var(--primary);
+        .quiz-option.correct-answer {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.15);
+            color: #6ee7b7;
+        }
+
+        .quiz-option.wrong-selected {
+            border-color: var(--danger);
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
+        }
+
+        .quiz-option.disabled {
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .quiz-option input[type="radio"] {
             margin-top: 3px;
+            accent-color: var(--primary);
+            flex-shrink: 0;
         }
 
         .quiz-feedback {
             margin-top: 8px;
-            font-size: 0.85rem;
-            font-weight: 600;
+            font-size: 0.82rem;
+            padding: 8px 12px;
+            border-radius: 6px;
             display: none;
         }
 
-        .quiz-feedback.correct { color: #4ade80; }
-        .quiz-feedback.incorrect { color: #f87171; }
+        .quiz-feedback.show {
+            display: block;
+        }
 
-        .submit-module-btn {
-            background: var(--success);
+        .quiz-feedback.correct-fb {
+            background: rgba(16, 185, 129, 0.15);
+            color: #6ee7b7;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .quiz-feedback.incorrect-fb {
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .quiz-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .quiz-btn {
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 10px 24px;
+            padding: 12px 28px;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
-            transition: opacity 0.2s;
+            font-size: 0.95rem;
+            transition: background 0.2s;
         }
 
-        .submit-module-btn:hover {
-            opacity: 0.9;
+        .quiz-btn:hover {
+            background: var(--primary-hover);
         }
 
-        .module-score-display {
-            margin-left: 15px;
+        .quiz-btn.secondary {
+            background: #374151;
+        }
+
+        .quiz-btn.secondary:hover {
+            background: #4b5563;
+        }
+
+        .score-panel {
+            display: none;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.15));
+            border: 1px solid rgba(59, 130, 246, 0.35);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .score-panel.show {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .score-circle {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: conic-gradient(var(--primary) var(--score-pct), #1f2937 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            position: relative;
+        }
+
+        .score-circle::before {
+            content: '';
+            position: absolute;
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            background: var(--slide-bg);
+        }
+
+        .score-value {
+            position: relative;
+            z-index: 1;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .score-label {
+            font-size: 1.1rem;
             font-weight: 600;
-            font-size: 0.9rem;
+            margin-bottom: 6px;
         }
 
-        @media(max-width: 768px) {
-            .options-grid {
-                grid-template-columns: 1fr;
-            }
+        .score-detail {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .score-message {
+            font-size: 0.95rem;
+            padding: 10px 16px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .score-message.pass {
+            background: rgba(16, 185, 129, 0.15);
+            color: #6ee7b7;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .score-message.fail {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fcd34d;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .attempt-info {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 8px;
         }
     </style>
 </head>
 <body>
 
-<div class="master-container">
-    <div class="deck-viewport">
-        <div class="slide-header">
-            <h2>Module 3: Tech & Docs Knowledge Check</h2>
-            <span class="duration-badge">Score & Verify Mastery</span>
+<div class="quiz-wrapper">
+    <div class="quiz-header">
+        <h2>Day 3 Knowledge Check</h2>
+        <span class="duration-badge">Day 3 • Quiz • 8 Questions</span>
+    </div>
+
+    <div class="quiz-container" id="quiz-day3">
+        <div class="quiz-intro">
+            <strong>Knowledge Check — Day 3 Operations & Growth</strong><br>
+            Final knowledge check. Unlimited attempts. Aim for 75%+ to confirm mastery of live operations.
         </div>
-        <div class="quiz-container" id="quiz-deck-2">
-            <div class="question-box" data-q="1" data-ans="A">
-                <div class="question-title">1. What legal clause in your service agreement allows you to sign rate confirmations on behalf of your carrier?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m2_q1" value="A"> A) Power of Attorney (POA).</label>
-                    <label class="option-label"><input type="radio" name="m2_q1" value="B"> B) Real Estate Deed.</label>
-                    <label class="option-label"><input type="radio" name="m2_q1" value="C"> C) Medical Waiver.</label>
-                    <label class="option-label"><input type="radio" name="m2_q1" value="D"> D) Patent Assignment.</label>
-                </div>
-                <div class="quiz-feedback" id="m2_f1"></div>
+
+        <div class="quiz-question" data-qid="d3q1">
+            <h4>1. What is the primary purpose of a Bill of Lading (BOL)?</h4>
+            <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="d3q1" value="a"> It is only a shipping label</label>
+                <label class="quiz-option"><input type="radio" name="d3q1" value="b"> It serves as receipt, contract, and title for the freight; note pre-existing damage at pickup</label>
+                <label class="quiz-option"><input type="radio" name="d3q1" value="c"> It replaces the need for a Ratecon</label>
+                <label class="quiz-option"><input type="radio" name="d3q1" value="d"> It is only used for international shipments</label>
             </div>
-            <div class="question-box" data-q="2" data-ans="B">
-                <div class="question-title">2. What are the standard minimum insurance coverages brokers require from carriers?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m2_q2" value="A"> A) $10,000 auto liability and $5,000 cargo insurance.</label>
-                    <label class="option-label"><input type="radio" name="m2_q2" value="B"> B) Typically $100,000 auto liability and $100,000 cargo insurance.</label>
-                    <label class="option-label"><input type="radio" name="m2_q2" value="C"> C) No insurance is required.</label>
-                    <label class="option-label"><input type="radio" name="m2_q2" value="D"> D) $10 million aircraft insurance.</label>
-                </div>
-                <div class="quiz-feedback" id="m2_f2"></div>
-            </div>
-            <div class="question-box" data-q="3" data-ans="B">
-                <div class="question-title">3. What does a Notice of Assignment (NOA) indicate in carrier documentation?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m2_q3" value="A"> A) That the truck requires mechanical repairs.</label>
-                    <label class="option-label"><input type="radio" name="m2_q3" value="B"> B) That the carrier uses a factoring company and payments must go to that specific factor.</label>
-                    <label class="option-label"><input type="radio" name="m2_q3" value="C"> C) That the driver is changing their home address.</label>
-                    <label class="option-label"><input type="radio" name="m2_q3" value="D"> D) That the carrier is retiring.</label>
-                </div>
-                <div class="quiz-feedback" id="m2_f3"></div>
-            </div>
-            <div class="question-box" data-q="4" data-ans="B">
-                <div class="question-title">4. Why is maintaining a digital documentation vault essential for a dispatcher?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m2_q4" value="A"> A) To decorate your computer desktop.</label>
-                    <label class="option-label"><input type="radio" name="m2_q4" value="B"> B) Because brokers demand COIs, W-9s, and authority letters instantly when booking loads.</label>
-                    <label class="option-label"><input type="radio" name="m2_q4" value="C"> C) To print physical wallpaper.</label>
-                    <label class="option-label"><input type="radio" name="m2_q4" value="D"> D) To comply with video game regulations.</label>
-                </div>
-                <div class="quiz-feedback" id="m2_f4"></div>
-            </div>
-            <div class="question-box" data-q="5" data-ans="B">
-                <div class="question-title">5. What does TMS stand for in dispatching software technology?</div>
-                <div class="options-grid">
-                    <label class="option-label"><input type="radio" name="m2_q5" value="A"> A) Total Motor Standard.</label>
-                    <label class="option-label"><input type="radio" name="m2_q5" value="B"> B) Transportation Management System.</label>
-                    <label class="option-label"><input type="radio" name="m2_q5" value="C"> C) Truck Monitoring Service.</label>
-                    <label class="option-label"><input type="radio" name="m2_q5" value="D"> D) Tariff Management Software.</label>
-                </div>
-                <div class="quiz-feedback" id="m2_f5"></div>
-            </div>
+            <div class="quiz-feedback" data-fb="d3q1"></div>
         </div>
-        <div style="margin-top: 20px; display: flex; align-items: center;">
-            <button class="submit-module-btn" onclick="gradeQuiz(2, 5)">Grade Knowledge Check</button>
-            <span class="module-score-display" id="score-display-2"></span>
+
+        <div class="quiz-question" data-qid="d3q2">
+            <h4>2. Why must detention and TONU rates appear on the initial Ratecon or Master Agreement?</h4>
+            <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="d3q2" value="a"> Because the FMCSA requires it for every load</label>
+                <label class="quiz-option"><input type="radio" name="d3q2" value="b"> Otherwise the default is $0 — you cannot claim them later if they were never written</label>
+                <label class="quiz-option"><input type="radio" name="d3q2" value="c"> They are automatically paid by every broker</label>
+                <label class="quiz-option"><input type="radio" name="d3q2" value="d"> Only the carrier’s insurance covers them</label>
+            </div>
+            <div class="quiz-feedback" data-fb="d3q2"></div>
+        </div>
+
+        <div class="quiz-question" data-qid="d3q3">
+            <h4>3. What is the typical detention rate range after free time expires?</h4>
+            <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="d3q3" value="a"> $10–$20 per hour</label>
+                <label class="quiz-option"><input type="radio" name="d3q3" value="b"> $50–$100 per hour after 2 free hours</label>
+                <label class="quiz-option"><input type="radio" name="d3q3" value="c"> $500 flat fee regardless of time</label>
+                <label class="quiz-option"><input type="radio" name="d3q3" value="d"> Detention is never paid</label>
+            </div>
+            <div class="quiz-feedback" data-fb="d3q3"></div>
+        </div>
+
+        <div class="quiz-question" data-qid="d3q4">
+            <h4>4. Where should exact arrival and departure timestamps be recorded for a detention claim?</h4>
+            <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="d3q4" value="a"> Only in a text message to the driver</label>
+                <label class="quiz-option"><input type="radio" name="d3q4" value="b"> On the physical BOL (with receiver signature/stamp) and emailed to the broker on the Ratecon thread</label>
+                <label class="quiz-option"><input type="radio" name="d3q4" value="c"> Only in the dispatcher’s personal notes</label>
+                <label class="quiz-option"><input type="radio" name="d3q4" value="d"> Timestamps are not needed if you call the broker</label>
+            </div>
+            <div class="quiz-feedback" data-fb="d3q4"></div>
+        </div>
+
+        <div class="quiz-question" data-qid="d3q5">
+            <h4>5. What is the typical factoring pipeline for quick payment?</h4>
+            <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="d3q5" value="a"> Wait 30–60 days for the broker to pay the carrier directly</label>
+                <label class="quiz-option"><input type="radio" name="d3q5" value="b"> Pre-booking credit check → Delivery & signed POD → Submit Ratecon + POD + Invoice for 24-hour payout</label>
+                <label class="quiz-option"><input type="radio" name="d3q5" value="c"> Factoring is only for brokers, not carriers</label>
+                <label class="quiz-option"><input type="radio" name="d3q5" value="d"> Submit only the Ratecon with no POD</label>
+            </div>
+            <div class="quiz-feedback" data-fb="d3q5"></div>
+        </div>
+
+        <div class="quiz-question" data-qid="d3q6">
+            <h4>6. How should a dispatcher typically bill their carriers for services?</h4>
+            <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="d3q6" value="a"> Once a year at tax time</label>
+                <label class="quiz-option"><input type="radio" name="d3q6" value="b"> Weekly via Square/Stripe or digital payment apps (PayPal, Venmo, Cash App)</label>
+                <label class="quiz-option"><input type="radio" name="d3q6" value="c"> Only after the carrier has hauled 50 loads</label>
+                <label class="quiz-option"><input type="radio" name="d3q6" value="d"> Dispatchers never invoice carriers</label>
+            </div>
+            <div class="quiz-feedback" data-fb="d3q6"></div>
+        </div>
+
+        <div class="quiz-question" data-qid="d3q7">
+            <h4>7. What does TONU stand for and what is a typical claim range?</h4>
+            <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="d3q7" value="a"> Truck On Next Unit — $50</label>
+                <label class="quiz-option"><input type="radio" name="d3q7" value="b"> Truck Ordered Not Used — typically $150–$250+</label>
+                <label class="quiz-option"><input type="radio" name="d3q7" value="c"> Total Overnight Unit Notice — free</label>
+                <label class="quiz-option"><input type="radio" name="d3q7" value="d"> It is not a real industry term</label>
+            </div>
+            <div class="quiz-feedback" data-fb="d3q7"></div>
+        </div>
+
+        <div class="quiz-question" data-qid="d3q8">
+            <h4>8. What is a recommended daily routine for a professional dispatcher?</h4>
+            <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="d3q8" value="a"> Only check loads once a week</label>
+                <label class="quiz-option"><input type="radio" name="d3q8" value="b"> Morning loadboard scan → mid-day tracking → end-of-day financial debrief</label>
+                <label class="quiz-option"><input type="radio" name="d3q8" value="c"> Work only nights and ignore broker calls</label>
+                <label class="quiz-option"><input type="radio" name="d3q8" value="d"> Never track loads after they are booked</label>
+            </div>
+            <div class="quiz-feedback" data-fb="d3q8"></div>
+        </div>
+
+        <div class="quiz-actions">
+            <button class="quiz-btn" id="submit-day3" onclick="submitQuiz()">Submit Answers</button>
+            <button class="quiz-btn secondary" id="retry-day3" onclick="resetQuiz()" style="display:none;">Retry Quiz</button>
+        </div>
+
+        <div class="score-panel" id="score-day3">
+            <div class="score-circle" id="circle-day3" style="--score-pct: 0deg;">
+                <span class="score-value" id="pct-day3">0%</span>
+            </div>
+            <div class="score-label">Your Score</div>
+            <div class="score-detail" id="detail-day3"></div>
+            <div class="score-message" id="msg-day3"></div>
+            <div class="attempt-info" id="attempt-day3"></div>
         </div>
     </div>
 </div>
 
 <script>
-    function gradeQuiz(modIdx, totalQ) {
-        let score = 0;
-        const container = document.getElementById(`quiz-deck-${modIdx}`);
-        
-        for (let i = 1; i <= totalQ; i++) {
-            const qBox = container.querySelector(`.question-box[data-q="${i}"]`);
-            const correctAns = qBox.getAttribute('data-ans');
-            const selected = qBox.querySelector(`input[name="m${modIdx}_q${i}"]:checked`);
-            const feedbackEl = document.getElementById(`m${modIdx}_f${i}`);
-            
-            feedbackEl.style.display = 'block';
-            if (selected && selected.value === correctAns) {
-                score++;
-                feedbackEl.innerText = "✓ Correct! Professional standard verified.";
-                feedbackEl.className = "quiz-feedback correct";
+    const answerKey = {
+        d3q1: 'b', d3q2: 'b', d3q3: 'b', d3q4: 'b',
+        d3q5: 'b', d3q6: 'b', d3q7: 'b', d3q8: 'b'
+    };
+
+    const feedbackText = {
+        d3q1: {
+            correct: "Correct! The BOL functions as receipt, contract, and title; note damage at pickup.",
+            incorrect: "Incorrect. The BOL is the receipt/contract/title document; always note pre-existing damage."
+        },
+        d3q2: {
+            correct: "Correct! If detention/TONU are not written on the Ratecon, the default is $0.",
+            incorrect: "Incorrect. They must appear on the initial Ratecon or Master Agreement or they default to $0."
+        },
+        d3q3: {
+            correct: "Correct! Industry standard is typically $50–$100/hr after 2 free hours.",
+            incorrect: "Incorrect. Typical detention is $50–$100 per hour after free time."
+        },
+        d3q4: {
+            correct: "Correct! Timestamps go on the BOL with signature and are emailed on the Ratecon thread.",
+            incorrect: "Incorrect. Record exact times on the physical BOL and email the broker immediately."
+        },
+        d3q5: {
+            correct: "Correct! Credit check → POD → submit Ratecon + POD + Invoice for fast payout.",
+            incorrect: "Incorrect. The pipeline is pre-booking credit check → delivery & POD → submit packet for 24-hr payout."
+        },
+        d3q6: {
+            correct: "Correct! Weekly invoicing via Square/Stripe or payment apps is standard practice.",
+            incorrect: "Incorrect. Dispatchers typically invoice carriers weekly."
+        },
+        d3q7: {
+            correct: "Correct! TONU = Truck Ordered Not Used, typically $150–$250+.",
+            incorrect: "Incorrect. TONU means Truck Ordered Not Used and usually claims $150–$250+."
+        },
+        d3q8: {
+            correct: "Correct! Morning scan → mid-day tracking → end-of-day financials is the recommended routine.",
+            incorrect: "Incorrect. A solid daily routine is morning loadboard scan, mid-day tracking, and end-of-day financial debrief."
+        }
+    };
+
+    let attempts = 0;
+
+    function submitQuiz() {
+        let correctCount = 0;
+        const total = Object.keys(answerKey).length;
+
+        Object.keys(answerKey).forEach(qid => {
+            const selected = document.querySelector(`input[name="${qid}"]:checked`);
+            const questionEl = document.querySelector(`[data-qid="${qid}"]`);
+            const fbEl = document.querySelector(`[data-fb="${qid}"]`);
+            const options = questionEl.querySelectorAll('.quiz-option');
+
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+                const input = opt.querySelector('input');
+                if (input.value === answerKey[qid]) {
+                    opt.classList.add('correct-answer');
+                }
+            });
+
+            if (selected) {
+                const selectedOpt = selected.closest('.quiz-option');
+                if (selected.value === answerKey[qid]) {
+                    correctCount++;
+                    questionEl.classList.add('correct');
+                    selectedOpt.classList.add('selected');
+                    fbEl.textContent = feedbackText[qid].correct;
+                    fbEl.className = 'quiz-feedback show correct-fb';
+                } else {
+                    questionEl.classList.add('incorrect');
+                    selectedOpt.classList.add('wrong-selected');
+                    fbEl.textContent = feedbackText[qid].incorrect;
+                    fbEl.className = 'quiz-feedback show incorrect-fb';
+                }
             } else {
-                feedbackEl.innerText = `✕ Incorrect. The correct answer is option ${correctAns}.`;
-                feedbackEl.className = "quiz-feedback incorrect";
+                questionEl.classList.add('incorrect');
+                fbEl.textContent = "No answer selected. " + feedbackText[qid].incorrect;
+                fbEl.className = 'quiz-feedback show incorrect-fb';
             }
-        }
+        });
 
-        const scoreDisplay = document.getElementById(`score-display-${modIdx}`);
-        const percentage = Math.round((score / totalQ) * 100);
-        
-        if (score === totalQ) {
-            scoreDisplay.style.color = "var(--success)";
-            scoreDisplay.innerText = `Score: ${score}/${totalQ} (${percentage}%) - Mastered!`;
+        const pct = Math.round((correctCount / total) * 100);
+        attempts++;
+
+        document.getElementById('circle-day3').style.setProperty('--score-pct', (pct * 3.6) + 'deg');
+        document.getElementById('pct-day3').textContent = pct + '%';
+        document.getElementById('detail-day3').textContent = `${correctCount} out of ${total} correct`;
+
+        const msg = document.getElementById('msg-day3');
+        if (pct >= 75) {
+            msg.textContent = pct === 100 ? "Perfect score! Excellent mastery." : "Great job! You passed this knowledge check.";
+            msg.className = 'score-message pass';
         } else {
-            scoreDisplay.style.color = "var(--error)";
-            scoreDisplay.innerText = `Score: ${score}/${totalQ} (${percentage}%) - Review material & retry.`;
+            msg.textContent = "Keep reviewing the material and try again. You can retake this quiz unlimited times.";
+            msg.className = 'score-message fail';
         }
-    }
-</script>
 
+        document.getElementById('attempt-day3').textContent = `Attempt #${attempts}`;
+        document.getElementById('score-day3').classList.add('show');
+        document.getElementById('retry-day3').style.display = 'inline-block';
+        document.getElementById('submit-day3').style.display = 'none';
+        document.getElementById('score-day3').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function resetQuiz() {
+        Object.keys(answerKey).forEach(qid => {
+            const questionEl = document.querySelector(`[data-qid="${qid}"]`);
+            const fbEl = document.querySelector(`[data-fb="${qid}"]`);
+            const options = questionEl.querySelectorAll('.quiz-option');
+            const inputs = questionEl.querySelectorAll('input[type="radio"]');
+
+            questionEl.classList.remove('correct', 'incorrect');
+            options.forEach(opt => opt.classList.remove('disabled', 'selected', 'correct-answer', 'wrong-selected'));
+            inputs.forEach(inp => { inp.checked = false; });
+            fbEl.className = 'quiz-feedback';
+            fbEl.textContent = '';
+        });
+
+        document.getElementById('score-day3').classList.remove('show');
+        document.getElementById('retry-day3').style.display = 'none';
+        document.getElementById('submit-day3').style.display = 'inline-block';
+        document.getElementById('quiz-day3').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    document.addEventListener('change', function(e) {
+        if (e.target.type === 'radio') {
+            document.querySelectorAll(`input[name="${e.target.name}"]`).forEach(inp => {
+                inp.closest('.quiz-option').classList.toggle('selected', inp.checked);
+            });
+        }
+    });
+</script>
 </body>
 </html>
