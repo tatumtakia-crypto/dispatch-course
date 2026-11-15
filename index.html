@@ -626,5 +626,207 @@
         <p>Operational Support & Inquiries: <a href="mailto:support@mmblacklabel.com" class="text-yellow-400 hover:underline">support@mmblacklabel.com</a></p>
     </footer>
 
+    <!-- ===================== CART + CHECKOUT LOGIC ===================== -->
+    <script>
+        // ========== CART STATE ==========
+        let cart = JSON.parse(localStorage.getItem('crownCart')) || [];
+
+        // Known Square payment links for single-item checkouts
+        const squareLinks = {
+            "Saturday Group Session (11/21)": "https://square.link/u/C0YXgoHQ",
+            "Live Dispatcher Course": "https://square.link/u/jSyA2scQ",
+            "Self-Led Dispatcher Course": "https://square.link/u/gOVARTyy",
+            "Live Carrier Acquisition": "https://square.link/u/hHgrPzWQ",
+            "Self-Led Carrier Acquisition": "https://square.link/u/BVstdkoN"
+        };
+
+        // ========== HELPERS ==========
+        function formatPrice(cents) {
+            return '$' + (cents / 100).toFixed(2);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const msg = document.getElementById('toast-message');
+            msg.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2800);
+        }
+
+        function saveCart() {
+            localStorage.setItem('crownCart', JSON.stringify(cart));
+        }
+
+        function getCartTotal() {
+            return cart.reduce((sum, item) => sum + item.price, 0);
+        }
+
+        // ========== RENDER CART ==========
+        function renderCart() {
+            const container = document.getElementById('cart-items-container');
+            const emptyMsg = document.getElementById('empty-cart-msg');
+            const totalEl = document.getElementById('cart-total');
+            const badge = document.getElementById('cart-badge');
+            const mobileBadge = document.getElementById('mobile-cart-badge');
+            const checkoutBtn = document.getElementById('checkout-btn');
+
+            // Update badges
+            const count = cart.length;
+            badge.textContent = count;
+            mobileBadge.textContent = count;
+
+            // Update total
+            totalEl.textContent = formatPrice(getCartTotal());
+
+            // Enable / disable checkout
+            checkoutBtn.disabled = count === 0;
+
+            if (count === 0) {
+                container.innerHTML = '';
+                container.appendChild(emptyMsg);
+                emptyMsg.style.display = 'block';
+                return;
+            }
+
+            emptyMsg.style.display = 'none';
+            container.innerHTML = '';
+
+            cart.forEach((item, index) => {
+                const row = document.createElement('div');
+                row.className = 'flex items-start justify-between gap-4 bg-black/40 border border-gray-800 rounded-xl p-4';
+                row.innerHTML = `
+                    <div class="flex-1 min-w-0">
+                        <p class="font-bold text-white text-sm leading-snug">${item.name}</p>
+                        <p class="text-yellow-400 font-semibold text-sm mt-1">${formatPrice(item.price)}</p>
+                    </div>
+                    <button type="button" class="remove-item-btn text-gray-500 hover:text-red-400 transition text-xl font-bold leading-none" data-index="${index}" aria-label="Remove item">&times;</button>
+                `;
+                container.appendChild(row);
+            });
+
+            // Attach remove listeners
+            container.querySelectorAll('.remove-item-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const idx = parseInt(btn.dataset.index);
+                    const removed = cart.splice(idx, 1)[0];
+                    saveCart();
+                    renderCart();
+                    showToast(`Removed “${removed.name}”`);
+                });
+            });
+        }
+
+        // ========== ADD TO CART ==========
+        function addToCart(name, price) {
+            // Prevent exact duplicates (optional – remove this block if you want quantity)
+            const exists = cart.find(item => item.name === name);
+            if (exists) {
+                showToast('Already in cart');
+                openCart();
+                return;
+            }
+
+            cart.push({ name, price: parseInt(price) });
+            saveCart();
+            renderCart();
+            showToast(`Added “${name}”`);
+            openCart();
+        }
+
+        // ========== CART DRAWER CONTROLS ==========
+        function openCart() {
+            const drawer = document.getElementById('cart-drawer');
+            const overlay = document.getElementById('cart-overlay');
+            drawer.classList.remove('translate-x-full');
+            overlay.classList.remove('hidden', 'opacity-0', 'pointer-events-none');
+            overlay.classList.add('opacity-100');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCart() {
+            const drawer = document.getElementById('cart-drawer');
+            const overlay = document.getElementById('cart-overlay');
+            drawer.classList.add('translate-x-full');
+            overlay.classList.add('opacity-0', 'pointer-events-none');
+            setTimeout(() => overlay.classList.add('hidden'), 300);
+            document.body.style.overflow = '';
+        }
+
+        // ========== CHECKOUT → CREATE SQUARE LINK ==========
+        function proceedToCheckout() {
+            if (cart.length === 0) return;
+
+            // Single item with known Square link → go directly
+            if (cart.length === 1 && squareLinks[cart[0].name]) {
+                window.open(squareLinks[cart[0].name], '_blank');
+                showToast('Redirecting to Square Checkout…');
+                return;
+            }
+
+            // Multiple items or service deposits → create a summary + open support email
+            // (Square Payment Links are static; multi-item requires either individual checkouts or Square Online store)
+            const total = formatPrice(getCartTotal());
+            const itemList = cart.map(i => `• ${i.name} — ${formatPrice(i.price)}`).join('%0A');
+            const subject = encodeURIComponent(`Crown Access Order – Total ${total}`);
+            const body = encodeURIComponent(
+`Hi Crown Access team,
+
+I would like to complete payment for the following items:
+
+${cart.map(i => `• ${i.name} — ${formatPrice(i.price)}`).join('\n')}
+
+Total: ${total}
+
+Please send me a Square payment link or invoice.
+
+Thank you!`
+            );
+
+            // Open email as fallback + show clear toast
+            window.open(`mailto:support@mmblacklabel.com?subject=${subject}&body=${body}`, '_blank');
+            showToast('Order summary opened – check your email client');
+        }
+
+        // ========== EVENT LISTENERS ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initial render
+            renderCart();
+
+            // All Add-to-Cart / Pay Full Tuition buttons
+            document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const name = btn.dataset.name;
+                    const price = btn.dataset.price;
+                    if (name && price) {
+                        addToCart(name, price);
+                    }
+                });
+            });
+
+            // Cart open buttons
+            document.getElementById('cart-toggle-btn').addEventListener('click', openCart);
+            document.getElementById('mobile-cart-btn').addEventListener('click', openCart);
+
+            // Cart close
+            document.getElementById('cart-close-btn').addEventListener('click', closeCart);
+            document.getElementById('cart-overlay').addEventListener('click', closeCart);
+
+            // Checkout
+            document.getElementById('checkout-btn').addEventListener('click', proceedToCheckout);
+
+            // Mobile menu toggle
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Close mobile menu when a link is clicked
+            document.querySelectorAll('.mobile-nav-link').forEach(link => {
+                link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+            });
+        });
+    </script>
 </body>
 </html>
