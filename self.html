@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Certified Freight Dispatcher Professional Course | Crown Access</title>
+    <title>Complete 3-Day Freight Dispatcher Training Course | Crown Access</title>
     <style>
         :root {
             --bg-color: #0b0f19;
@@ -13,9 +13,10 @@
             --text-muted: #9ca3af;
             --primary: #3b82f6;
             --primary-hover: #2563eb;
-            --success: #22c55e;
-            --error: #ef4444;
             --accent: #8b5cf6;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
         }
 
         body {
@@ -38,11 +39,10 @@
             gap: 20px;
         }
 
-        /* Top Module Navigation Bar (8 tabs now: Intro + 7 Modules) */
         .module-nav {
             display: grid;
-            grid-template-columns: repeat(8, 1fr);
-            gap: 6px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
             background: #111827;
             padding: 12px;
             border-radius: 12px;
@@ -53,12 +53,12 @@
             background: #1f2937;
             border: none;
             color: var(--text-muted);
-            padding: 10px 4px;
+            padding: 12px 8px;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
-            font-size: 0.7rem;
+            font-size: 0.9rem;
             text-align: center;
         }
 
@@ -73,7 +73,6 @@
             box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
         }
 
-        /* Presentation Deck Viewport */
         .deck-viewport {
             background-color: var(--slide-bg);
             border: 1px solid var(--border-color);
@@ -81,12 +80,11 @@
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
             display: flex;
             flex-direction: column;
-            min-height: 600px;
+            min-height: 620px;
             position: relative;
             overflow: hidden;
         }
 
-        /* Slide Layout */
         .slide {
             display: none;
             flex-direction: column;
@@ -131,9 +129,9 @@
 
         .slide-content-grid {
             display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
+            grid-template-columns: 1.15fr 0.85fr;
             gap: 35px;
-            align-items: center;
+            align-items: start;
             flex-grow: 1;
         }
 
@@ -147,7 +145,7 @@
         .slide-text-side ul {
             padding-left: 18px;
             color: var(--text-muted);
-            margin: 0;
+            margin: 0 0 12px 0;
         }
 
         .slide-text-side li {
@@ -164,7 +162,7 @@
             background: #1f2937;
             border-radius: 12px;
             border: 1px solid var(--border-color);
-            height: 330px;
+            height: 340px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -187,75 +185,6 @@
             color: var(--text-muted);
             margin-top: 8px;
         }
-
-        .slide-full {
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .quiz-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            overflow-y: auto;
-            max-height: 420px;
-            padding-right: 10px;
-        }
-
-        .question-box {
-            background: #1f2937;
-            border: 1px solid var(--border-color);
-            padding: 18px;
-            border-radius: 10px;
-        }
-
-        .question-title {
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--text-main);
-            font-size: 0.95rem;
-        }
-
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        .option-label {
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-            background: #111827;
-            padding: 9px;
-            border-radius: 6px;
-            cursor: pointer;
-            border: 1px solid transparent;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            transition: all 0.2s;
-        }
-
-        .option-label:hover {
-            border-color: var(--primary);
-            color: var(--text-main);
-        }
-
-        .option-label input {
-            accent-color: var(--primary);
-            margin-top: 3px;
-        }
-
-        .quiz-feedback {
-            margin-top: 8px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: none;
-        }
-
-        .quiz-feedback.correct { color: #4ade80; }
-        .quiz-feedback.incorrect { color: #f87171; }
 
         .deck-controls {
             display: flex;
@@ -325,36 +254,274 @@
             font-weight: 600;
         }
 
-        .submit-module-btn {
-            background: var(--success);
+        .qa-box {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin-top: 12px;
+        }
+
+        .qa-box strong {
+            color: #60a5fa;
+        }
+
+        /* ===== QUIZ STYLES ===== */
+        .quiz-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-height: 520px;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+
+        .quiz-intro {
+            background: rgba(139, 92, 246, 0.12);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 10px;
+            padding: 14px 18px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .quiz-intro strong {
+            color: #c084fc;
+        }
+
+        .quiz-question {
+            background: #1f2937;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 16px 18px;
+            transition: border-color 0.2s;
+        }
+
+        .quiz-question.correct {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.08);
+        }
+
+        .quiz-question.incorrect {
+            border-color: var(--danger);
+            background: rgba(239, 68, 68, 0.08);
+        }
+
+        .quiz-question h4 {
+            margin: 0 0 12px 0;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 12px;
+            background: #111827;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        .quiz-option:hover:not(.disabled) {
+            border-color: var(--primary);
+            background: rgba(59, 130, 246, 0.08);
+        }
+
+        .quiz-option.selected {
+            border-color: var(--primary);
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--text-main);
+        }
+
+        .quiz-option.correct-answer {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.15);
+            color: #6ee7b7;
+        }
+
+        .quiz-option.wrong-selected {
+            border-color: var(--danger);
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
+        }
+
+        .quiz-option.disabled {
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .quiz-option input[type="radio"] {
+            margin-top: 3px;
+            accent-color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .quiz-feedback {
+            margin-top: 8px;
+            font-size: 0.82rem;
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
+        .quiz-feedback.correct-fb {
+            background: rgba(16, 185, 129, 0.15);
+            color: #6ee7b7;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .quiz-feedback.incorrect-fb {
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .quiz-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .quiz-btn {
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 10px 24px;
+            padding: 12px 28px;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
-            transition: opacity 0.2s;
+            font-size: 0.95rem;
+            transition: background 0.2s;
         }
 
-        .submit-module-btn:hover {
-            opacity: 0.9;
+        .quiz-btn:hover {
+            background: var(--primary-hover);
         }
 
-        .module-score-display {
-            margin-left: 15px;
+        .quiz-btn.secondary {
+            background: #374151;
+        }
+
+        .quiz-btn.secondary:hover {
+            background: #4b5563;
+        }
+
+        .quiz-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .score-panel {
+            display: none;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.15));
+            border: 1px solid rgba(59, 130, 246, 0.35);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .score-panel.show {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .score-circle {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: conic-gradient(var(--primary) var(--score-pct), #1f2937 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            position: relative;
+        }
+
+        .score-circle::before {
+            content: '';
+            position: absolute;
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            background: var(--slide-bg);
+        }
+
+        .score-value {
+            position: relative;
+            z-index: 1;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .score-label {
+            font-size: 1.1rem;
             font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .score-detail {
+            color: var(--text-muted);
             font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .score-message {
+            font-size: 0.95rem;
+            padding: 10px 16px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .score-message.pass {
+            background: rgba(16, 185, 129, 0.15);
+            color: #6ee7b7;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .score-message.fail {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fcd34d;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .attempt-info {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        /* Full-width quiz layout (no image column) */
+        .slide.quiz-slide .slide-content-grid {
+            grid-template-columns: 1fr;
         }
 
         @media(max-width: 768px) {
             .slide-content-grid {
                 grid-template-columns: 1fr;
             }
-            .options-grid {
-                grid-template-columns: 1fr;
-            }
             .module-nav {
-                grid-template-columns: repeat(4, 1fr);
+                grid-template-columns: 1fr;
             }
             .deck-controls {
                 flex-direction: column;
@@ -371,1170 +538,1269 @@
 
 <div class="master-container">
 
-    <!-- Top Module Navigation -->
+    <!-- Top Day Navigation -->
     <div class="module-nav">
-        <button class="module-tab active" onclick="switchModule(0)">Intro</button>
-        <button class="module-tab" onclick="switchModule(1)">Mod 1: Business</button>
-        <button class="module-tab" onclick="switchModule(2)">Mod 2: Brand</button>
-        <button class="module-tab" onclick="switchModule(3)">Mod 3: Marketing</button>
-        <button class="module-tab" onclick="switchModule(4)">Mod 4: Loadboards</button>
-        <button class="module-tab" onclick="switchModule(5)">Mod 5: Negotiation</button>
-        <button class="module-tab" onclick="switchModule(6)">Mod 6: Dispatching</button>
-        <button class="module-tab" onclick="switchModule(7)">Mod 7: Scaling</button>
+        <button class="module-tab active" onclick="switchModule(0)">Day 1: Foundations</button>
+        <button class="module-tab" onclick="switchModule(1)">Day 2: Acquisition</button>
+        <button class="module-tab" onclick="switchModule(2)">Day 3: Operations</button>
     </div>
 
     <!-- Presentation Deck Viewport -->
     <div class="deck-viewport" id="deckViewport">
 
-        <!-- ================= INTRO MODULE ================= -->
-        <div class="module-deck" data-module="0">
-            <div class="slide active">
-                <div class="slide-header">
-                    <h2>Welcome & Course Overview</h2>
-                    <span class="duration-badge">Introduction • Slide 1 of 3</span>
-                </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>Welcome to the <strong>Certified Freight Dispatcher Professional Course</strong> presented by Crown Access. This professional curriculum is engineered to transform beginners into elite, independent agency operators capable of commanding high weekly gross revenues.</p>
-                        <ul>
-                            <li><strong>Comprehensive Curriculum:</strong> Master everything from corporate entity formation and legal document compliance to advanced spot-market rate negotiations and multi-truck dispatch workflows.</li>
-                            <li><strong>Executive Standards:</strong> Designed specifically for dedicated professionals seeking high-yield, low-overhead remote business models in the logistics sector.</li>
-                        </ul>
-                    </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80" alt="Crown Access Logistics">
-                        <span class="image-caption">Crown Access Professional Freight Dispatching Academy.</span>
-                    </div>
-                </div>
-            </div>
+      <!-- ================= DAY 1 ================= -->
+      <div class="module-deck" data-module="0">
 
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>Curriculum Roadmap (Modules 1 - 4)</h2>
-                    <span class="duration-badge">Introduction • Slide 2 of 3</span>
-                </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>Our structured 7-module masterclass methodically guides you through building a bulletproof logistics enterprise:</p>
-                        <ul>
-                            <li><strong>Module 1 - Business Foundation:</strong> Corporate entity formation, licensing, banking, and understanding regulatory compliance without needing a broker bond.</li>
-                            <li><strong>Module 2 - Building the Brand:</strong> Designing professional agency identities, visual assets, and high-value market positioning under Crown Access standards.</li>
-                            <li><strong>Module 3 - Marketing & Target Audience:</strong> Sourcing owner-operators, cold outreach scripts, digital funnels, and executing professional onboarding workflows.</li>
-                            <li><strong>Module 4 - Loadboards & Freight:</strong> Deep dive into DAT, Truckstop, filtering criteria, spot rates, and analyzing high-margin equipment lanes.</li>
-                        </ul>
-                    </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" alt="Roadmap Setup">
-                        <span class="image-caption">Systematic enterprise development roadmap.</span>
-                    </div>
-                </div>
+        <!-- SLIDE 1 -->
+        <div class="slide active">
+            <div class="slide-header">
+                <h2>Day 1 Welcome & Agenda</h2>
+                <span class="duration-badge">Day 1 • Slide 1 of 10</span>
             </div>
-
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>Curriculum Roadmap (Modules 5 - 7) & Certification</h2>
-                    <span class="duration-badge">Introduction • Slide 3 of 3</span>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <p>Welcome to the <strong>Complete 3-Day Freight Dispatcher Training Course</strong>. Format: 3 daily sessions × 45 minutes. Each day ends with Q&A checkpoints and clear action items.</p>
+                    <ul>
+                        <li><strong>Module 1 (15 min):</strong> Industry Essentials & Key Terms</li>
+                        <li><strong>Module 2 (15 min):</strong> Business Structure, Tech Stack & Niche Selection</li>
+                        <li><strong>Module 3 (15 min):</strong> Marketing Strategy & Sourcing Leads</li>
+                    </ul>
+                    <p>By the end of Day 1 you will understand the core language of the industry, have a clear brand foundation, legal structure plan, and first lead-generation channels ready to activate.</p>
                 </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>Completing the second half of the curriculum transitions you straight into active, daily freight execution:</p>
-                        <ul>
-                            <li><strong>Module 5 - Rate Negotiation:</strong> Mastering broker psychological tactics, RPM optimization, credit checks, and securing detention/TONU accessorial fees.</li>
-                            <li><strong>Module 6 - Daily Dispatching:</strong> Executing setup packets, rate confirmations, professional dispatch sheets, and managing check-calls.</li>
-                            <li><strong>Module 7 - Invoicing & Scaling:</strong> Managing BOL submissions, factoring workflows, daily routines, and expanding into a multi-dispatcher agency.</li>
-                            <li><strong>Certificate of Completion:</strong> Upon finishing all modules and interactive knowledge checks, every student receives an official Crown Access Certificate of Completion.</li>
-                        </ul>
-                    </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Certification">
-                        <span class="image-caption">Official Professional Certification upon course completion.</span>
-                    </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80" alt="Day 1 Agenda">
+                    <span class="image-caption">3-Day Freight Dispatcher Training • Day 1 Roadmap</span>
                 </div>
             </div>
         </div>
 
-
-        <!-- ================= MODULE 1: BUSINESS FOUNDATION ================= -->
-        <div class="module-deck" data-module="1" style="display: none;">
-            <div class="slide active">
-                <div class="slide-header">
-                    <h2>1.1 Enterprise Architecture: Independent Dispatching vs. Brokerage</h2>
-                    <span class="duration-badge">Module 1 • 45 Mins • Slide 1 of 5</span>
-                </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>Establishing a profitable logistics service business requires absolute clarity regarding industry roles and legal distinctions. Independent freight dispatching operates by representing motor carriers directly, serving as their remote back-office operations manager.</p>
-                        <ul>
-                            <li><strong>Regulatory Separation:</strong> Unlike freight brokers who interject themselves between shippers and carriers and are mandated by federal law to maintain a $75,000 surety bond, independent dispatchers act solely as agents for the carrier.</li>
-                            <li><strong>Financial Freedom & Overhead:</strong> Because you do not take financial custody of freight or handle broker bond underwriting, your initial startup overhead remains exceptionally low.</li>
-                        </ul>
-                    </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80" alt="Business Foundation">
-                        <span class="image-caption">Understanding independent agent economics and regulatory structures.</span>
-                    </div>
-                </div>
+        <!-- SLIDE 2 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Module 1: Industry Essentials & Key Terms</h2>
+                <span class="duration-badge">Day 1 • Slide 2 of 10</span>
             </div>
-
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>1.2 Corporate Entity Formation: LLCs and EIN Acquisition</h2>
-                    <span class="duration-badge">Module 1 • Slide 2 of 5</span>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <p><strong>Overview:</strong> Master the core trucking vocabulary, the four main industry players, and the strict legal line between dispatching and brokering.</p>
+                    <p><strong>Core Vocabulary – Definitions:</strong></p>
+                    <ul>
+                        <li><strong>FMCSA</strong> – Federal Motor Carrier Safety Administration. The U.S. government agency that regulates the trucking industry, safety, and operating authority.</li>
+                        <li><strong>DOT Number</strong> – A unique identification number issued by the FMCSA to every commercial motor carrier that operates in interstate commerce.</li>
+                        <li><strong>MC Number</strong> – Motor Carrier Number. Issued by the FMCSA to carriers and brokers that have operating authority to haul regulated commodities for hire.</li>
+                        <li><strong>MOTUS</strong> – A real-time motor carrier monitoring system used by many brokers and dispatchers to check authority status, insurance, and safety data.</li>
+                        <li><strong>Load Board</strong> – An online marketplace (DAT, Truckstop, Trucker Path, etc.) where brokers post available freight and carriers/dispatchers search for loads.</li>
+                        <li><strong>Capacity</strong> – Available trucks/trailers that are empty and ready to haul freight.</li>
+                        <li><strong>Deadhead</strong> – Miles driven with an empty trailer (no paying load). Also called “empty miles.”</li>
+                        <li><strong>Backhaul</strong> – A return load that takes the truck back toward its home base or next desired region, reducing deadhead.</li>
+                    </ul>
                 </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>To operate with institutional credibility and protect your personal assets from corporate liabilities, you must establish a formal business entity before signing client contracts or opening commercial merchant accounts.</p>
-                        <ul>
-                            <li><strong>State Registration:</strong> Filing your Articles of Organization to establish your corporate LLC structure (such as within Jefferson County, Alabama, or your respective operating state).</li>
-                            <li><strong>Federal EIN:</strong> Securing your official Employer Identification Number directly from the IRS website.</li>
-                            <li><strong>Commercial Banking:</strong> Opening a dedicated business checking account to maintain clean corporate records.</li>
-                        </ul>
-                    </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" alt="Entity Formation">
-                        <span class="image-caption">Establishing LLC protection, EIN credentials, and commercial accounts.</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>1.3 Regulatory Compliance: MC, DOT, and State Licensing</h2>
-                    <span class="duration-badge">Module 1 • Slide 3 of 5</span>
-                </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>Navigating motor carrier compliance ensures that your agency operates entirely above board and within federal transportation guidelines.</p>
-                        <ul>
-                            <li><strong>Motor Carrier Authorities:</strong> Understanding how your carrier clients obtain their active MC and USDOT numbers through the FMCSA.</li>
-                            <li><strong>Dispatcher Verification:</strong> Ensuring that every carrier you onboard maintains active authority, valid safety ratings, and clean compliance history.</li>
-                            <li><strong>Local Municipal Licensing:</strong> Checking county and city business license requirements where your agency headquarters is registered.</li>
-                        </ul>
-                    </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=600&q=80" alt="Compliance">
-                        <span class="image-caption">Verifying motor carrier safety ratings and regulatory compliance.</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>1.4 Revenue Architecture & Agency Financial Modeling</h2>
-                    <span class="duration-badge">Module 1 • Slide 4 of 5</span>
-                </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>Structuring your agency's billing models and income projections determines your long-term scalability and cash flow stability.</p>
-                        <ul>
-                            <li><strong>Percentage-Based Fees:</strong> Establishing standard industry pricing, charging between 5% and 10% of gross weekly truck revenue.</li>
-                            <li><strong>Weekly Invoicing Cycles:</strong> Implementing automated weekly settlement statements tied directly to carrier load confirmations.</li>
-                            <li><strong>Revenue Projections:</strong> Modeling gross income potential based on active trucks under dispatch, scaling from solo operators to fleets.</li>
-                        </ul>
-                    </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600&q=80" alt="Revenue Model">
-                        <span class="image-caption">Modeling weekly gross revenue and percentage-based service fees.</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Knowledge Check Slide -->
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>Module 1 Knowledge Check</h2>
-                    <span class="duration-badge">Score & Verify Mastery</span>
-                </div>
-                <div class="slide-full">
-                    <div class="quiz-container" id="quiz-deck-0">
-                        <div class="question-box" data-q="1" data-ans="A">
-                            <div class="question-title">1. What is the primary operational difference between a freight dispatcher and a freight broker?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m0_q1" value="A"> A) Dispatchers represent and book loads for carriers; brokers mediate between shippers and carriers.</label>
-                                <label class="option-label"><input type="radio" name="m0_q1" value="B"> B) Dispatchers require a $75,000 surety bond.</label>
-                                <label class="option-label"><input type="radio" name="m0_q1" value="C"> C) Brokers drive semi-trucks.</label>
-                                <label class="option-label"><input type="radio" name="m0_q1" value="D"> D) There is no difference.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m0_f1"></div>
-                        </div>
-                        <div class="question-box" data-q="2" data-ans="B">
-                            <div class="question-title">2. Why is forming an LLC and obtaining an EIN important for your dispatch business?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m0_q2" value="A"> A) It automatically grants you broker authority.</label>
-                                <label class="option-label"><input type="radio" name="m0_q2" value="B"> B) It provides legal liability protection and enables professional business banking.</label>
-                                <label class="option-label"><input type="radio" name="m0_q2" value="C"> C) It waives all federal taxes.</label>
-                                <label class="option-label"><input type="radio" name="m0_q2" value="D"> D) It allows you to drive commercial trucks.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m0_f2"></div>
-                        </div>
-                        <div class="question-box" data-q="3" data-ans="B">
-                            <div class="question-title">3. Do independent freight dispatchers need a $75,000 broker bond?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m0_q3" value="A"> A) Yes, exactly $75,000.</label>
-                                <label class="option-label"><input type="radio" name="m0_q3" value="B"> B) No, because dispatchers represent carriers rather than taking financial custody of freight.</label>
-                                <label class="option-label"><input type="radio" name="m0_q3" value="C"> C) Yes, $100,000.</label>
-                                <label class="option-label"><input type="radio" name="m0_q3" value="D"> D) Only if operating in Alabama.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m0_f3"></div>
-                        </div>
-                        <div class="question-box" data-q="4" data-ans="B">
-                            <div class="question-title">4. What is the standard compensation model for an independent freight dispatcher?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m0_q4" value="A"> A) A flat annual salary paid by brokers.</label>
-                                <label class="option-label"><input type="radio" name="m0_q4" value="B"> B) A weekly percentage (e.g., 5% to 10%) of gross load revenue.</label>
-                                <label class="option-label"><input type="radio" name="m0_q4" value="C"> C) Hourly wages paid by shippers.</label>
-                                <label class="option-label"><input type="radio" name="m0_q4" value="D"> D) Commission paid directly by the government.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m0_f4"></div>
-                        </div>
-                        <div class="question-box" data-q="5" data-ans="B">
-                            <div class="question-title">5. What does MC and DOT stand for in motor carrier compliance?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m0_q5" value="A"> A) Motor Carrier and Department of Training.</label>
-                                <label class="option-label"><input type="radio" name="m0_q5" value="B"> B) Motor Carrier and Department of Transportation.</label>
-                                <label class="option-label"><input type="radio" name="m0_q5" value="C"> C) Master Control and Delivery Order.</label>
-                                <label class="option-label"><input type="radio" name="m0_q5" value="D"> D) Management Corporation and Direct Operation.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m0_f5"></div>
-                        </div>
-                    </div>
-                    <div style="margin-top: 15px; display: flex; align-items: center;">
-                        <button class="submit-module-btn" onclick="gradeModule(0, 5)">Grade Module 1 Quiz</button>
-                        <span class="module-score-display" id="score-display-0"></span>
-                    </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" alt="Industry Terms">
+                    <span class="image-caption">Core industry terms you must know cold</span>
                 </div>
             </div>
         </div>
 
-
-        <!-- ================= MODULE 2: BUILDING THE BRAND ================= -->
-        <div class="module-deck" data-module="2" style="display: none;">
-            <div class="slide active">
-                <div class="slide-header">
-                    <h2>2.1 Brand Identity & Professional Asset Creation</h2>
-                    <span class="duration-badge">Module 2 • 45 Mins • Slide 1 of 5</span>
-                </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>In the competitive freight sector, perception dictates value. Building a world-class brand identity ensures that brokers and carriers take your agency seriously from the first interaction.</p>
-                        <ul>
-                            <li><strong>Visual Branding Standards:</strong> Designing sophisticated logos, typography hierarchies, and color palettes (such as Crown Access metallic blues and golds) that project institutional authority.</li>
-                            <li><strong>Digital Collateral:</strong> Building professional email domains, branded digital letterheads, and service proposals.</li>
-                        </ul>
-                    </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600&q=80" alt="Brand Identity">
-                        <span class="image-caption">Developing elite visual identities and corporate collateral.</span>
-                    </div>
-                </div>
+        <!-- SLIDE 3 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Key Players & The Legal Line</h2>
+                <span class="duration-badge">Day 1 • Slide 3 of 10</span>
             </div>
-
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>2.2 Niche Market Positioning & Fleet Specialization</h2>
-                    <span class="duration-badge">Module 2 • Slide 2 of 5</span>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <p><strong>Roles & Relationships – Clear Definitions:</strong></p>
+                    <ul>
+                        <li><strong>Shipper / Receiver</strong> – The company that owns the freight (shipper) or the company that receives it (receiver). They pay the broker or carrier.</li>
+                        <li><strong>Carrier</strong> – The trucking company (owner-operator or fleet) that actually moves the freight with its own authority (MC/DOT numbers) and equipment.</li>
+                        <li><strong>Freight Broker</strong> – A company that arranges transportation between shippers and carriers. Brokers never own the trucks. They must hold a $75,000 surety bond and FMCSA broker authority.</li>
+                        <li><strong>Freight Dispatcher</strong> – An independent agent who works exclusively for the carrier under a written agreement. The dispatcher finds loads, negotiates rates, and handles paperwork on behalf of the carrier. The dispatcher never takes possession of the freight or the money paid for the load.</li>
+                    </ul>
+                    <p><strong>Critical Legal Rule:</strong> If you ever handle the load money or act as a middleman between shipper and carrier without a written carrier agreement, you are brokering and must have a broker bond. Stay strictly on the dispatcher side of the line.</p>
                 </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>Generalist agencies struggle to build authority. Positioning your brand around a specific equipment class or hauling niche accelerates trust and market penetration.</p>
-                        <ul>
-                            <li><strong>Equipment Specialization:</strong> Choosing whether your agency will focus on Dry Van, Reefer, Flatbed, Step Deck, or Box Truck operations.</li>
-                            <li><strong>Corridor Mastery:</strong> Developing localized expertise in high-density freight corridors.</li>
-                        </ul>
-                    </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=600&q=80" alt="Market Positioning">
-                        <span class="image-caption">Specializing in equipment classes and high-density freight corridors.</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>2.3 Establishing Your Digital Infrastructure & Web Presence</h2>
-                    <span class="duration-badge">Module 2 • Slide 3 of 5</span>
-                </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>A high-converting web presence acts as your 24/7 sales representative, validating your agency when prospective carriers research your business.</p>
-                        <ul>
-                            <li><strong>Landing Page Architecture:</strong> Constructing clean, mobile-optimized HTML/CSS web portals featuring clear service breakdowns and carrier intake forms.</li>
-                            <li><strong>Virtual Office Infrastructure:</strong> Setting up cloud-based business phone lines, automated voicemail trees, and digital fax numbers.</li>
-                        </ul>
-                    </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" alt="Digital Infrastructure">
-                        <span class="image-caption">Building high-converting digital portals and virtual communication tools.</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>2.4 Brand Protection & Legal Safeguards</h2>
-                    <span class="duration-badge">Module 2 • Slide 4 of 5</span>
-                </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>Safeguarding your agency name and operational assets ensures long-term brand equity without infringement risks.</p>
-                        <ul>
-                            <li><strong>Trademark Clearance:</strong> Conducting rigorous database searches (USPTO) to ensure your agency name and logo assets are fully clear.</li>
-                            <li><strong>Domain Real Estate:</strong> Securing exact-match web domains and social media handles across all major professional networks.</li>
-                        </ul>
-                    </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=600&q=80" alt="Brand Protection">
-                        <span class="image-caption">Securing trademark clearances and digital domain assets.</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Knowledge Check Slide -->
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>Module 2 Knowledge Check</h2>
-                    <span class="duration-badge">Score & Verify Mastery</span>
-                </div>
-                <div class="slide-full">
-                    <div class="quiz-container" id="quiz-deck-1">
-                        <div class="question-box" data-q="1" data-ans="A">
-                            <div class="question-title">1. What size carrier fleet is typically the best target market for an independent freight dispatcher?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m1_q1" value="A"> A) Small fleets (1 to 5 trucks) or owner-operators without internal dispatchers.</label>
-                                <label class="option-label"><input type="radio" name="m1_q1" value="B"> B) Mega-carriers with over 1,000 corporate trucks.</label>
-                                <label class="option-label"><input type="radio" name="m1_q1" value="C"> C) Freight brokerage corporations.</label>
-                                <label class="option-label"><input type="radio" name="m1_q1" value="D"> D) Private delivery van couriers.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m1_f1"></div>
-                        </div>
-                        <div class="question-box" data-q="2" data-ans="B">
-                            <div class="question-title">2. Where can you find newly authorized motor carriers to pitch your dispatching services?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m1_q2" value="A"> A) Grocery store bulletin boards.</label>
-                                <label class="option-label"><input type="radio" name="m1_q2" value="B"> B) FMCSA safety and authority registry databases and industry directories.</label>
-                                <label class="option-label"><input type="radio" name="m1_q2" value="C"> C) Local real estate listings.</label>
-                                <label class="option-label"><input type="radio" name="m1_q2" value="D"> D) Public library book catalogs.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m1_f2"></div>
-                        </div>
-                        <div class="question-box" data-q="3" data-ans="B">
-                            <div class="question-title">3. How should you handle fee pushback from a prospective carrier during your sales pitch?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m1_q3" value="A"> A) Lower your fee to zero immediately.</label>
-                                <label class="option-label"><input type="radio" name="m1_q3" value="B"> B) Demonstrate how your negotiation skills generate higher RPM that easily covers your fee.</label>
-                                <label class="option-label"><input type="radio" name="m1_q3" value="C"> C) Hang up the phone immediately.</label>
-                                <label class="option-label"><input type="radio" name="m1_q3" value="D"> D) Pay the carrier out of your own pocket.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m1_f3"></div>
-                        </div>
-                        <div class="question-box" data-q="4" data-ans="B">
-                            <div class="question-title">4. What is a vital step before booking any loads for a newly onboarded carrier?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m1_q4" value="A"> A) Buying them a new semi-truck.</label>
-                                <label class="option-label"><input type="radio" name="m1_q4" value="B"> B) Having them sign your Master Dispatcher-Carrier Agreement and collecting compliance documents.</label>
-                                <label class="option-label"><input type="radio" name="m1_q4" value="C"> C) Painting their trailer with your agency logo.</label>
-                                <label class="option-label"><input type="radio" name="m1_q4" value="D"> D) Depositing their quarterly taxes.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m1_f4"></div>
-                        </div>
-                        <div class="question-box" data-q="5" data-ans="B">
-                            <div class="question-title">5. What is the primary benefit of utilizing social proof in your marketing?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m1_q5" value="A"> A) It lowers your electric bill.</label>
-                                <label class="option-label"><input type="radio" name="m1_q5" value="B"> B) It builds instant trust and credibility by showing real results achieved for other carriers.</label>
-                                <label class="option-label"><input type="radio" name="m1_q5" value="C"> C) It secures commercial real estate leases.</label>
-                                <label class="option-label"><input type="radio" name="m1_q5" value="D"> D) It qualifies you for government grants.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m1_f5"></div>
-                        </div>
-                    </div>
-                    <div style="margin-top: 15px; display: flex; align-items: center;">
-                        <button class="submit-module-btn" onclick="gradeModule(1, 5)">Grade Module 2 Quiz</button>
-                        <span class="module-score-display" id="score-display-1"></span>
-                    </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Roles">
+                    <span class="image-caption">Shipper → Broker → Carrier (Dispatcher works only for the Carrier)</span>
                 </div>
             </div>
         </div>
 
-
-        <!-- ================= MODULE 3: MARKETING & TARGET AUDIENCE ================= -->
-        <div class="module-deck" data-module="3" style="display: none;">
-            <div class="slide active">
-                <div class="slide-header">
-                    <h2>3.1 Identifying & Sourcing Owner-Operators and Small Fleets</h2>
-                    <span class="duration-badge">Module 3 • 45 Mins • Slide 1 of 5</span>
-                </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>Targeting the right audience is the foundation of high-conversion marketing. Small fleet owners (1 to 5 trucks) represent your prime demographic because they are overwhelmed with driving and administrative tasks.</p>
+        <!-- SLIDE 4 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Q&A Checkpoint — Module 1</h2>
+                <span class="duration-badge">Day 1 • Slide 4 of 10</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <div class="qa-box">
+                        <p><strong>Open floor for questions on:</strong></p>
                         <ul>
-                            <li><strong>Data Mining Registries:</strong> Utilizing FMCSA safety and authority databases to extract contact details for newly registered motor carriers.</li>
-                            <li><strong>Pain Point Analysis:</strong> Identifying common carrier frustrations: sitting too long at docks, dealing with slow-paying brokers, and losing hours on loadboards.</li>
+                            <li>Any of the core terms (FMCSA, MC, DOT, Deadhead, Backhaul, etc.)</li>
+                            <li>Difference between Broker and Dispatcher</li>
+                            <li>Why the $75k bond matters and how to stay on the legal side of the line</li>
                         </ul>
                     </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Target Audience">
-                        <span class="image-caption">Extracting carrier leads and analyzing owner-operator pain points.</span>
-                    </div>
+                    <p style="margin-top:18px;">Take notes on any terms that still feel unclear — we will use them constantly for the rest of the course.</p>
                 </div>
-            </div>
-
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>3.2 Outbound Sales & Cold Outreach Scripts</h2>
-                    <span class="duration-badge">Module 3 • Slide 2 of 5</span>
-                </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>Executing professional outbound communication requires structured phone and text scripts that capture attention immediately.</p>
-                        <ul>
-                            <li><strong>The Opening Hook:</strong> Introducing Crown Access concisely, referencing their specific equipment type, and immediately addressing lane profitability.</li>
-                            <li><strong>Overcoming Initial Resistance:</strong> Disarming common carrier objections ("I already have a broker") with calm, professional counter-value.</li>
-                        </ul>
-                    </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80" alt="Outbound Sales">
-                        <span class="image-caption">Executing cold outreach scripts and overcoming carrier objections.</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>3.3 Digital Funnels & Social Proof Generation</h2>
-                    <span class="duration-badge">Module 3 • Slide 3 of 5</span>
-                </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>Leveraging digital marketing funnels automates lead generation and builds unstoppable social proof.</p>
-                        <ul>
-                            <li><strong>Promotional Collateral:</strong> Distributing high-impact digital flyers across trucker networks and social media platforms.</li>
-                            <li><strong>Case Studies & Testimonials:</strong> Highlighting real weekly gross revenue reports from satisfied carriers.</li>
-                        </ul>
-                    </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1432888622747-4eb9a1efeb05?auto=format&fit=crop&w=600&q=80" alt="Digital Funnels">
-                        <span class="image-caption">Deploying digital marketing assets and building verified social proof.</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>3.4 Carrier Onboarding & Intake Protocols</h2>
-                    <span class="duration-badge">Module 3 • Slide 4 of 5</span>
-                </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>Converting a prospect into an active client requires a frictionless onboarding process that establishes absolute operational clarity.</p>
-                        <ul>
-                            <li><strong>Intake Questionnaires:</strong> Gathering exact equipment dimensions, weight limits, preferred operating regions, and home-time requirements.</li>
-                            <li><strong>Compliance Verification:</strong> Collecting W-9 forms, Certificates of Insurance (COI), and MC authority letters.</li>
-                        </ul>
-                    </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80" alt="Onboarding Protocols">
-                        <span class="image-caption">Executing seamless carrier intake and compliance collection.</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Knowledge Check Slide -->
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>Module 3 Knowledge Check</h2>
-                    <span class="duration-badge">Score & Verify Mastery</span>
-                </div>
-                <div class="slide-full">
-                    <div class="quiz-container" id="quiz-deck-2">
-                        <div class="question-box" data-q="1" data-ans="A">
-                            <div class="question-title">1. What legal clause in your service agreement allows you to sign rate confirmations on behalf of your carrier?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m2_q1" value="A"> A) Power of Attorney (POA).</label>
-                                <label class="option-label"><input type="radio" name="m2_q1" value="B"> B) Real Estate Deed.</label>
-                                <label class="option-label"><input type="radio" name="m2_q1" value="C"> C) Medical Waiver.</label>
-                                <label class="option-label"><input type="radio" name="m2_q1" value="D"> D) Patent Assignment.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m2_f1"></div>
-                        </div>
-                        <div class="question-box" data-q="2" data-ans="B">
-                            <div class="question-title">2. What are the standard minimum insurance coverages brokers require from carriers?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m2_q2" value="A"> A) $10,000 auto liability and $5,000 cargo insurance.</label>
-                                <label class="option-label"><input type="radio" name="m2_q2" value="B"> B) Typically $100,000 auto liability and $100,000 cargo insurance.</label>
-                                <label class="option-label"><input type="radio" name="m2_q2" value="C"> C) No insurance is required.</label>
-                                <label class="option-label"><input type="radio" name="m2_q2" value="D"> D) $10 million aircraft insurance.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m2_f2"></div>
-                        </div>
-                        <div class="question-box" data-q="3" data-ans="B">
-                            <div class="question-title">3. What does a Notice of Assignment (NOA) indicate in carrier documentation?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m2_q3" value="A"> A) That the truck requires mechanical repairs.</label>
-                                <label class="option-label"><input type="radio" name="m2_q3" value="B"> B) That the carrier uses a factoring company and payments must go to that specific factor.</label>
-                                <label class="option-label"><input type="radio" name="m2_q3" value="C"> C) That the driver is changing their home address.</label>
-                                <label class="option-label"><input type="radio" name="m2_q3" value="D"> D) That the carrier is retiring.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m2_f3"></div>
-                        </div>
-                        <div class="question-box" data-q="4" data-ans="B">
-                            <div class="question-title">4. Why is maintaining a digital documentation vault essential for a dispatcher?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m2_q4" value="A"> A) To decorate your computer desktop.</label>
-                                <label class="option-label"><input type="radio" name="m2_q4" value="B"> B) Because brokers demand COIs, W-9s, and authority letters instantly when booking loads.</label>
-                                <label class="option-label"><input type="radio" name="m2_q4" value="C"> C) To print physical wallpaper.</label>
-                                <label class="option-label"><input type="radio" name="m2_q4" value="D"> D) To comply with video game regulations.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m2_f4"></div>
-                        </div>
-                        <div class="question-box" data-q="5" data-ans="B">
-                            <div class="question-title">5. What does TMS stand for in dispatching software technology?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m2_q5" value="A"> A) Total Motor Standard.</label>
-                                <label class="option-label"><input type="radio" name="m2_q5" value="B"> B) Transportation Management System.</label>
-                                <label class="option-label"><input type="radio" name="m2_q5" value="C"> C) Truck Monitoring Service.</label>
-                                <label class="option-label"><input type="radio" name="m2_q5" value="D"> D) Tariff Management Software.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m2_f5"></div>
-                        </div>
-                    </div>
-                    <div style="margin-top: 15px; display: flex; align-items: center;">
-                        <button class="submit-module-btn" onclick="gradeModule(2, 5)">Grade Module 3 Quiz</button>
-                        <span class="module-score-display" id="score-display-2"></span>
-                    </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Q&A">
+                    <span class="image-caption">Module 1 Q&A Checkpoint</span>
                 </div>
             </div>
         </div>
 
-
-        <!-- ================= MODULE 4: LOADBOARDS ================= -->
-        <div class="module-deck" data-module="4" style="display: none;">
-            <div class="slide active">
-                <div class="slide-header">
-                    <h2>4.1 Mastering Industry Loadboards (DAT & Truckstop)</h2>
-                    <span class="duration-badge">Module 4 • 45 Mins • Slide 1 of 5</span>
-                </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>Loadboards serve as the primary digital marketplace connecting available freight with available carrier capacity. Mastering their advanced search algorithms is essential.</p>
-                        <ul>
-                            <li><strong>Advanced Filtering:</strong> Navigating DAT Power and Truckstop.com using precise origin radiuses, deadhead limits, equipment types, and weight cutoffs.</li>
-                            <li><strong>Posting Equipment:</strong> Utilizing loadboard truck-posting features to broadcast your carrier's upcoming empty status.</li>
-                        </ul>
-                    </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1542744094-24638eff58bb?auto=format&fit=crop&w=600&q=80" alt="Loadboard Mastery">
-                        <span class="image-caption">Navigating advanced search filters and truck-posting tools on DAT.</span>
-                    </div>
-                </div>
+        <!-- SLIDE 5 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Module 2: Business Structure, Tech Stack & Niche</h2>
+                <span class="duration-badge">Day 1 • Slide 5 of 10</span>
             </div>
-
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>4.2 Spot Market Intelligence & Lane Trend Analysis</h2>
-                    <span class="duration-badge">Module 4 • Slide 2 of 5</span>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <p><strong>Overview:</strong> Form your LLC, set up essential tech/cloud systems, and choose a profitable equipment niche.</p>
+                    <ul>
+                        <li><strong>LLC (Limited Liability Company)</strong> – A legal business structure that protects your personal assets from business debts and lawsuits.</li>
+                        <li><strong>EIN (Employer Identification Number)</strong> – A free nine-digit tax ID number issued by the IRS. Required to open a business bank account and file taxes as a business.</li>
+                        <li><strong>Merchant Processing</strong> – Services such as Square or Stripe that allow you to accept credit cards and send automated invoices to your carriers.</li>
+                        <li><strong>VoIP Phone</strong> – Voice over Internet Protocol. A business phone system that runs over the internet (OpenPhone, Google Voice, RingCentral) instead of a traditional landline.</li>
+                        <li><strong>E-Signature Software</strong> – Tools such as DocuSign or PandaDoc that let carriers sign contracts and Ratecons electronically.</li>
+                        <li><strong>Niche</strong> – A focused segment of the market (Box Trucks, Dry Vans, Reefers, Flatbeds, specific geographic lanes, or new-authority carriers) that you specialize in to stand out and win higher rates.</li>
+                    </ul>
                 </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>Understanding spot market dynamics enables you to identify high-margin shipping lanes and avoid unprofitable backhauls.</p>
-                        <ul>
-                            <li><strong>Rate View Analytics:</strong> Analyzing historical spot rates to determine exact market value per mile for specific origins and destinations.</li>
-                            <li><strong>Seasonal Surge Tracking:</strong> Capitalizing on high-demand regional shifts and holiday peaks.</li>
-                        </ul>
-                    </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" alt="Lane Analysis">
-                        <span class="image-caption">Evaluating spot rate analytics and regional freight density.</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>4.3 Equipment Specifications & Weight Compliance</h2>
-                    <span class="duration-badge">Module 4 • Slide 3 of 5</span>
-                </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>Matching your carrier's exact equipment configurations to suitable freight prevents costly overweight fines and rejected loads.</p>
-                        <ul>
-                            <li><strong>Dry Vans & Reefers:</strong> Understanding standard 53ft dimensions, pallet capacities, and gross weight limits.</li>
-                            <li><strong>Flatbeds & Step Decks:</strong> Managing tarp requirements, securement chains, straps, and oversized dimensional constraints.</li>
-                        </ul>
-                    </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=600&q=80" alt="Equipment Specs">
-                        <span class="image-caption">Verifying trailer dimensions, weight capacities, and securement needs.</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>4.4 Spot Market Volatility vs. Dedicated Contract Freight</h2>
-                    <span class="duration-badge">Module 4 • Slide 4 of 5</span>
-                </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>Balancing daily spot market fluctuations with recurring dedicated contract freight creates stable, predictable income for your carriers.</p>
-                        <ul>
-                            <li><strong>Spot Market Advantages:</strong> Maximizing revenue during high-demand market spikes when spot rates exceed contract averages.</li>
-                            <li><strong>Dedicated Lane Securing:</strong> Pitching shippers or primary brokers for weekly recurring freight contracts.</li>
-                        </ul>
-                    </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600&q=80" alt="Spot vs Contract">
-                        <span class="image-caption">Balancing spot market opportunities with dedicated freight contracts.</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Knowledge Check Slide -->
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>Module 4 Knowledge Check</h2>
-                    <span class="duration-badge">Score & Verify Mastery</span>
-                </div>
-                <div class="slide-full">
-                    <div class="quiz-container" id="quiz-deck-3">
-                        <div class="question-box" data-q="1" data-ans="A">
-                            <div class="question-title">1. What are DAT and Truckstop.com primarily used for in freight dispatching?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m3_q1" value="A"> A) Searching available loads and posting empty carrier trucks.</label>
-                                <label class="option-label"><input type="radio" name="m3_q1" value="B"> B) Filing federal income taxes.</label>
-                                <label class="option-label"><input type="radio" name="m3_q1" value="C"> C) Processing payroll for truck drivers.</label>
-                                <label class="option-label"><input type="radio" name="m3_q1" value="D"> D) Designing company logos.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m3_f1"></div>
-                        </div>
-                        <div class="question-box" data-q="2" data-ans="B">
-                            <div class="question-title">2. What type of trailer is required to transport temperature-sensitive food and pharmaceuticals?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m3_q2" value="A"> A) Standard Dry Van.</label>
-                                <label class="option-label"><input type="radio" name="m3_q2" value="B"> B) Refrigerated trailer (Reefer).</label>
-                                <label class="option-label"><input type="radio" name="m3_q2" value="C"> C) Flatbed trailer.</label>
-                                <label class="option-label"><input type="radio" name="m3_q2" value="D"> D) Lowboy trailer.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m3_f2"></div>
-                        </div>
-                        <div class="question-box" data-q="3" data-ans="B">
-                            <div class="question-title">3. What does "deadhead miles" refer to in trucking operations?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m3_q3" value="A"> A) Miles driven while fully loaded with cargo.</label>
-                                <label class="option-label"><input type="radio" name="m3_q3" value="B"> B) Unloaded miles driven to reach a pickup location.</label>
-                                <label class="option-label"><input type="radio" name="m3_q3" value="C"> C) Miles driven during a vehicle breakdown.</label>
-                                <label class="option-label"><input type="radio" name="m3_q3" value="D"> D) Total annual vehicle mileage.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m3_f3"></div>
-                        </div>
-                        <div class="question-box" data-q="4" data-ans="B">
-                            <div class="question-title">4. Why is analyzing spot market lane data critical before booking a load?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m3_q4" value="A"> A) To predict tomorrow's weather forecast.</label>
-                                <label class="option-label"><input type="radio" name="m3_q4" value="B"> B) To ensure your carrier is getting top dollar and avoiding below-market rate traps.</label>
-                                <label class="option-label"><input type="radio" name="m3_q4" value="C"> C) To check broker credit scores.</label>
-                                <label class="option-label"><input type="radio" name="m3_q4" value="D"> D) To register new MC numbers.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m3_f4"></div>
-                        </div>
-                        <div class="question-box" data-q="5" data-ans="B">
-                            <div class="question-title">5. What is the standard length of a traditional semi-trailer (Dry Van or Reefer)?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m3_q5" value="A"> A) 20 feet.</label>
-                                <label class="option-label"><input type="radio" name="m3_q5" value="B"> B) 53 feet.</label>
-                                <label class="option-label"><input type="radio" name="m3_q5" value="C"> C) 100 feet.</label>
-                                <label class="option-label"><input type="radio" name="m3_q5" value="D"> D) 15 feet.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m3_f5"></div>
-                        </div>
-                    </div>
-                    <div style="margin-top: 15px; display: flex; align-items: center;">
-                        <button class="submit-module-btn" onclick="gradeModule(3, 5)">Grade Module 4 Quiz</button>
-                        <span class="module-score-display" id="score-display-3"></span>
-                    </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" alt="Business Setup">
+                    <span class="image-caption">LLC, tech stack, and niche selection with definitions</span>
                 </div>
             </div>
         </div>
 
-
-        <!-- ================= MODULE 5: NEGOTIATION ================= -->
-        <div class="module-deck" data-module="5" style="display: none;">
-            <div class="slide active">
-                <div class="slide-header">
-                    <h2>5.1 The Psychology of Broker Negotiation</h2>
-                    <span class="duration-badge">Module 5 • 45 Mins • Slide 1 of 5</span>
-                </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>Freight rate negotiation is a psychological discipline based on supply, demand, and professional authority. Command respect by speaking fluently in transportation terminology.</p>
-                        <ul>
-                            <li><strong>Industry Lexicon:</strong> Mastering terms like linehaul rate, Rate Per Mile (RPM), deadhead, fuel surcharge, and market capacity.</li>
-                            <li><strong>Leverage Assessment:</strong> Recognizing when regional truck shortages allow you to reject initial broker offers.</li>
-                        </ul>
-                    </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80" alt="Negotiation Psychology">
-                        <span class="image-caption">Applying negotiation psychology and logistics terminology.</span>
-                    </div>
-                </div>
+        <!-- SLIDE 6 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Visual Walkthrough — Drive Structure & Carrier Packet</h2>
+                <span class="duration-badge">Day 1 • Slide 6 of 10</span>
             </div>
-
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>5.2 Tactical Phone & Email Execution</h2>
-                    <span class="duration-badge">Module 5 • Slide 2 of 5</span>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <p>Live / screenshot preview of:</p>
+                    <ul>
+                        <li><strong>Google Drive / Dropbox Hierarchy</strong> – One root folder per carrier containing sub-folders for Contracts, Ratecons, BOLs, Invoices, and Insurance.</li>
+                        <li><strong>Dispatch Agreement</strong> – The contract between you and the carrier that outlines your services, fee percentage, and responsibilities.</li>
+                        <li><strong>Limited Power of Attorney (POA)</strong> – A legal document that allows you to book loads and sign Ratecons on the carrier’s behalf without giving you ownership of the company.</li>
+                    </ul>
+                    <p>These documents become the backbone of every carrier relationship. Keep them clean, consistent, and always signed before the first load.</p>
                 </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>Executing precise phone and email scripts enables you to break through standard broker rate resistance.</p>
-                        <ul>
-                            <li><strong>Counter-Offer Strategies:</strong> Defusing the "that's our maximum budget" objection by highlighting service quality.</li>
-                            <li><strong>Value Justification:</strong> Pitching your carrier's pristine safety score and flawless on-time delivery record.</li>
-                        </ul>
-                    </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80" alt="Phone Tactics">
-                        <span class="image-caption">Executing phone scripts and justifying higher rate per mile benchmarks.</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>5.3 Financial Risk Mitigation: Factoring & Credit Checks</h2>
-                    <span class="duration-badge">Module 5 • Slide 3 of 5</span>
-                </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>Securing high rates means nothing if the broker fails to pay. Rigorous financial vetting is a mandatory dispatcher duty.</p>
-                        <ul>
-                            <li><strong>Credit Vetting Protocols:</strong> Analyzing DAT/Truckstop credit scores, days-to-pay averages, and credit limits before committing a carrier.</li>
-                            <li><strong>Factoring Integration:</strong> Working seamlessly with carrier factoring companies to ensure immediate invoice approval.</li>
-                        </ul>
-                    </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80" alt="Factoring and Credit">
-                        <span class="image-caption">Running broker credit checks and coordinating with factoring partners.</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>5.4 Securing Accessorial Fees: Detention, Layover & TONU</h2>
-                    <span class="duration-badge">Module 5 • Slide 4 of 5</span>
-                </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>Protecting your carrier's revenue extends beyond linehaul rates; you must successfully negotiate accessorial compensation when transit disruptions happen.</p>
-                        <ul>
-                            <li><strong>Detention Recovery:</strong> Securing standard hourly compensation after two free hours at loading/unloading facilities.</li>
-                            <li><strong>Layover Pay & TONU:</strong> Establishing guaranteed daily compensation or Truck Ordered Not Used fees when disruptions occur.</li>
-                        </ul>
-                    </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80" alt="Accessorial Fees">
-                        <span class="image-caption">Claiming detention, layovers, and TONU fees for delayed carriers.</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Knowledge Check Slide -->
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>Module 5 Knowledge Check</h2>
-                    <span class="duration-badge">Score & Verify Mastery</span>
-                </div>
-                <div class="slide-full">
-                    <div class="quiz-container" id="quiz-deck-4">
-                        <div class="question-box" data-q="1" data-ans="A">
-                            <div class="question-title">1. What is the purpose of checking a broker's credit score before booking a load?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m4_q1" value="A"> A) To ensure the broker pays their invoices on time and avoids bankruptcy risk.</label>
-                                <label class="option-label"><input type="radio" name="m4_q1" value="B"> B) To determine the broker's personal credit card limit.</label>
-                                <label class="option-label"><input type="radio" name="m4_q1" value="C"> C) To check if the broker owns semi-trucks.</label>
-                                <label class="option-label"><input type="radio" name="m4_q1" value="D"> D) To verify their office building square footage.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m4_f1"></div>
-                        </div>
-                        <div class="question-box" data-q="2" data-ans="B">
-                            <div class="question-title">2. What does TONU stand for in freight negotiations?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m4_q2" value="A"> A) Total Operating Net Unit.</label>
-                                <label class="option-label"><input type="radio" name="m4_q2" value="B"> B) Truck Ordered Not Used.</label>
-                                <label class="option-label"><input type="radio" name="m4_q2" value="C"> C) Transit Order Notice Unit.</label>
-                                <label class="option-label"><input type="radio" name="m4_q2" value="D"> D) Tariffs on National Units.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m4_f2"></div>
-                        </div>
-                        <div class="question-box" data-q="3" data-ans="B">
-                            <div class="question-title">3. When should detention pay be requested from a broker?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m4_q3" value="A"> A) As soon as the truck leaves home.</label>
-                                <label class="option-label"><input type="radio" name="m4_q3" value="B"> B) When a shipper or receiver delays loading/unloading beyond the agreed free time (e.g., 2 hours).</label>
-                                <label class="option-label"><input type="radio" name="m4_q3" value="C"> C) When the truck breaks down on the highway.</label>
-                                <label class="option-label"><input type="radio" name="m4_q3" value="D"> D) At the end of every calendar year.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m4_f3"></div>
-                        </div>
-                        <div class="question-box" data-q="4" data-ans="B">
-                            <div class="question-title">4. How can you effectively justify a higher rate during broker negotiations?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m4_q4" value="A"> A) By making personal threats.</label>
-                                <label class="option-label"><input type="radio" name="m4_q4" value="B"> B) By highlighting your carrier's superior safety record, clean equipment, and tight market capacity.</label>
-                                <label class="option-label"><input type="radio" name="m4_q4" value="C"> C) By hiding information from the broker.</label>
-                                <label class="option-label"><input type="radio" name="m4_q4" value="D"> D) By accepting whatever price is posted first.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m4_f4"></div>
-                        </div>
-                        <div class="question-box" data-q="5" data-ans="B">
-                            <div class="question-title">5. What is the function of a factoring company in the trucking industry?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m4_q5" value="A"> A) They drive freight trucks across state lines.</label>
-                                <label class="option-label"><input type="radio" name="m4_q5" value="B"> B) They purchase freight bills and advance cash to carriers immediately before the broker pays.</label>
-                                <label class="option-label"><input type="radio" name="m4_q5" value="C"> C) They manufacture tires and engine parts.</label>
-                                <label class="option-label"><input type="radio" name="m4_q5" value="D"> D) They issue driver commercial driver licenses (CDLs).</label>
-                            </div>
-                            <div class="quiz-feedback" id="m4_f5"></div>
-                        </div>
-                    </div>
-                    <div style="margin-top: 15px; display: flex; align-items: center;">
-                        <button class="submit-module-btn" onclick="gradeModule(4, 5)">Grade Module 5 Quiz</button>
-                        <span class="module-score-display" id="score-display-4"></span>
-                    </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80" alt="Documents">
+                    <span class="image-caption">Sample folder structure, Dispatch Agreement & Limited POA</span>
                 </div>
             </div>
         </div>
 
-
-        <!-- ================= MODULE 6: DISPATCHING ================= -->
-        <div class="module-deck" data-module="6" style="display: none;">
-            <div class="slide active">
-                <div class="slide-header">
-                    <h2>6.1 The Booking Workflow & Rate Confirmation Auditing</h2>
-                    <span class="duration-badge">Module 6 • 45 Mins • Slide 1 of 5</span>
-                </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>Executing the final booking paperwork requires absolute precision. A single typo on a rate confirmation can cost thousands of dollars.</p>
+        <!-- SLIDE 7 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Q&A Checkpoint — Module 2</h2>
+                <span class="duration-badge">Day 1 • Slide 7 of 10</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <div class="qa-box">
+                        <p><strong>Open floor for questions on:</strong></p>
                         <ul>
-                            <li><strong>Broker Setup Execution:</strong> Rapidly completing and returning broker carrier packages and profile sheets.</li>
-                            <li><strong>Rate Con Auditing:</strong> Inspecting every detail: origin/destination addresses, weights, appointment times, and rates.</li>
+                            <li>LLC formation and EIN process</li>
+                            <li>IONOS domain + professional email setup</li>
+                            <li>What “niche” really means and how to choose one</li>
+                            <li>Recommended tech stack tools and why each is needed</li>
                         </ul>
                     </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80" alt="Booking Workflow">
-                        <span class="image-caption">Auditing rate confirmations and executing broker setup packets.</span>
-                    </div>
                 </div>
-            </div>
-
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>6.2 Formatting Professional Dispatch Sheets</h2>
-                    <span class="duration-badge">Module 6 • Slide 2 of 5</span>
-                </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>Your drivers need clear, unambiguous operational instructions. Professional dispatch sheets eliminate confusion on the road.</p>
-                        <ul>
-                            <li><strong>Dispatch Sheet Structure:</strong> Consolidating facility names, gate codes, appointment schedules, and contact numbers.</li>
-                            <li><strong>Driver Handoff Protocol:</strong> Transmitting complete instructions to your carrier via digital messaging.</li>
-                        </ul>
-                    </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" alt="Dispatch Sheets">
-                        <span class="image-caption">Formatting comprehensive dispatch instructions for drivers.</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>6.3 Transit Coordination & Electronic Tracking</h2>
-                    <span class="duration-badge">Module 6 • Slide 3 of 5</span>
-                </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>Maintaining active communication during transit satisfies broker tracking requirements and prevents frustrating check-call phone calls.</p>
-                        <ul>
-                            <li><strong>Check-Call Milestones:</strong> Communicating status updates at pickup (Loaded), mid-transit, and delivery.</li>
-                            <li><strong>Electronic Tracking Apps:</strong> Managing broker tracking requests (MacroPoint, FourKites) via driver smartphones.</li>
-                        </ul>
-                    </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600&q=80" alt="Transit Coordination">
-                        <span class="image-caption">Managing check-calls and electronic tracking platforms.</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>6.4 Exception Management & Problem Solving</h2>
-                    <span class="duration-badge">Module 6 • Slide 4 of 5</span>
-                </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>When unexpected road emergencies occur, elite dispatchers provide rapid solutions to keep freight moving.</p>
-                        <ul>
-                            <li><strong>Detention Documentation:</strong> Instructing drivers to secure facility check-in/out stamps on the Bill of Lading.</li>
-                            <li><strong>Appointment Rescheduling:</strong> Coordinating with brokers and warehouses immediately if delays threaten schedules.</li>
-                        </ul>
-                    </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80" alt="Exception Management">
-                        <span class="image-caption">Resolving transit exceptions and securing accessorial reimbursement.</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Knowledge Check Slide -->
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>Module 6 Knowledge Check</h2>
-                    <span class="duration-badge">Score & Verify Mastery</span>
-                </div>
-                <div class="slide-full">
-                    <div class="quiz-container" id="quiz-deck-5">
-                        <div class="question-box" data-q="1" data-ans="A">
-                            <div class="question-title">1. What is the most important document to review carefully before signing and returning to a broker?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m5_q1" value="A"> A) The Rate Confirmation.</label>
-                                <label class="option-label"><input type="radio" name="m5_q1" value="B"> B) The broker's corporate holiday schedule.</label>
-                                <label class="option-label"><input type="radio" name="m5_q1" value="C"> C) The office lease agreement.</label>
-                                <label class="option-label"><input type="radio" name="m5_q1" value="D"> D) The shipping container patent filing.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m5_f1"></div>
-                        </div>
-                        <div class="question-box" data-q="2" data-ans="B">
-                            <div class="question-title">2. What information must be included on a professional dispatch sheet given to your driver?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m5_q2" value="A"> A) The broker's personal home address.</label>
-                                <label class="option-label"><input type="radio" name="m5_q2" value="B"> B) Pickup/delivery addresses, appointment times, reference IDs, and broker contact info.</label>
-                                <label class="option-label"><input type="radio" name="m5_q2" value="C"> C) Your company's quarterly tax projections.</label>
-                                <label class="option-label"><input type="radio" name="m5_q2" value="D"> D) Local weather forecasts for next month.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m5_f2"></div>
-                        </div>
-                        <div class="question-box" data-q="3" data-ans="B">
-                            <div class="question-title">3. Why are check-calls important during a load's transit?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m5_q3" value="A"> A) To test telephone battery levels.</label>
-                                <label class="option-label"><input type="radio" name="m5_q3" value="B"> B) To provide brokers with visibility, satisfy tracking requirements, and prevent panic.</label>
-                                <label class="option-label"><input type="radio" name="m5_q3" value="C"> C) To re-negotiate the freight rate upward mid-trip.</label>
-                                <label class="option-label"><input type="radio" name="m5_q3" value="D"> D) To book a second load simultaneously.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m5_f3"></div>
-                        </div>
-                        <div class="question-box" data-q="4" data-ans="B">
-                            <div class="question-title">4. What is required to successfully claim detention pay from a broker when a shipper delays a driver?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m5_q4" value="A"> A) A signed letter from local law enforcement.</label>
-                                <label class="option-label"><input type="radio" name="m5_q4" value="B"> B) Time-stamped check-in and check-out documentation signed on the Bill of Lading (BOL).</label>
-                                <label class="option-label"><input type="radio" name="m5_q4" value="C"> C) Verbal agreement over casual conversation.</label>
-                                <label class="option-label"><input type="radio" name="m5_q4" value="D"> D) A receipt for driver meals.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m5_f4"></div>
-                        </div>
-                        <div class="question-box" data-q="5" data-ans="B">
-                            <div class="question-title">5. What should you do immediately if your driver experiences a major traffic delay threatening an on-time delivery?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m5_q5" value="A"> A) Turn off your phone and ignore it.</label>
-                                <label class="option-label"><input type="radio" name="m5_q5" value="B"> B) Proactively notify the broker immediately before the delivery appointment lapses.</label>
-                                <label class="option-label"><input type="radio" name="m5_q5" value="C"> C) Wait until the next day to mention it.</label>
-                                <label class="option-label"><input type="radio" name="m5_q5" value="D"> D) File a lawsuit against the highway department.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m5_f5"></div>
-                        </div>
-                    </div>
-                    <div style="margin-top: 15px; display: flex; align-items: center;">
-                        <button class="submit-module-btn" onclick="gradeModule(5, 5)">Grade Module 6 Quiz</button>
-                        <span class="module-score-display" id="score-display-5"></span>
-                    </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Q&A">
+                    <span class="image-caption">Module 2 Q&A Checkpoint</span>
                 </div>
             </div>
         </div>
 
-
-        <!-- ================= MODULE 7: INVOICING & SCALING ================= -->
-        <div class="module-deck" data-module="7" style="display: none;">
-            <div class="slide active">
-                <div class="slide-header">
-                    <h2>7.1 The Billing & Invoicing Cycle</h2>
-                    <span class="duration-badge">Module 7 • 45 Mins • Slide 1 of 4</span>
+        <!-- SLIDE 8 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Module 3: Marketing Strategy & Sourcing Leads</h2>
+                <span class="duration-badge">Day 1 • Slide 8 of 10</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <p><strong>Overview:</strong> Multi-channel outreach using Carrier IQ, Facebook groups, Reddit, and truck-stop networking.</p>
+                    <ul>
+                        <li><strong>Cold Calling</strong> – Calling owner-operators directly from public lists or Carrier IQ data to offer dispatch services.</li>
+                        <li><strong>Grassroots / Digital Communities</strong> – Providing value in Facebook groups and Reddit communities (r/trucking, Box Truck Owners, Hotshot groups) before pitching.</li>
+                        <li><strong>Truck-Stop Marketing</strong> – Handing out professional business cards and flyers at Pilot Flying J, Love’s, TA, and local truck stops.</li>
+                        <li><strong>Carrier IQ</strong> – A data platform that lists active motor carriers, their equipment, and contact information to help you find potential clients.</li>
+                    </ul>
                 </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>Closing out completed loads correctly ensures your carriers get paid quickly and your agency receives its weekly commissions without friction.</p>
-                        <ul>
-                            <li><strong>Bill of Lading (BOL):</strong> Collecting the signed proof-of-delivery receipt from the receiver immediately upon unloading.</li>
-                            <li><strong>Invoice Submission:</strong> Transmitting rate confirmations and signed BOLs to the broker or factoring company.</li>
-                        </ul>
-                    </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80" alt="Billing and Invoicing">
-                        <span class="image-caption">Managing BOL delivery receipts and accounts receivable workflows.</span>
-                    </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1432888622747-4eb9a1efeb05?auto=format&fit=crop&w=600&q=80" alt="Marketing">
+                    <span class="image-caption">Multi-channel lead generation with clear terms</span>
                 </div>
             </div>
+        </div>
 
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>7.2 Daily Dispatcher Routine & Scaling Your Agency</h2>
-                    <span class="duration-badge">Module 7 • Slide 2 of 4</span>
-                </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>Transitioning from a solo operator into running a thriving multi-dispatcher agency requires disciplined daily routines and strategic delegation.</p>
+        <!-- SLIDE 9 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Q&A Checkpoint — Module 3 & Day 1 Wrap-Up</h2>
+                <span class="duration-badge">Day 1 • Slide 9 of 10</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <div class="qa-box">
+                        <p><strong>Final Day 1 questions on:</strong></p>
                         <ul>
-                            <li><strong>Daily Routine Architecture:</strong> Morning loadboard scans, mid-day transit tracking, and end-of-day carrier financial debriefs.</li>
-                            <li><strong>Agency Scaling:</strong> Hiring associate dispatchers, standardizing SOPs, and expanding your carrier roster.</li>
+                            <li>Any remaining industry terminology</li>
+                            <li>Facebook / Reddit outreach tactics</li>
+                            <li>Truck-stop flyer design & distribution</li>
+                            <li>Using Carrier IQ or similar lead databases</li>
                         </ul>
                     </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-152202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80" alt="Scaling Agency">
-                        <span class="image-caption">Structuring daily agency operations and scaling dispatcher teams.</span>
-                    </div>
+                    <p style="margin-top:16px;"><strong>Day 1 Homework:</strong> Finish Branding & Domain Worksheet, register domain + professional email, and prepare first draft of business card / flyer.</p>
+                </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Wrap-up">
+                    <span class="image-caption">Day 1 complete — see you tomorrow</span>
                 </div>
             </div>
+        </div>
 
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>7.3 Capstone Overview & Professional Certification</h2>
-                    <span class="duration-badge">Module 7 • Slide 3 of 4</span>
-                </div>
-                <div class="slide-content-grid">
-                    <div class="slide-text-side">
-                        <p>Synthesize all seven modules to launch and grow your independent dispatching enterprise with total confidence.</p>
-                        <ul>
-                            <li><strong>Core Competencies Mastered:</strong> Entity formation, brand positioning, carrier sales, document compliance, loadboards, negotiation, and daily agency operations.</li>
-                            <li><strong>Certification Milestone:</strong> Graduation affirms your readiness to lead enterprise freight dispatching at a professional level.</li>
-                        </ul>
-                    </div>
-                    <div class="slide-image-side">
-                        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=600&q=80" alt="Capstone Certification">
-                        <span class="image-caption">Mastering complete freight dispatch operations for long-term success.</span>
-                    </div>
-                </div>
+        <!-- SLIDE 10: DAY 1 QUIZ -->
+        <div class="slide quiz-slide">
+            <div class="slide-header">
+                <h2>Day 1 Knowledge Check</h2>
+                <span class="duration-badge">Day 1 • Quiz • 8 Questions</span>
             </div>
-
-            <!-- Knowledge Check Slide -->
-            <div class="slide">
-                <div class="slide-header">
-                    <h2>Module 7: Master Certification Exam</h2>
-                    <span class="duration-badge">Final Assessment</span>
-                </div>
-                <div class="slide-full">
-                    <div class="quiz-container" id="quiz-deck-6">
-                        <div class="question-box" data-q="1" data-ans="B">
-                            <div class="question-title">1. What document serves as legal proof of load delivery and is required to get paid?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m6_q1" value="A"> A) A billboard advertisement.</label>
-                                <label class="option-label"><input type="radio" name="m6_q1" value="B"> B) The signed Bill of Lading (BOL).</label>
-                                <label class="option-label"><input type="radio" name="m6_q1" value="C"> C) A real estate deed.</label>
-                                <label class="option-label"><input type="radio" name="m6_q1" value="D"> D) A vehicle registration card.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m6_f1"></div>
-                        </div>
-                        <div class="question-box" data-q="2" data-ans="A">
-                            <div class="question-title">2. Why is tracking accounts receivable important for an independent dispatcher?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m6_q2" value="A"> A) To ensure completed loads are invoiced and your dispatch commissions are paid on time.</label>
-                                <label class="option-label"><input type="radio" name="m6_q2" value="B"> B) To calculate truck tire pressure.</label>
-                                <label class="option-label"><input type="radio" name="m6_q2" value="C"> C) To design marketing flyers.</label>
-                                <label class="option-label"><input type="radio" name="m6_q2" value="D"> D) To register new LLC entities.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m6_f2"></div>
-                        </div>
-                        <div class="question-box" data-q="3" data-ans="B">
-                            <div class="question-title">3. What is a key milestone when scaling from a solo dispatcher to an agency?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m6_q3" value="A"> A) Stopping all communication with carriers.</label>
-                                <label class="option-label"><input type="radio" name="m6_q3" value="B"> B) Hiring and training associate dispatchers to manage expanding carrier rosters.</label>
-                                <label class="option-label"><input type="radio" name="m6_q3" value="C"> C) Driving semi-trucks across the country yourself.</label>
-                                <label class="option-label"><input type="radio" name="m6_q3" value="D"> D) Eliminating all computer software.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m6_f3"></div>
-                        </div>
-                        <div class="question-box" data-q="4" data-ans="B">
-                            <div class="question-title">4. What activities should anchor a dispatcher's daily morning routine?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m6_q4" value="A"> A) Sleeping until noon.</label>
-                                <label class="option-label"><input type="radio" name="m6_q4" value="B"> B) Scanning loadboards, checking carrier truck locations, and pitching new prospects.</label>
-                                <label class="option-label"><input type="radio" name="m6_q4" value="C"> C) Closing the business permanently.</label>
-                                <label class="option-label"><input type="radio" name="m6_q4" value="D"> D) Auditing highway rest stops.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m6_f4"></div>
-                        </div>
-                        <div class="question-box" data-q="5" data-ans="A">
-                            <div class="question-title">5. What does earning certification as a Certified Freight Dispatcher Professional signify?</div>
-                            <div class="options-grid">
-                                <label class="option-label"><input type="radio" name="m6_q5" value="A"> A) Mastery of dispatching fundamentals, loadboard navigation, rate negotiation, and agency operations.</label>
-                                <label class="option-label"><input type="radio" name="m6_q5" value="B"> B) Authorization to fly commercial airplanes.</label>
-                                <label class="option-label"><input type="radio" name="m6_q5" value="C"> C) Completion of real estate brokerage exams.</label>
-                                <label class="option-label"><input type="radio" name="m6_q5" value="D"> D) Ownership of a freight brokerage bond.</label>
-                            </div>
-                            <div class="quiz-feedback" id="m6_f5"></div>
-                        </div>
+            <div class="slide-content-grid">
+                <div class="quiz-container" id="quiz-day1">
+                    <div class="quiz-intro">
+                        <strong>Knowledge Check — Day 1 Foundations</strong><br>
+                        Answer all 8 questions. You can retry as many times as you like. A score of 75% or higher is recommended before moving to Day 2.
                     </div>
-                    <div style="margin-top: 15px; display: flex; align-items: center;">
-                        <button class="submit-module-btn" onclick="gradeModule(6, 5)">Complete Master Exam & Certify</button>
-                        <span class="module-score-display" id="score-display-6"></span>
+
+                    <!-- Q1 -->
+                    <div class="quiz-question" data-qid="d1q1">
+                        <h4>1. What does FMCSA stand for?</h4>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="d1q1" value="a"> Federal Motor Carrier Safety Administration</label>
+                            <label class="quiz-option"><input type="radio" name="d1q1" value="b"> Federal Motor Commerce Safety Agency</label>
+                            <label class="quiz-option"><input type="radio" name="d1q1" value="c"> Freight Motor Carrier Standards Authority</label>
+                            <label class="quiz-option"><input type="radio" name="d1q1" value="d"> Federal Maritime Carrier Safety Association</label>
+                        </div>
+                        <div class="quiz-feedback" data-fb="d1q1"></div>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="quiz-question" data-qid="d1q2">
+                        <h4>2. What is the key legal difference between a Freight Dispatcher and a Freight Broker?</h4>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="d1q2" value="a"> Dispatchers own the trucks; brokers do not</label>
+                            <label class="quiz-option"><input type="radio" name="d1q2" value="b"> Dispatchers work exclusively for the carrier under a written agreement and never handle load money; brokers arrange transportation between shippers and carriers and must hold a $75k surety bond</label>
+                            <label class="quiz-option"><input type="radio" name="d1q2" value="c"> There is no legal difference</label>
+                            <label class="quiz-option"><input type="radio" name="d1q2" value="d"> Brokers only work with dry vans; dispatchers work with all equipment</label>
+                        </div>
+                        <div class="quiz-feedback" data-fb="d1q2"></div>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="quiz-question" data-qid="d1q3">
+                        <h4>3. What is “deadhead”?</h4>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="d1q3" value="a"> Miles driven with an empty trailer (no paying load)</label>
+                            <label class="quiz-option"><input type="radio" name="d1q3" value="b"> A high-paying premium load</label>
+                            <label class="quiz-option"><input type="radio" name="d1q3" value="c"> The return trip after a delivery</label>
+                            <label class="quiz-option"><input type="radio" name="d1q3" value="d"> Extra hours a driver sits waiting for a load</label>
+                        </div>
+                        <div class="quiz-feedback" data-fb="d1q3"></div>
+                    </div>
+
+                    <!-- Q4 -->
+                    <div class="quiz-question" data-qid="d1q4">
+                        <h4>4. Why form an LLC when starting a dispatch business?</h4>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="d1q4" value="a"> It is required by the FMCSA to dispatch</label>
+                            <label class="quiz-option"><input type="radio" name="d1q4" value="b"> It protects your personal assets from business debts and lawsuits</label>
+                            <label class="quiz-option"><input type="radio" name="d1q4" value="c"> It automatically gives you broker authority</label>
+                            <label class="quiz-option"><input type="radio" name="d1q4" value="d"> It eliminates the need for a business bank account</label>
+                        </div>
+                        <div class="quiz-feedback" data-fb="d1q4"></div>
+                    </div>
+
+                    <!-- Q5 -->
+                    <div class="quiz-question" data-qid="d1q5">
+                        <h4>5. What is a Limited Power of Attorney (POA) used for in dispatching?</h4>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="d1q5" value="a"> To transfer ownership of the carrier’s trucks to the dispatcher</label>
+                            <label class="quiz-option"><input type="radio" name="d1q5" value="b"> To allow the dispatcher to book loads and sign Ratecons on the carrier’s behalf without owning the company</label>
+                            <label class="quiz-option"><input type="radio" name="d1q5" value="c"> To collect payment directly from shippers</label>
+                            <label class="quiz-option"><input type="radio" name="d1q5" value="d"> To obtain the carrier’s MC number permanently</label>
+                        </div>
+                        <div class="quiz-feedback" data-fb="d1q5"></div>
+                    </div>
+
+                    <!-- Q6 -->
+                    <div class="quiz-question" data-qid="d1q6">
+                        <h4>6. Which of the following is an example of a profitable equipment niche for a new dispatcher?</h4>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="d1q6" value="a"> Trying to dispatch every equipment type at once</label>
+                            <label class="quiz-option"><input type="radio" name="d1q6" value="b"> Focusing on Box Trucks, Dry Vans, Reefers, Flatbeds, specific lanes, or new-authority carriers</label>
+                            <label class="quiz-option"><input type="radio" name="d1q6" value="c"> Only handling international ocean freight</label>
+                            <label class="quiz-option"><input type="radio" name="d1q6" value="d"> Avoiding any specialization so you can take any load</label>
+                        </div>
+                        <div class="quiz-feedback" data-fb="d1q6"></div>
+                    </div>
+
+                    <!-- Q7 -->
+                    <div class="quiz-question" data-qid="d1q7">
+                        <h4>7. What is Carrier IQ primarily used for?</h4>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="d1q7" value="a"> Booking loads on DAT</label>
+                            <label class="quiz-option"><input type="radio" name="d1q7" value="b"> A data platform that lists active motor carriers, their equipment, and contact information to help find potential clients</label>
+                            <label class="quiz-option"><input type="radio" name="d1q7" value="c"> Checking driver Hours of Service</label>
+                            <label class="quiz-option"><input type="radio" name="d1q7" value="d"> Filing IFTA tax reports</label>
+                        </div>
+                        <div class="quiz-feedback" data-fb="d1q7"></div>
+                    </div>
+
+                    <!-- Q8 -->
+                    <div class="quiz-question" data-qid="d1q8">
+                        <h4>8. What must a Freight Broker hold that a pure Dispatcher does not need?</h4>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="d1q8" value="a"> A commercial driver’s license (CDL)</label>
+                            <label class="quiz-option"><input type="radio" name="d1q8" value="b"> A $75,000 surety bond and FMCSA broker authority</label>
+                            <label class="quiz-option"><input type="radio" name="d1q8" value="c"> An MC number issued to the dispatcher personally</label>
+                            <label class="quiz-option"><input type="radio" name="d1q8" value="d"> Ownership of at least five trucks</label>
+                        </div>
+                        <div class="quiz-feedback" data-fb="d1q8"></div>
+                    </div>
+
+                    <div class="quiz-actions">
+                        <button class="quiz-btn" onclick="submitQuiz('day1')">Submit Answers</button>
+                        <button class="quiz-btn secondary" onclick="resetQuiz('day1')" style="display:none;" id="retry-day1">Retry Quiz</button>
+                    </div>
+
+                    <div class="score-panel" id="score-day1">
+                        <div class="score-circle" id="circle-day1" style="--score-pct: 0deg;">
+                            <span class="score-value" id="pct-day1">0%</span>
+                        </div>
+                        <div class="score-label" id="label-day1">Your Score</div>
+                        <div class="score-detail" id="detail-day1"></div>
+                        <div class="score-message" id="msg-day1"></div>
+                        <div class="attempt-info" id="attempt-day1"></div>
                     </div>
                 </div>
             </div>
         </div>
+      </div>
+
+      <!-- ================= DAY 2 ================= -->
+      <div class="module-deck" data-module="1" style="display: none;">
+
+        <!-- SLIDE 1 -->
+        <div class="slide active">
+            <div class="slide-header">
+                <h2>Day 2 Welcome & Agenda</h2>
+                <span class="duration-badge">Day 2 • Slide 1 of 14</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <p>Quick recap of Day 1 (legal structure, niche, brand foundation). Today we move into carrier acquisition and closing deals.</p>
+                    <ul>
+                        <li><strong>Module 1 (10 min):</strong> Acquisition, Cold Calling & Grassroots Pitching</li>
+                        <li><strong>Module 2 (10 min):</strong> Carrier Onboarding & Risk Verification</li>
+                        <li><strong>Module 3 (15 min):</strong> Rate Negotiation, Load Boards & Fraud Prevention</li>
+                        <li><strong>Module 4 (10 min):</strong> Rate Confirmations (Ratecons)</li>
+                    </ul>
+                </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80" alt="Day 2">
+                    <span class="image-caption">Day 2 Roadmap — Acquisition & Closing</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 2 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Module 1: Acquisition, Cold Calling & Grassroots</h2>
+                <span class="duration-badge">Day 2 • Slide 2 of 14</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <p><strong>Overview:</strong> Proven cold-call scripts, in-person truck-stop approaches, and handling objections.</p>
+                    <ul>
+                        <li><strong>Cold Call Flow:</strong> Intro → Pain-point hook → Rate-per-mile pitch → Clear call to action.</li>
+                        <li><strong>Truck Stop & Online Pitch:</strong> Respectful approach at fuel islands or converting a Facebook inquiry into a phone consultation.</li>
+                        <li><strong>Qualifying & Objections:</strong> Filter leads quickly and handle “fee is too high” / “I dispatch myself” pushback.</li>
+                    </ul>
+                </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80" alt="Cold Calling">
+                    <span class="image-caption">Cold call flow and grassroots pitching</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Example Script — Cold Call & Objection Rebuttals</h2>
+                <span class="duration-badge">Day 2 • Slide 3 of 14</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <p>Full visual breakdown of the word-for-word cold-call script plus the most common objection responses.</p>
+                    <ul>
+                        <li>Opening that references equipment type and current market rates.</li>
+                        <li>Pain-point questions that surface real frustration.</li>
+                        <li>Clean close that moves the prospect to a packet review.</li>
+                        <li>Top 4–5 objection rebuttals used in the field.</li>
+                    </ul>
+                </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600&q=80" alt="Script">
+                    <span class="image-caption">Word-for-word cold call script + rebuttal sheet</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Q&A Checkpoint — Module 1</h2>
+                <span class="duration-badge">Day 2 • Slide 4 of 14</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <div class="qa-box">
+                        <p><strong>Open floor for questions on:</strong></p>
+                        <ul>
+                            <li>Cold-call delivery and timing</li>
+                            <li>Handling driver pushback</li>
+                            <li>Truck-stop approach etiquette</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Q&A">
+                    <span class="image-caption">Module 1 Q&A Checkpoint</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Module 2: Carrier Onboarding & Risk Verification</h2>
+                <span class="duration-badge">Day 2 • Slide 5 of 14</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <p><strong>Overview:</strong> Collect mandatory documents, verify active MC authority, and avoid cargo-insurance traps.</p>
+                    <ul>
+                        <li><strong>Required Documents:</strong> Dispatch Agreement, Limited POA, Active MC/DOT Certificate, Form W-9, COI ($1M Auto / $100k Cargo), Factoring NOA.</li>
+                        <li><strong>Authority Status Verification:</strong> Always check FMCSA SAFER, directory platforms, and MOTUS on the exact day of booking. Confirm “Active” status.</li>
+                        <li><strong>The $100k Cargo Insurance Trap:</strong> Compare load value on the Ratecon against the carrier’s maximum cargo coverage before booking high-value freight.</li>
+                    </ul>
+                </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=600&q=80" alt="Onboarding">
+                    <span class="image-caption">Document checklist and authority verification</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Example Documents — COI, W-9, NOA & SAFER</h2>
+                <span class="duration-badge">Day 2 • Slide 6 of 14</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <p>Visual examples highlighting the exact fields you must verify:</p>
+                    <ul>
+                        <li>Certificate of Insurance — liability limits, cargo limit, additional insured language.</li>
+                        <li>W-9 — correct legal name and EIN.</li>
+                        <li>Factoring Notice of Assignment (NOA).</li>
+                        <li>FMCSA SAFER snapshot confirming Active authority and safety rating.</li>
+                    </ul>
+                </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80" alt="Documents">
+                    <span class="image-caption">Sample COI, W-9, NOA and SAFER check</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Q&A Checkpoint — Module 2</h2>
+                <span class="duration-badge">Day 2 • Slide 7 of 14</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <div class="qa-box">
+                        <p><strong>Open floor for questions on:</strong></p>
+                        <ul>
+                            <li>Carrier packet contents</li>
+                            <li>COI limits and cargo traps</li>
+                            <li>Authority status checks</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Q&A">
+                    <span class="image-caption">Module 2 Q&A Checkpoint</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Module 3: Rate Negotiation, Load Boards & Fraud</h2>
+                <span class="duration-badge">Day 2 • Slide 8 of 14</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <p><strong>Overview:</strong> Free/paid load boards, HOS clocks, double-brokering red flags, and negotiating top rates.</p>
+                    <ul>
+                        <li><strong>Free Load Boards:</strong> Trucker Path, Freight Finder, Selectus, Trulos, Free Freight Search.</li>
+                        <li><strong>Sub-Account Rule:</strong> Paid boards (DAT, Truckstop) require an MC/DOT — drivers must add you as an authorized sub-user.</li>
+                        <li><strong>HOS & Trip Planning:</strong> 11-hour driving limit, 14-hour on-duty window, 34-hour restart, 80,000-lb gross weight.</li>
+                        <li><strong>Broker Vetting & Fraud Prevention:</strong> Credit scores, $75k surety bond, matching FMCSA email domains.</li>
+                        <li><strong>Negotiation:</strong> Cost-per-mile floor → lane rate analysis → confident broker pitch.</li>
+                    </ul>
+                </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1542744094-24638eff58bb?auto=format&fit=crop&w=600&q=80" alt="Load Boards">
+                    <span class="image-caption">Load boards, HOS, and fraud prevention</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Live Demo — Load Board Search & Broker Pitch</h2>
+                <span class="duration-badge">Day 2 • Slide 9 of 14</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <p>Live look at filtering loads on free and paid boards plus a sample broker negotiation script.</p>
+                    <ul>
+                        <li>Origin radius, deadhead, equipment, weight, and rate filters.</li>
+                        <li>Quick credit-score and days-to-pay check.</li>
+                        <li>Word-for-word broker pitch that protects carrier RPM.</li>
+                    </ul>
+                </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" alt="Demo">
+                    <span class="image-caption">Load board walkthrough + sample broker pitch</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Q&A Checkpoint — Module 3</h2>
+                <span class="duration-badge">Day 2 • Slide 10 of 14</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <div class="qa-box">
+                        <p><strong>Open floor for questions on:</strong></p>
+                        <ul>
+                            <li>Free vs. paid load board access</li>
+                            <li>HOS rules and trip planning</li>
+                            <li>Broker negotiation tactics</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Q&A">
+                    <span class="image-caption">Module 3 Q&A Checkpoint</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 11 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Module 4: Rate Confirmations (Ratecons)</h2>
+                <span class="duration-badge">Day 2 • Slide 11 of 14</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <p><strong>Overview:</strong> Auditing binding broker contracts, checking fine print, and executing Ratecons safely.</p>
+                    <ul>
+                        <li><strong>Ratecon Audit Checklist:</strong> Pickup/drop windows, weight, rates, accessorial clauses, hidden penalties, commodity description, and appointment times.</li>
+                        <li>Never sign until every field has been verified against the verbal agreement and the carrier’s equipment/weight limits.</li>
+                    </ul>
+                </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80" alt="Ratecon">
+                    <span class="image-caption">Rate confirmation audit process</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Example Document — Annotated Sample Ratecon</h2>
+                <span class="duration-badge">Day 2 • Slide 12 of 14</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <p>Visual walkthrough of a real Ratecon highlighting:</p>
+                    <ul>
+                        <li>Critical fields that must match the verbal agreement</li>
+                        <li>Common fine-print traps (late fees, lumper language, detention windows)</li>
+                        <li>Signature blocks and e-sign best practices</li>
+                    </ul>
+                </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" alt="Annotated Ratecon">
+                    <span class="image-caption">Annotated sample Rate Confirmation</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 13 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Q&A Checkpoint — Module 4 & Day 2 Wrap-Up</h2>
+                <span class="duration-badge">Day 2 • Slide 13 of 14</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <div class="qa-box">
+                        <p><strong>Final Day 2 questions on:</strong></p>
+                        <ul>
+                            <li>Ratecon fine print and red flags</li>
+                            <li>Any remaining acquisition or negotiation questions</li>
+                        </ul>
+                    </div>
+                    <p style="margin-top:16px;"><strong>Day 2 Homework:</strong> Practice the cold-call script out loud and review one real Ratecon (sample provided) using the audit checklist.</p>
+                </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Wrap-up">
+                    <span class="image-caption">Day 2 complete</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 14: DAY 2 QUIZ -->
+        <div class="slide quiz-slide">
+            <div class="slide-header">
+                <h2>Day 2 Knowledge Check</h2>
+                <span class="duration-badge">Day 2 • Quiz • 8 Questions</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="quiz-container" id="quiz-day2">
+                    <div class="quiz-intro">
+                        <strong>Knowledge Check — Day 2 Acquisition & Closing</strong><br>
+                        Answer all 8 questions. Unlimited attempts. Aim for 75%+ before Day 3.
+                    </div>
+
+                    <div class="quiz-question" data-qid="d2q1">
+                        <h4>1. What is the recommended cold-call flow structure?</h4>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="d2q1" value="a"> Pitch rate first → Ask for MC number → Hang up</label>
+                            <label class="quiz-option"><input type="radio" name="d2q1" value="b"> Intro → Pain-point hook → Rate-per-mile pitch → Clear call to action</label>
+                            <label class="quiz-option"><input type="radio" name="d2q1" value="c"> Ask for their insurance first → Offer free trial → Close</label>
+                            <label class="quiz-option"><input type="radio" name="d2q1" value="d"> Read a long script without pausing for answers</label>
+                        </div>
+                        <div class="quiz-feedback" data-fb="d2q1"></div>
+                    </div>
+
+                    <div class="quiz-question" data-qid="d2q2">
+                        <h4>2. Which documents are typically required in a complete carrier onboarding packet?</h4>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="d2q2" value="a"> Only a verbal agreement and a phone number</label>
+                            <label class="quiz-option"><input type="radio" name="d2q2" value="b"> Dispatch Agreement, Limited POA, Active MC/DOT Certificate, W-9, COI ($1M Auto / $100k Cargo), Factoring NOA</label>
+                            <label class="quiz-option"><input type="radio" name="d2q2" value="c"> Just a business card and a CDL photo</label>
+                            <label class="quiz-option"><input type="radio" name="d2q2" value="d"> Only the carrier’s bank account details</label>
+                        </div>
+                        <div class="quiz-feedback" data-fb="d2q2"></div>
+                    </div>
+
+                    <div class="quiz-question" data-qid="d2q3">
+                        <h4>3. Why must you check the carrier’s cargo insurance limit before booking high-value freight?</h4>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="d2q3" value="a"> Because brokers require it for tax purposes</label>
+                            <label class="quiz-option"><input type="radio" name="d2q3" value="b"> To avoid the $100k cargo insurance trap — the load value on the Ratecon must not exceed the carrier’s cargo coverage</label>
+                            <label class="quiz-option"><input type="radio" name="d2q3" value="c"> Cargo insurance is never required</label>
+                            <label class="quiz-option"><input type="radio" name="d2q3" value="d"> Only the broker’s insurance matters</label>
+                        </div>
+                        <div class="quiz-feedback" data-fb="d2q3"></div>
+                    </div>
+
+                    <div class="quiz-question" data-qid="d2q4">
+                        <h4>4. What is the “Sub-Account Rule” for paid load boards like DAT or Truckstop?</h4>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="d2q4" value="a"> Anyone can create an account for free</label>
+                            <label class="quiz-option"><input type="radio" name="d2q4" value="b"> Paid boards require an MC/DOT — drivers must add you as an authorized sub-user</label>
+                            <label class="quiz-option"><input type="radio" name="d2q4" value="c"> Dispatchers automatically get full access once they form an LLC</label>
+                            <label class="quiz-option"><input type="radio" name="d2q4" value="d"> Only brokers can use paid load boards</label>
+                        </div>
+                        <div class="quiz-feedback" data-fb="d2q4"></div>
+                    </div>
+
+                    <div class="quiz-question" data-qid="d2q5">
+                        <h4>5. Under federal HOS rules, what is the maximum driving time allowed in a single shift?</h4>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="d2q5" value="a"> 8 hours</label>
+                            <label class="quiz-option"><input type="radio" name="d2q5" value="b"> 11 hours</label>
+                            <label class="quiz-option"><input type="radio" name="d2q5" value="c"> 14 hours of pure driving</label>
+                            <label class="quiz-option"><input type="radio" name="d2q5" value="d"> 24 hours with no limit</label>
+                        </div>
+                        <div class="quiz-feedback" data-fb="d2q5"></div>
+                    </div>
+
+                    <div class="quiz-question" data-qid="d2q6">
+                        <h4>6. When auditing a Ratecon, which items should you always verify?</h4>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="d2q6" value="a"> Only the total rate amount</label>
+                            <label class="quiz-option"><input type="radio" name="d2q6" value="b"> Pickup/drop windows, weight, rates, accessorial clauses, hidden penalties, commodity description, and appointment times</label>
+                            <label class="quiz-option"><input type="radio" name="d2q6" value="c"> Just the broker’s phone number</label>
+                            <label class="quiz-option"><input type="radio" name="d2q6" value="d"> The color of the paper it is printed on</label>
+                        </div>
+                        <div class="quiz-feedback" data-fb="d2q6"></div>
+                    </div>
+
+                    <div class="quiz-question" data-qid="d2q7">
+                        <h4>7. What is a key fraud-prevention step when dealing with brokers?</h4>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="d2q7" value="a"> Never check credit scores or bond status</label>
+                            <label class="quiz-option"><input type="radio" name="d2q7" value="b"> Verify credit scores, confirm the $75k surety bond, and match FMCSA email domains</label>
+                            <label class="quiz-option"><input type="radio" name="d2q7" value="c"> Accept any load posted on free boards without verification</label>
+                            <label class="quiz-option"><input type="radio" name="d2q7" value="d"> Only work with brokers who call you first</label>
+                        </div>
+                        <div class="quiz-feedback" data-fb="d2q7"></div>
+                    </div>
+
+                    <div class="quiz-question" data-qid="d2q8">
+                        <h4>8. What should you do if a Ratecon’s fine print contains late fees or detention language that was never discussed?</h4>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="d2q8" value="a"> Sign it anyway to secure the load quickly</label>
+                            <label class="quiz-option"><input type="radio" name="d2q8" value="b"> Never sign until every field has been verified against the verbal agreement and the carrier’s equipment/weight limits</label>
+                            <label class="quiz-option"><input type="radio" name="d2q8" value="c"> Ignore the fine print — only the rate matters</label>
+                            <label class="quiz-option"><input type="radio" name="d2q8" value="d"> Ask the driver to sign it instead</label>
+                        </div>
+                        <div class="quiz-feedback" data-fb="d2q8"></div>
+                    </div>
+
+                    <div class="quiz-actions">
+                        <button class="quiz-btn" onclick="submitQuiz('day2')">Submit Answers</button>
+                        <button class="quiz-btn secondary" onclick="resetQuiz('day2')" style="display:none;" id="retry-day2">Retry Quiz</button>
+                    </div>
+
+                    <div class="score-panel" id="score-day2">
+                        <div class="score-circle" id="circle-day2" style="--score-pct: 0deg;">
+                            <span class="score-value" id="pct-day2">0%</span>
+                        </div>
+                        <div class="score-label" id="label-day2">Your Score</div>
+                        <div class="score-detail" id="detail-day2"></div>
+                        <div class="score-message" id="msg-day2"></div>
+                        <div class="attempt-info" id="attempt-day2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <!-- ================= DAY 3 ================= -->
+      <div class="module-deck" data-module="2" style="display: none;">
+
+        <!-- SLIDE 1 -->
+        <div class="slide active">
+            <div class="slide-header">
+                <h2>Day 3 Welcome & Agenda</h2>
+                <span class="duration-badge">Day 3 • Slide 1 of 13</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <p>Recap of Day 2 (acquisition, onboarding, negotiation, Ratecons). Today we cover live operations, accessorials, financials, and growth.</p>
+                    <ul>
+                        <li><strong>Module 1 (10 min):</strong> Live Dispatching, BOLs, Free Tools & Exception Handling</li>
+                        <li><strong>Module 2 (15 min):</strong> Detention, TONU & Accessorial Routing</li>
+                        <li><strong>Module 3 (10 min):</strong> Factoring & Financial Workflows</li>
+                        <li><strong>Module 4 (10 min):</strong> Industry Networking & Course Wrap-Up</li>
+                    </ul>
+                </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80" alt="Day 3">
+                    <span class="image-caption">Day 3 Roadmap — Operations & Growth</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 2 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Module 1: Live Dispatching, BOLs & Exceptions</h2>
+                <span class="duration-badge">Day 3 • Slide 2 of 13</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <p><strong>Overview:</strong> Managing active loads, free PDF tools, OS&D/breakdowns, and after-hours boundaries.</p>
+                    <ul>
+                        <li><strong>Free Document Tools:</strong> Adobe Scan / CamScanner for clean PDFs; I Love PDF or Smallpdf for merging Ratecons + BOLs + PODs.</li>
+                        <li><strong>BOL & POD Flow:</strong> BOL as receipt/contract/title; note pre-existing damage at pickup; secure clean POD/COD documentation.</li>
+                        <li><strong>Tracking & Check-Calls:</strong> MacroPoint, Trucker Tools, and proactive status updates.</li>
+                        <li><strong>Disasters & Exceptions:</strong> OS&D, mechanical breakdowns, immediate broker communication.</li>
+                        <li><strong>After-Hours Protocols:</strong> Clear boundaries, emergency contact numbers, roadside assistance guidance.</li>
+                    </ul>
+                </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600&q=80" alt="Dispatching">
+                    <span class="image-caption">Live dispatch tools and exception handling</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Example Documents — BOL, Signed POD & COD</h2>
+                <span class="duration-badge">Day 3 • Slide 3 of 13</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <p>Visual examples showing:</p>
+                    <ul>
+                        <li>Clean vs. damaged cargo notations on the BOL</li>
+                        <li>Proper receiver signature / stamp locations</li>
+                        <li>COD receipt best practices</li>
+                    </ul>
+                </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80" alt="BOL POD">
+                    <span class="image-caption">Sample BOL, signed POD and COD receipt</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Q&A Checkpoint — Module 1</h2>
+                <span class="duration-badge">Day 3 • Slide 4 of 13</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <div class="qa-box">
+                        <p><strong>Open floor for questions on:</strong></p>
+                        <ul>
+                            <li>BOL / POD best practices</li>
+                            <li>Free PDF tools</li>
+                            <li>OS&D and after-hours protocols</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Q&A">
+                    <span class="image-caption">Module 1 Q&A Checkpoint</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Module 2: Detention, TONU & Accessorial Routing</h2>
+                <span class="duration-badge">Day 3 • Slide 5 of 13</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <p><strong>Overview:</strong> Enforcing upfront detention and TONU terms and properly logging timestamps.</p>
+                    <ul>
+                        <li><strong>Upfront Ratecon Rule:</strong> Detention ($50–$100/hr after 2 free hours) and TONU ($150–$250+) must appear on the initial Ratecon or Master Agreement — otherwise default is $0.</li>
+                        <li><strong>Where Details Go:</strong> Write exact arrival/departure timestamps on the physical BOL, get receiver signature/stamp, and email the broker immediately on the Ratecon thread.</li>
+                        <li><strong>Layovers & Cancellations:</strong> Overnight layover fees and TONU claims process.</li>
+                    </ul>
+                </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80" alt="Accessorials">
+                    <span class="image-caption">Detention, TONU and layover protocols</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Visual Example — BOL Timestamps & Detention Email</h2>
+                <span class="duration-badge">Day 3 • Slide 6 of 13</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <p>Step-by-step visual showing:</p>
+                    <ul>
+                        <li>How in/out timestamps should appear on the BOL</li>
+                        <li>Exact email template to send brokers when claiming detention or TONU</li>
+                    </ul>
+                </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" alt="Timestamps">
+                    <span class="image-caption">BOL timestamp annotation + detention email template</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Q&A Checkpoint — Module 2</h2>
+                <span class="duration-badge">Day 3 • Slide 7 of 13</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <div class="qa-box">
+                        <p><strong>Open floor for questions on:</strong></p>
+                        <ul>
+                            <li>Detention payout rules</li>
+                            <li>TONU disputes</li>
+                            <li>Layover claims</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Q&A">
+                    <span class="image-caption">Module 2 Q&A Checkpoint</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Module 3: Factoring & Financial Workflows</h2>
+                <span class="duration-badge">Day 3 • Slide 8 of 13</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <p><strong>Overview:</strong> Broker credit checks, factoring packets for 24-hour payouts, and weekly carrier invoicing.</p>
+                    <ul>
+                        <li><strong>Factoring Pipeline:</strong> Pre-booking credit check → Delivery & signed POD → Submit Ratecon + POD + Invoice for 24-hour payout.</li>
+                        <li><strong>Dispatch Billing:</strong> Invoice carriers weekly via Square/Stripe or digital payment apps (PayPal, Venmo, Cash App).</li>
+                    </ul>
+                </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80" alt="Factoring">
+                    <span class="image-caption">Factoring packet and weekly invoice flow</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Example Documents — Factoring Packet & Weekly Invoice</h2>
+                <span class="duration-badge">Day 3 • Slide 9 of 13</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <p>Visual walkthrough of a merged factoring submission packet and a clean weekly dispatch service invoice.</p>
+                </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" alt="Invoice">
+                    <span class="image-caption">Sample factoring packet + weekly service invoice</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Q&A Checkpoint — Module 3</h2>
+                <span class="duration-badge">Day 3 • Slide 10 of 13</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <div class="qa-box">
+                        <p><strong>Open floor for questions on:</strong></p>
+                        <ul>
+                            <li>Factoring companies and quick-pay options</li>
+                            <li>Weekly billing process</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Q&A">
+                    <span class="image-caption">Module 3 Q&A Checkpoint</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 11 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Module 4: Industry Networking & Course Wrap-Up</h2>
+                <span class="duration-badge">Day 3 • Slide 11 of 13</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <p><strong>Overview:</strong> Building direct broker relationships for dedicated lanes, daily dispatcher routines, and next steps.</p>
+                    <ul>
+                        <li>Scaling through direct broker relationships and dedicated lanes.</li>
+                        <li>Recommended daily routine (morning loadboard scan → mid-day tracking → end-of-day financial debrief).</li>
+                        <li>Launch checklist: legal entity, brand assets, carrier packet, first 5–10 target carriers, load-board access.</li>
+                    </ul>
+                </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-152202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80" alt="Networking">
+                    <span class="image-caption">Networking, routines and launch checklist</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Final Course Q&A & Graduation Next Steps</h2>
+                <span class="duration-badge">Day 3 • Slide 12 of 13</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="slide-text-side">
+                    <div class="qa-box">
+                        <p><strong>Comprehensive open-floor Q&A</strong> covering any topic from the three days.</p>
+                    </div>
+                    <p style="margin-top:16px;"><strong>Action Plan to Launch:</strong></p>
+                    <ul>
+                        <li>Finalize LLC + EIN + business bank account</li>
+                        <li>Complete brand assets and carrier packet</li>
+                        <li>Secure first 3–5 carriers</li>
+                        <li>Book first loads under the processes learned</li>
+                    </ul>
+                    <p>Congratulations — you now have the full operating system to run a professional independent dispatch agency.</p>
+                </div>
+                <div class="slide-image-side">
+                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=600&q=80" alt="Graduation">
+                    <span class="image-caption">Course complete — time to launch</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: DAY 3 QUIZ -->
+        <div class="slide quiz-slide">
+            <div class="slide-header">
+                <h2>Day 3 Knowledge Check</h2>
+                <span class="duration-badge">Day 3 • Quiz • 8 Questions</span>
+            </div>
+            <div class="slide-content-grid">
+                <div class="quiz-container" id="quiz-day3">
+                    <div class="quiz-intro">
+                        <strong>Knowledge Check — Day 3 Operations & Growth</strong><br>
+                        Final knowledge check. Unlimited attempts. Aim for 75%+ to confirm mastery of live operations.
+                    </div>
+
+                    <div class="quiz-question" data-qid="d3q1">
+                        <h4>1. What is the primary purpose of a Bill of Lading (BOL)?</h4>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="d3q1" value="a"> It is only a shipping label</label>
+                            <label class="quiz-option"><input type="radio" name="d3q1" value="b"> It serves as receipt, contract, and title for the freight; note pre-existing damage at pickup</label>
+                            <label class="quiz-option"><input type="radio" name="d3q1" value="c"> It replaces the need for a Ratecon</label>
+                            <label class="quiz-option"><input type="radio" name="d3q1" value="d"> It is only used for international shipments</label>
+                        </div>
+                        <div class="quiz-feedback" data-fb="d3q1"></div>
+                    </div>
+
+                    <div class="quiz-question" data-qid="d3q2">
+                        <h4>2. Why must detention and TONU rates appear on the initial Ratecon or Master Agreement?</h4>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="d3q2" value="a"> Because the FMCSA requires it for every load</label>
+                            <label class="quiz-option"><input type="radio" name="d3q2" value="b"> Otherwise the default is $0 — you cannot claim them later if they were never written</label>
+                            <label class="quiz-option"><input type="radio" name="d3q2" value="c"> They are automatically paid by every broker</label>
+                            <label class="quiz-option"><input type="radio" name="d3q2" value="d"> Only the carrier’s insurance covers them</label>
+                        </div>
+                        <div class="quiz-feedback" data-fb="d3q2"></div>
+                    </div>
+
+                    <div class="quiz-question" data-qid="d3q3">
+                        <h4>3. What is the typical detention rate range after free time expires?</h4>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="d3q3" value="a"> $10–$20 per hour</label>
+                            <label class="quiz-option"><input type="radio" name="d3q3" value="b"> $50–$100 per hour after 2 free hours</label>
+                            <label class="quiz-option"><input type="radio" name="d3q3" value="c"> $500 flat fee regardless of time</label>
+                            <label class="quiz-option"><input type="radio" name="d3q3" value="d"> Detention is never paid</label>
+                        </div>
+                        <div class="quiz-feedback" data-fb="d3q3"></div>
+                    </div>
+
+                    <div class="quiz-question" data-qid="d3q4">
+                        <h4>4. Where should exact arrival and departure timestamps be recorded for a detention claim?</h4>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="d3q4" value="a"> Only in a text message to the driver</label>
+                            <label class="quiz-option"><input type="radio" name="d3q4" value="b"> On the physical BOL (with receiver signature/stamp) and emailed to the broker on the Ratecon thread</label>
+                            <label class="quiz-option"><input type="radio" name="d3q4" value="c"> Only in the dispatcher’s personal notes</label>
+                            <label class="quiz-option"><input type="radio" name="d3q4" value="d"> Timestamps are not needed if you call the broker</label>
+                        </div>
+                        <div class="quiz-feedback" data-fb="d3q4"></div>
+                    </div>
+
+                    <div class="quiz-question" data-qid="d3q5">
+                        <h4>5. What is the typical factoring pipeline for quick payment?</h4>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="d3q5" value="a"> Wait 30–60 days for the broker to pay the carrier directly</label>
+                            <label class="quiz-option"><input type="radio" name="d3q5" value="b"> Pre-booking credit check → Delivery & signed POD → Submit Ratecon + POD + Invoice for 24-hour payout</label>
+                            <label class="quiz-option"><input type="radio" name="d3q5" value="c"> Factoring is only for brokers, not carriers</label>
+                            <label class="quiz-option"><input type="radio" name="d3q5" value="d"> Submit only the Ratecon with no POD</label>
+                        </div>
+                        <div class="quiz-feedback" data-fb="d3q5"></div>
+                    </div>
+
+                    <div class="quiz-question" data-qid="d3q6">
+                        <h4>6. How should a dispatcher typically bill their carriers for services?</h4>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="d3q6" value="a"> Once a year at tax time</label>
+                            <label class="quiz-option"><input type="radio" name="d3q6" value="b"> Weekly via Square/Stripe or digital payment apps (PayPal, Venmo, Cash App)</label>
+                            <label class="quiz-option"><input type="radio" name="d3q6" value="c"> Only after the carrier has hauled 50 loads</label>
+                            <label class="quiz-option"><input type="radio" name="d3q6" value="d"> Dispatchers never invoice carriers</label>
+                        </div>
+                        <div class="quiz-feedback" data-fb="d3q6"></div>
+                    </div>
+
+                    <div class="quiz-question" data-qid="d3q7">
+                        <h4>7. What does TONU stand for and what is a typical claim range?</h4>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="d3q7" value="a"> Truck On Next Unit — $50</label>
+                            <label class="quiz-option"><input type="radio" name="d3q7" value="b"> Truck Ordered Not Used — typically $150–$250+</label>
+                            <label class="quiz-option"><input type="radio" name="d3q7" value="c"> Total Overnight Unit Notice — free</label>
+                            <label class="quiz-option"><input type="radio" name="d3q7" value="d"> It is not a real industry term</label>
+                        </div>
+                        <div class="quiz-feedback" data-fb="d3q7"></div>
+                    </div>
+
+                    <div class="quiz-question" data-qid="d3q8">
+                        <h4>8. What is a recommended daily routine for a professional dispatcher?</h4>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="d3q8" value="a"> Only check loads once a week</label>
+                            <label class="quiz-option"><input type="radio" name="d3q8" value="b"> Morning loadboard scan → mid-day tracking → end-of-day financial debrief</label>
+                            <label class="quiz-option"><input type="radio" name="d3q8" value="c"> Work only nights and ignore broker calls</label>
+                            <label class="quiz-option"><input type="radio" name="d3q8" value="d"> Never track loads after they are booked</label>
+                        </div>
+                        <div class="quiz-feedback" data-fb="d3q8"></div>
+                    </div>
+
+                    <div class="quiz-actions">
+                        <button class="quiz-btn" onclick="submitQuiz('day3')">Submit Answers</button>
+                        <button class="quiz-btn secondary" onclick="resetQuiz('day3')" style="display:none;" id="retry-day3">Retry Quiz</button>
+                    </div>
+
+                    <div class="score-panel" id="score-day3">
+                        <div class="score-circle" id="circle-day3" style="--score-pct: 0deg;">
+                            <span class="score-value" id="pct-day3">0%</span>
+                        </div>
+                        <div class="score-label" id="label-day3">Your Score</div>
+                        <div class="score-detail" id="detail-day3"></div>
+                        <div class="score-message" id="msg-day3"></div>
+                        <div class="attempt-info" id="attempt-day3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
 
     </div>
 
-    <!-- Presentation Controls Bottom Bar -->
+    <!-- Presentation Controls -->
     <div class="deck-controls">
         <div class="deck-controls-left">
-            <a href="portal.html" class="back-dashboard-btn">
+            <a href="dashboard.html" class="back-dashboard-btn">
                 ← Back to Dashboard
             </a>
         </div>
         <div class="deck-controls-right">
             <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">Previous</button>
-            <span class="slide-counter" id="slideCounter">Intro • Slide 1 / 3</span>
+            <span class="slide-counter" id="slideCounter">Day 1 • Slide 1 / 10</span>
             <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next</button>
         </div>
     </div>
 
 </div>
 
-<!-- JavaScript Engine for Navigation and Quizzes -->
 <script>
     let currentModule = 0;
     let currentSlide = 0;
-    
-    // Slide counts for each deck (Intro has 3 slides; Modules 1-6 have 5 slides including quiz; Module 7 has 4 slides including quiz)
-    const moduleSlideCounts = [3, 5, 5, 5, 5, 5, 5, 4];
+
+    // Updated slide counts: Day 1 = 10, Day 2 = 14, Day 3 = 13 (includes quiz)
+    const moduleSlideCounts = [10, 14, 13];
+    const moduleNames = ["Day 1", "Day 2", "Day 3"];
+
+    // Correct answers for each quiz
+    const answerKey = {
+        day1: { d1q1: 'a', d1q2: 'b', d1q3: 'a', d1q4: 'b', d1q5: 'b', d1q6: 'b', d1q7: 'b', d1q8: 'b' },
+        day2: { d2q1: 'b', d2q2: 'b', d2q3: 'b', d2q4: 'b', d2q5: 'b', d2q6: 'b', d2q7: 'b', d2q8: 'b' },
+        day3: { d3q1: 'b', d3q2: 'b', d3q3: 'b', d3q4: 'b', d3q5: 'b', d3q6: 'b', d3q7: 'b', d3q8: 'b' }
+    };
+
+    // Feedback explanations
+    const feedbackText = {
+        day1: {
+            d1q1: { correct: "Correct! FMCSA = Federal Motor Carrier Safety Administration.", incorrect: "Incorrect. FMCSA stands for Federal Motor Carrier Safety Administration." },
+            d1q2: { correct: "Correct! Dispatchers work only for the carrier and never handle load money.", incorrect: "Incorrect. Dispatchers work exclusively for the carrier under written agreement and never take possession of freight money." },
+            d1q3: { correct: "Correct! Deadhead = empty miles with no paying load.", incorrect: "Incorrect. Deadhead means miles driven with an empty trailer." },
+            d1q4: { correct: "Correct! An LLC protects personal assets from business liabilities.", incorrect: "Incorrect. The main reason is personal asset protection from business debts and lawsuits." },
+            d1q5: { correct: "Correct! Limited POA lets you book and sign on the carrier’s behalf without ownership.", incorrect: "Incorrect. A Limited POA authorizes you to book loads and sign Ratecons without owning the company." },
+            d1q6: { correct: "Correct! Specializing in a niche helps you stand out and win better rates.", incorrect: "Incorrect. Focused niches (Box Trucks, Reefers, specific lanes, new-authority, etc.) are recommended." },
+            d1q7: { correct: "Correct! Carrier IQ is a lead-generation data platform for finding carriers.", incorrect: "Incorrect. Carrier IQ lists active motor carriers, equipment, and contact info." },
+            d1q8: { correct: "Correct! Brokers must hold a $75k surety bond and FMCSA broker authority.", incorrect: "Incorrect. Brokers need a $75,000 surety bond and FMCSA broker authority; pure dispatchers do not." }
+        },
+        day2: {
+            d2q1: { correct: "Correct! Intro → Pain-point → Rate pitch → Clear CTA is the proven flow.", incorrect: "Incorrect. The recommended flow is Intro → Pain-point hook → Rate-per-mile pitch → Clear call to action." },
+            d2q2: { correct: "Correct! Full packet includes Agreement, POA, MC/DOT, W-9, COI, and NOA.", incorrect: "Incorrect. Required docs include Dispatch Agreement, Limited POA, MC/DOT, W-9, COI, and Factoring NOA." },
+            d2q3: { correct: "Correct! Always compare load value to the carrier’s cargo limit to avoid under-insurance.", incorrect: "Incorrect. You must ensure the load value does not exceed the carrier’s cargo coverage ($100k trap)." },
+            d2q4: { correct: "Correct! Drivers must add you as an authorized sub-user on paid boards.", incorrect: "Incorrect. Paid boards require the carrier’s MC/DOT; you need to be added as a sub-user." },
+            d2q5: { correct: "Correct! Federal HOS allows a maximum of 11 hours of driving within a 14-hour window.", incorrect: "Incorrect. The maximum driving time is 11 hours." },
+            d2q6: { correct: "Correct! Always audit every critical field before signing.", incorrect: "Incorrect. Verify pickup/drop, weight, rates, accessorials, penalties, commodity, and appointments." },
+            d2q7: { correct: "Correct! Credit scores, bond verification, and email domain matching reduce fraud risk.", incorrect: "Incorrect. Key steps include checking credit, confirming the $75k bond, and matching FMCSA domains." },
+            d2q8: { correct: "Correct! Never sign until the Ratecon matches the verbal agreement and carrier limits.", incorrect: "Incorrect. Never sign until every field is verified against the verbal agreement." }
+        },
+        day3: {
+            d3q1: { correct: "Correct! The BOL functions as receipt, contract, and title; note damage at pickup.", incorrect: "Incorrect. The BOL is the receipt/contract/title document; always note pre-existing damage." },
+            d3q2: { correct: "Correct! If detention/TONU are not written on the Ratecon, the default is $0.", incorrect: "Incorrect. They must appear on the initial Ratecon or Master Agreement or they default to $0." },
+            d3q3: { correct: "Correct! Industry standard is typically $50–$100/hr after 2 free hours.", incorrect: "Incorrect. Typical detention is $50–$100 per hour after free time." },
+            d3q4: { correct: "Correct! Timestamps go on the BOL with signature and are emailed on the Ratecon thread.", incorrect: "Incorrect. Record exact times on the physical BOL and email the broker immediately." },
+            d3q5: { correct: "Correct! Credit check → POD → submit Ratecon + POD + Invoice for fast payout.", incorrect: "Incorrect. The pipeline is pre-booking credit check → delivery & POD → submit packet for 24-hr payout." },
+            d3q6: { correct: "Correct! Weekly invoicing via Square/Stripe or payment apps is standard practice.", incorrect: "Incorrect. Dispatchers typically invoice carriers weekly." },
+            d3q7: { correct: "Correct! TONU = Truck Ordered Not Used, typically $150–$250+.", incorrect: "Incorrect. TONU means Truck Ordered Not Used and usually claims $150–$250+." },
+            d3q8: { correct: "Correct! Morning scan → mid-day tracking → end-of-day financials is the recommended routine.", incorrect: "Incorrect. A solid daily routine is morning loadboard scan, mid-day tracking, and end-of-day financial debrief." }
+        }
+    };
+
+    // Attempt counters
+    const attempts = { day1: 0, day2: 0, day3: 0 };
 
     function switchModule(moduleIndex) {
         currentModule = moduleIndex;
         currentSlide = 0;
 
-        // Update active tabs
         const tabs = document.querySelectorAll('.module-tab');
         tabs.forEach((tab, idx) => {
-            if (idx === moduleIndex) {
-                tab.classList.add('active');
-            } else {
-                tab.classList.remove('active');
-            }
+            tab.classList.toggle('active', idx === moduleIndex);
         });
 
-        // Update visible module deck
         const decks = document.querySelectorAll('.module-deck');
         decks.forEach((deck, idx) => {
             if (idx === moduleIndex) {
                 deck.style.display = 'block';
                 const slides = deck.querySelectorAll('.slide');
                 slides.forEach((s, sIdx) => {
-                    if (sIdx === 0) s.classList.add('active');
-                    else s.classList.remove('active');
+                    s.classList.toggle('active', sIdx === 0);
                 });
             } else {
                 deck.style.display = 'none';
@@ -1557,6 +1823,7 @@
                 currentSlide = moduleSlideCounts[currentModule] - 1;
                 const prevDeck = document.querySelector(`.module-deck[data-module="${currentModule}"]`);
                 const prevSlides = prevDeck.querySelectorAll('.slide');
+                prevSlides.forEach(s => s.classList.remove('active'));
                 prevSlides[currentSlide].classList.add('active');
             } else {
                 currentSlide = 0;
@@ -1576,47 +1843,135 @@
 
     function updateControls() {
         const totalSlides = moduleSlideCounts[currentModule];
-        let moduleName = currentModule === 0 ? "Intro" : `Module ${currentModule}`;
-        document.getElementById('slideCounter').innerText = `${moduleName} • Slide ${currentSlide + 1} / ${totalSlides}`;
+        document.getElementById('slideCounter').innerText =
+            `${moduleNames[currentModule]} • Slide ${currentSlide + 1} / ${totalSlides}`;
 
         document.getElementById('prevBtn').disabled = (currentModule === 0 && currentSlide === 0);
-        document.getElementById('nextBtn').disabled = (currentModule === moduleSlideCounts.length - 1 && currentSlide === totalSlides - 1);
+        document.getElementById('nextBtn').disabled =
+            (currentModule === moduleSlideCounts.length - 1 && currentSlide === totalSlides - 1);
     }
 
-    function gradeModule(modIdx, totalQ) {
-        let score = 0;
-        const deck = document.querySelector(`.module-deck[data-module="${modIdx}"]`);
-        
-        for (let i = 1; i <= totalQ; i++) {
-            const qBox = deck.querySelector(`.question-box[data-q="${i}"]`);
-            const correctAns = qBox.getAttribute('data-ans');
-            const selected = qBox.querySelector(`input[name="m${modIdx === 7 ? 6 : modIdx - 1}_q${i}"]:checked`);
-            const feedbackEl = document.getElementById(`m${modIdx === 7 ? 6 : modIdx - 1}_f${i}`);
-            
-            feedbackEl.style.display = 'block';
-            if (selected && selected.value === correctAns) {
-                score++;
-                feedbackEl.innerText = "✓ Correct! Professional standard verified.";
-                feedbackEl.className = "quiz-feedback correct";
+    function submitQuiz(day) {
+        const key = answerKey[day];
+        const feedback = feedbackText[day];
+        let correctCount = 0;
+        const total = Object.keys(key).length;
+
+        // Disable all options and show feedback
+        Object.keys(key).forEach(qid => {
+            const selected = document.querySelector(`input[name="${qid}"]:checked`);
+            const questionEl = document.querySelector(`[data-qid="${qid}"]`);
+            const fbEl = document.querySelector(`[data-fb="${qid}"]`);
+            const options = questionEl.querySelectorAll('.quiz-option');
+
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+                const input = opt.querySelector('input');
+                if (input.value === key[qid]) {
+                    opt.classList.add('correct-answer');
+                }
+            });
+
+            if (selected) {
+                const selectedOpt = selected.closest('.quiz-option');
+                if (selected.value === key[qid]) {
+                    correctCount++;
+                    questionEl.classList.add('correct');
+                    selectedOpt.classList.add('selected');
+                    fbEl.textContent = feedback[qid].correct;
+                    fbEl.className = 'quiz-feedback show correct-fb';
+                } else {
+                    questionEl.classList.add('incorrect');
+                    selectedOpt.classList.add('wrong-selected');
+                    fbEl.textContent = feedback[qid].incorrect;
+                    fbEl.className = 'quiz-feedback show incorrect-fb';
+                }
             } else {
-                feedbackEl.innerText = `✕ Incorrect. The correct answer is option ${correctAns}.`;
-                feedbackEl.className = "quiz-feedback incorrect";
+                questionEl.classList.add('incorrect');
+                fbEl.textContent = "No answer selected. " + feedback[qid].incorrect;
+                fbEl.className = 'quiz-feedback show incorrect-fb';
             }
+        });
+
+        // Score calculation
+        const pct = Math.round((correctCount / total) * 100);
+        attempts[day]++;
+
+        const circle = document.getElementById(`circle-${day}`);
+        const pctEl = document.getElementById(`pct-${day}`);
+        const detail = document.getElementById(`detail-${day}`);
+        const msg = document.getElementById(`msg-${day}`);
+        const attemptEl = document.getElementById(`attempt-${day}`);
+        const panel = document.getElementById(`score-${day}`);
+        const retryBtn = document.getElementById(`retry-${day}`);
+
+        circle.style.setProperty('--score-pct', (pct * 3.6) + 'deg');
+        pctEl.textContent = pct + '%';
+        detail.textContent = `${correctCount} out of ${total} correct`;
+
+        if (pct >= 75) {
+            msg.textContent = pct === 100 ? "Perfect score! Excellent mastery." : "Great job! You passed this knowledge check.";
+            msg.className = 'score-message pass';
+        } else {
+            msg.textContent = "Keep reviewing the material and try again. You can retake this quiz unlimited times.";
+            msg.className = 'score-message fail';
         }
 
-        const scoreDisplay = document.getElementById(`score-display-${modIdx === 7 ? 6 : modIdx - 1}`);
-        const percentage = Math.round((score / totalQ) * 100);
-        
-        if (score === totalQ) {
-            scoreDisplay.style.color = "var(--success)";
-            scoreDisplay.innerText = `Score: ${score}/${totalQ} (${percentage}%) - Mastered!`;
-        } else {
-            scoreDisplay.style.color = "var(--error)";
-            scoreDisplay.innerText = `Score: ${score}/${totalQ} (${percentage}%) - Review material & retry.`;
-        }
+        attemptEl.textContent = `Attempt #${attempts[day]}`;
+        panel.classList.add('show');
+        retryBtn.style.display = 'inline-block';
+
+        // Hide submit button after submission
+        const submitBtn = panel.previousElementSibling.querySelector('.quiz-btn:not(.secondary)');
+        if (submitBtn) submitBtn.style.display = 'none';
+
+        // Scroll to score
+        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
-    // Initialize state on load
+    function resetQuiz(day) {
+        const key = answerKey[day];
+
+        Object.keys(key).forEach(qid => {
+            const questionEl = document.querySelector(`[data-qid="${qid}"]`);
+            const fbEl = document.querySelector(`[data-fb="${qid}"]`);
+            const options = questionEl.querySelectorAll('.quiz-option');
+            const inputs = questionEl.querySelectorAll('input[type="radio"]');
+
+            questionEl.classList.remove('correct', 'incorrect');
+            options.forEach(opt => {
+                opt.classList.remove('disabled', 'selected', 'correct-answer', 'wrong-selected');
+            });
+            inputs.forEach(inp => { inp.checked = false; });
+            fbEl.className = 'quiz-feedback';
+            fbEl.textContent = '';
+        });
+
+        document.getElementById(`score-${day}`).classList.remove('show');
+        document.getElementById(`retry-${day}`).style.display = 'none';
+
+        // Show submit button again
+        const actions = document.querySelector(`#quiz-${day} .quiz-actions`);
+        const submitBtn = actions.querySelector('.quiz-btn:not(.secondary)');
+        if (submitBtn) submitBtn.style.display = 'inline-block';
+
+        // Scroll back to top of quiz
+        document.getElementById(`quiz-${day}`).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Option click highlighting
+    document.addEventListener('change', function(e) {
+        if (e.target.type === 'radio') {
+            const name = e.target.name;
+            const options = document.querySelectorAll(`input[name="${name}"]`);
+            options.forEach(inp => {
+                const opt = inp.closest('.quiz-option');
+                opt.classList.toggle('selected', inp.checked);
+            });
+        }
+    });
+
+    // Initialize
     updateControls();
 </script>
 
